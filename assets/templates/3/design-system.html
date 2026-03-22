@@ -1,0 +1,695 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Lumina - Design System</title>
+    <!-- Tailwind CSS -->
+    <script src="assets/resource_3fa48481346f.es"></script>
+    <!-- Iconify -->
+    <script src="assets/iconify-icon_e19829e7f0e8.js"></script>
+    <!-- GSAP -->
+    <script src="assets/gsap_4a57399e4113.js"></script>
+    <script src="assets/ScrollTrigger_8669edfeb171.js"></script>
+    <!-- Fonts -->
+    <link href="assets/css2_06de5dc696ad.css" rel="stylesheet"/>
+    <link href="assets/css2_6f16cdd6fd9f.css" rel="stylesheet"/>
+    <link href="assets/css2_b52fc18295f8.css" rel="stylesheet"/>
+    <link href="assets/css2_bd407d5ceb4b.css" rel="stylesheet"/>
+    <link href="assets/css2_bd311904ea29.css" rel="stylesheet"/>
+    <link href="assets/css2_0b2072b66163.css" rel="stylesheet"/>
+    <link href="assets/css2_a7b22b336fe1.css" rel="stylesheet"/>
+    <link href="assets/css2_e5ca562f8909.css" rel="stylesheet"/>
+    <link href="assets/css2_fa22aa91016e.css" rel="stylesheet"/>
+    <link href="assets/css2_176e25227b5e.css" rel="stylesheet"/>
+    <link href="assets/css2_6c160a0c4e6f.css" rel="stylesheet"/>
+    <link href="assets/css2_2b2d87bc82d8.css" rel="stylesheet"/>
+    <link href="assets/css2_4fef849c83da.css" rel="stylesheet"/>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'DM Sans', sans-serif; }
+        /* Smooth Scrolling */
+        html { scroll-behavior: smooth; }
+        /* Hide scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* Marquee Animation */
+        @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+        animation: marquee 30s linear infinite;
+        }
+        /* Utility for masking text */
+        .line-mask {
+        overflow: hidden;
+        display: inline-flex;
+        }
+        /* Grid Lines Background */
+        .grid-lines {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        max-width: 80rem; /* 7xl */
+        margin: 0 auto;
+        pointer-events: none;
+        z-index: 0;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 1.5rem; /* px-6 */
+        }
+        .grid-line {
+        width: 1px;
+        height: 100%;
+        background-color: rgba(228, 228, 231, 0.4); /* zinc-200/40 */
+        }
+        .font-quicksand { font-family: 'Quicksand', sans-serif !important; }
+        .font-pt-serif { font-family: 'PT Serif', serif !important; }
+        .font-google-sans-flex { font-family: 'Google Sans Flex', sans-serif !important; }
+        .font-cormorant { font-family: 'Cormorant Garamond', serif !important; }
+        .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }
+        .font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }
+        .font-dm-sans { font-family: 'DM Sans', sans-serif !important; }
+        .font-playfair { font-family: 'Playfair Display', serif !important; }
+        .font-oswald { font-family: 'Oswald', sans-serif !important; }
+        .font-newsreader { font-family: 'Newsreader', serif !important; }
+        .font-instrument-serif { font-family: 'Instrument Serif', serif !important; }
+        .font-merriweather { font-family: 'Merriweather', serif !important; }
+    </style>
+</head>
+<body class="bg-zinc-50 text-zinc-900 antialiased selection:bg-zinc-900 selection:text-white overflow-x-hidden">
+
+    <!-- Fixed Vertical Grid Lines -->
+    <div class="grid-lines">
+        <div class="grid-line"></div>
+        <div class="grid-line hidden md:block"></div>
+        <div class="grid-line hidden md:block"></div>
+        <div class="grid-line"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 backdrop-blur-md bg-zinc-50/80 border-b border-zinc-200/50">
+        <div class="flex items-center justify-between w-full max-w-7xl mx-auto relative z-10">
+            <div class="flex items-center gap-2">
+                <iconify-icon class="text-zinc-900" icon="solar:infinity-linear" width="28"></iconify-icon>
+                <span class="text-xl tracking-tighter font-semibold font-display uppercase font-dm-sans">Lumina</span>
+                <span class="ml-4 text-xs font-semibold tracking-wide uppercase text-zinc-500 bg-zinc-200/50 px-2 py-1 rounded hidden md:block">Design System</span>
+            </div>
+            <!-- Main Scroll Links -->
+            <div class="hidden md:flex items-center gap-6 xl:gap-8 ml-auto">
+                <a class="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors uppercase tracking-tight" href="#hero">Hero</a>
+                <a class="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors uppercase tracking-tight" href="#typography">Typography</a>
+                <a class="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors uppercase tracking-tight" href="#colors">Colors</a>
+                <a class="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors uppercase tracking-tight" href="#components">Components</a>
+                <a class="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors uppercase tracking-tight" href="#layout">Layout</a>
+                <a class="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors uppercase tracking-tight" href="#motion">Motion</a>
+                <a class="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors uppercase tracking-tight" href="#icons">Icons</a>
+            </div>
+            <!-- Mobile Menu Icon -->
+            <button class="md:hidden ml-auto">
+                <iconify-icon icon="solar:hamburger-menu-linear" width="24"></iconify-icon>
+            </button>
+        </div>
+    </nav>
+
+    <div class="relative z-10 w-full">
+        <!-- 0) Hero (Exact Clone, Text Adapted) -->
+        <main class="max-w-7xl mr-auto ml-auto pt-32 pr-6 pb-12 pl-6" id="hero">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+                <div class="reveal-stagger">
+                    <div class="flex items-center gap-2 border border-zinc-200 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur mb-4 md:mb-0 shadow-sm">
+                        <div class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></div>
+                        <span class="text-xs font-semibold tracking-wide uppercase text-zinc-500">Living Design System</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-16">
+                <h1 class="text-6xl md:text-[7.5rem] leading-[0.9] tracking-tighter font-display font-light text-zinc-900">
+                    <div class="line-mask"><span class="reveal-text font-dm-sans">Lumina</span></div><br/>
+                    <div class="line-mask"><span class="reveal-text font-dm-sans">Design</span></div>
+                    <div class="line-mask"><span class="reveal-text italic font-serif text-zinc-400 font-bricolage">System</span></div>
+                    <div class="line-mask"><span class="reveal-text font-dm-sans">& Library.</span></div>
+                </h1>
+                <div class="mt-8 flex flex-col md:flex-row justify-between items-start gap-8">
+                    <p class="text-lg md:text-xl text-zinc-500 max-w-lg leading-relaxed font-light reveal-para opacity-0 font-bricolage">
+                        A comprehensive guide to the aesthetic purity and robust engineering components that define the Lumina experience.
+                    </p>
+                    <div class="flex gap-4 reveal-para opacity-0">
+                        <button class="w-14 h-14 rounded-full border border-zinc-200 flex items-center justify-center hover:bg-zinc-100 transition-colors group" onclick="document.getElementById('typography').scrollIntoView({behavior:'smooth'})">
+                            <iconify-icon class="text-zinc-400 group-hover:text-zinc-900 transition-colors" icon="solar:arrow-right-down-bold-duotone" width="24"></iconify-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative w-full aspect-[16/10] md:aspect-[2.4/1] rounded-3xl overflow-hidden mb-24 group shadow-xl shadow-zinc-200/50">
+                <div class="absolute inset-0 z-10 bg-zinc-900/20 transition-colors duration-700 group-hover:bg-zinc-900/0"></div>
+                <img alt="Design System Architecture" class="parallax-img absolute inset-0 w-full h-[140%] -top-[20%] object-cover grayscale opacity-95 transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105" src="assets/4c325f70-85f3-4523-86a3-48f4cc_e2f47fbb183f.jpg" style="will-change: transform;"/>
+                <div class="absolute bottom-8 left-8 z-20">
+                    <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white">
+                        <svg class="lucide lucide-map-pin" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <span class="text-xs font-medium tracking-tight uppercase">Core Guidelines — v2.0</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 1) Typography -->
+        <section class="max-w-7xl mr-auto ml-auto pr-6 pb-24 pl-6" id="typography">
+            <div class="mb-12 border-t border-zinc-200 pt-16">
+                <div class="inline-flex items-center gap-2 mb-6">
+                    <iconify-icon class="text-indigo-600" icon="solar:text-bold" width="24"></iconify-icon>
+                    <span class="text-sm font-semibold tracking-wide uppercase text-zinc-500">01. Typography</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl tracking-tighter font-display font-light font-dm-sans text-zinc-900">Typescale & Rhythm</h2>
+            </div>
+            <div class="flex flex-col border-t border-zinc-200">
+                <!-- Heading 1 -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between py-8 border-b border-zinc-200 gap-4">
+                    <div class="w-48 shrink-0 text-sm font-semibold uppercase tracking-wide text-zinc-500">Heading 1</div>
+                    <div class="flex-1 overflow-x-auto">
+                        <h1 class="text-6xl md:text-[7.5rem] leading-[0.9] tracking-tighter font-display font-light text-zinc-900 font-dm-sans whitespace-nowrap">Hero Title</h1>
+                    </div>
+                    <div class="text-right text-sm font-mono text-zinc-400 shrink-0">120px / 120px</div>
+                </div>
+                <!-- Heading 2 -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between py-8 border-b border-zinc-200 gap-4">
+                    <div class="w-48 shrink-0 text-sm font-semibold uppercase tracking-wide text-zinc-500">Heading 2</div>
+                    <div class="flex-1 overflow-x-auto">
+                        <h2 class="text-4xl md:text-5xl tracking-tighter leading-tight font-display font-light text-zinc-900 font-dm-sans whitespace-nowrap">Section Title</h2>
+                    </div>
+                    <div class="text-right text-sm font-mono text-zinc-400 shrink-0">48px / 48px</div>
+                </div>
+                <!-- Heading 3 -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between py-8 border-b border-zinc-200 gap-4">
+                    <div class="w-48 shrink-0 text-sm font-semibold uppercase tracking-wide text-zinc-500">Heading 3</div>
+                    <div class="flex-1 overflow-x-auto">
+                        <h3 class="text-3xl md:text-5xl font-display font-light leading-tight tracking-tight text-white bg-zinc-900 p-2 rounded font-dm-sans inline-block whitespace-nowrap">"Testimonial Title"</h3>
+                    </div>
+                    <div class="text-right text-sm font-mono text-zinc-400 shrink-0">48px / 48px</div>
+                </div>
+                <!-- Heading 4 -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between py-8 border-b border-zinc-200 gap-4">
+                    <div class="w-48 shrink-0 text-sm font-semibold uppercase tracking-wide text-zinc-500">Heading 4</div>
+                    <div class="flex-1 overflow-x-auto">
+                        <h4 class="text-2xl tracking-tight font-display font-medium font-dm-sans text-zinc-900 whitespace-nowrap">Project Title</h4>
+                    </div>
+                    <div class="text-right text-sm font-mono text-zinc-400 shrink-0">24px / 32px</div>
+                </div>
+                <!-- Bold L -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between py-8 border-b border-zinc-200 gap-4">
+                    <div class="w-48 shrink-0 text-sm font-semibold uppercase tracking-wide text-zinc-500">Bold L</div>
+                    <div class="flex-1 overflow-x-auto">
+                        <span class="text-lg font-medium text-white bg-zinc-900 px-4 py-2 rounded">Let's Talk Business</span>
+                    </div>
+                    <div class="text-right text-sm font-mono text-zinc-400 shrink-0">18px / 28px</div>
+                </div>
+                <!-- Bold M -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between py-8 border-b border-zinc-200 gap-4">
+                    <div class="w-48 shrink-0 text-sm font-semibold uppercase tracking-wide text-zinc-500">Bold M</div>
+                    <div class="flex-1 overflow-x-auto">
+                        <span class="text-sm font-medium text-zinc-600 uppercase tracking-tight">Navigation Link</span>
+                    </div>
+                    <div class="text-right text-sm font-mono text-zinc-400 shrink-0">14px / 20px</div>
+                </div>
+                <!-- Bold S -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between py-8 border-b border-zinc-200 gap-4">
+                    <div class="w-48 shrink-0 text-sm font-semibold uppercase tracking-wide text-zinc-500">Bold S</div>
+                    <div class="flex-1 overflow-x-auto">
+                        <span class="text-xs font-semibold tracking-wide uppercase text-zinc-500">Tagline Marker</span>
+                    </div>
+                    <div class="text-right text-sm font-mono text-zinc-400 shrink-0">12px / 16px</div>
+                </div>
+                <!-- Paragraph -->
+                <div class="flex flex-col md:flex-row md:items-start justify-between py-8 border-b border-zinc-200 gap-4">
+                    <div class="w-48 shrink-0 text-sm font-semibold uppercase tracking-wide text-zinc-500 pt-1">Paragraph</div>
+                    <div class="flex-1 overflow-hidden">
+                        <p class="text-lg md:text-xl text-zinc-500 leading-relaxed font-light font-bricolage max-w-lg">We blend aesthetic purity with robust engineering to create digital products that define categories.</p>
+                    </div>
+                    <div class="text-right text-sm font-mono text-zinc-400 shrink-0 pt-1">20px / 32px</div>
+                </div>
+                <!-- Regular M -->
+                <div class="flex flex-col md:flex-row md:items-start justify-between py-8 border-b border-zinc-200 gap-4">
+                    <div class="w-48 shrink-0 text-sm font-semibold uppercase tracking-wide text-zinc-500 pt-1">Regular M</div>
+                    <div class="flex-1 overflow-hidden">
+                        <p class="text-zinc-500 leading-relaxed max-w-lg">Crafting pixel-perfect designs that scale. We focus on interaction details, accessibility, and visual harmony to build trust.</p>
+                    </div>
+                    <div class="text-right text-sm font-mono text-zinc-400 shrink-0 pt-1">16px / 24px</div>
+                </div>
+                <!-- Regular S -->
+                <div class="flex flex-col md:flex-row md:items-start justify-between py-8 border-b border-zinc-200 gap-4">
+                    <div class="w-48 shrink-0 text-sm font-semibold uppercase tracking-wide text-zinc-500 pt-1">Regular S</div>
+                    <div class="flex-1 overflow-hidden">
+                        <p class="text-zinc-500 text-sm">Mobile App Redesign</p>
+                    </div>
+                    <div class="text-right text-sm font-mono text-zinc-400 shrink-0 pt-1">14px / 20px</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2) Colors & Surfaces -->
+        <section class="max-w-7xl mr-auto ml-auto pr-6 pb-24 pl-6" id="colors">
+            <div class="mb-12 border-t border-zinc-200 pt-16">
+                <div class="inline-flex items-center gap-2 mb-6">
+                    <iconify-icon class="text-indigo-600" icon="solar:palette-bold" width="24"></iconify-icon>
+                    <span class="text-sm font-semibold tracking-wide uppercase text-zinc-500">02. Colors & Surfaces</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl tracking-tighter font-display font-light font-dm-sans text-zinc-900">Surfaces & Accents</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+                <!-- Zinc 50 -->
+                <div>
+                    <div class="h-32 rounded-2xl bg-zinc-50 border border-zinc-200 mb-4 shadow-sm flex items-end p-4"></div>
+                    <div class="text-sm font-medium font-dm-sans">Page Background</div>
+                    <div class="text-xs text-zinc-500 font-mono">bg-zinc-50</div>
+                </div>
+                <!-- Zinc 100 -->
+                <div>
+                    <div class="h-32 rounded-2xl bg-zinc-100 border border-zinc-200 mb-4 flex items-end p-4"></div>
+                    <div class="text-sm font-medium font-dm-sans">Panel / Muted</div>
+                    <div class="text-xs text-zinc-500 font-mono">bg-zinc-100</div>
+                </div>
+                <!-- Zinc 900 -->
+                <div>
+                    <div class="h-32 rounded-2xl bg-zinc-900 mb-4 flex items-end p-4 border border-zinc-800"></div>
+                    <div class="text-sm font-medium font-dm-sans text-zinc-900">Dark Surface / CTA</div>
+                    <div class="text-xs text-zinc-500 font-mono">bg-zinc-900</div>
+                </div>
+                <!-- White/Glass -->
+                <div>
+                    <div class="h-32 rounded-2xl bg-white/80 backdrop-blur border border-zinc-200 mb-4 flex items-center justify-center overflow-hidden relative">
+                        <!-- Underlay to show blur -->
+                        <div class="absolute inset-x-0 h-1/2 bottom-0 bg-gradient-to-tr from-indigo-100 to-rose-100 -z-10"></div>
+                    </div>
+                    <div class="text-sm font-medium font-dm-sans">Light Glass</div>
+                    <div class="text-xs text-zinc-500 font-mono">bg-white/80 backdrop-blur</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
+                <!-- Green Accent -->
+                <div>
+                    <div class="h-16 rounded-xl bg-green-500 mb-3"></div>
+                    <div class="text-sm font-medium font-dm-sans">Status Active</div>
+                    <div class="text-xs text-zinc-500 font-mono">bg-green-500</div>
+                </div>
+                <!-- Hover Icons -->
+                <div>
+                    <div class="h-16 rounded-xl bg-indigo-50 mb-3 flex items-center justify-center border border-zinc-100"><iconify-icon class="text-indigo-600" icon="solar:screencast-2-bold-duotone" width="24"></iconify-icon></div>
+                    <div class="text-sm font-medium font-dm-sans">Service Hover (Indigo)</div>
+                    <div class="text-xs text-zinc-500 font-mono">bg-indigo-50 text-indigo-600</div>
+                </div>
+                <div>
+                    <div class="h-16 rounded-xl bg-rose-50 mb-3 flex items-center justify-center border border-zinc-100"><iconify-icon class="text-rose-600" icon="solar:widget-add-bold-duotone" width="24"></iconify-icon></div>
+                    <div class="text-sm font-medium font-dm-sans">Service Hover (Rose)</div>
+                    <div class="text-xs text-zinc-500 font-mono">bg-rose-50 text-rose-600</div>
+                </div>
+                <div>
+                    <div class="h-16 rounded-xl bg-amber-50 mb-3 flex items-center justify-center border border-zinc-100"><iconify-icon class="text-amber-600" icon="solar:rocket-2-bold-duotone" width="24"></iconify-icon></div>
+                    <div class="text-sm font-medium font-dm-sans">Service Hover (Amber)</div>
+                    <div class="text-xs text-zinc-500 font-mono">bg-amber-50 text-amber-600</div>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-display font-medium font-dm-sans mb-6">Borders & Overlays</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <div class="h-24 rounded-2xl bg-zinc-50 border border-zinc-200 mb-3 flex items-center justify-center">
+                        <span class="text-xs text-zinc-500">Light Border</span>
+                    </div>
+                    <div class="text-sm font-medium font-dm-sans text-zinc-900">Default Border</div>
+                    <div class="text-xs text-zinc-500 font-mono">border-zinc-200</div>
+                </div>
+                <div class="bg-zinc-900 p-2 rounded-2xl">
+                    <div class="h-20 rounded-xl bg-zinc-900 border-2 border-zinc-700 mb-3 flex items-center justify-center">
+                        <span class="text-xs text-zinc-400">Dark Border</span>
+                    </div>
+                    <div class="text-sm font-medium font-dm-sans text-white px-2">Testimonial Image Border</div>
+                    <div class="text-xs text-zinc-500 font-mono px-2">border-zinc-700</div>
+                </div>
+                <div>
+                    <div class="h-24 rounded-2xl overflow-hidden mb-3 relative flex items-center justify-center bg-zinc-200 bg-[url('assets/4c325f70-85f3-4523-86a3-48f4cc_e2f47fbb183f.jpg')] bg-cover bg-center">
+                        <div class="absolute inset-0 bg-zinc-900/20"></div>
+                        <span class="relative z-10 text-white text-xs font-semibold">Image Wash</span>
+                    </div>
+                    <div class="text-sm font-medium font-dm-sans text-zinc-900">Hero Overlay</div>
+                    <div class="text-xs text-zinc-500 font-mono">bg-zinc-900/20</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3) UI Components -->
+        <section class="max-w-7xl mr-auto ml-auto pr-6 pb-24 pl-6" id="components">
+            <div class="mb-12 border-t border-zinc-200 pt-16">
+                <div class="inline-flex items-center gap-2 mb-6">
+                    <iconify-icon class="text-indigo-600" icon="solar:widget-bold" width="24"></iconify-icon>
+                    <span class="text-sm font-semibold tracking-wide uppercase text-zinc-500">03. UI Components</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl tracking-tighter font-display font-light font-dm-sans text-zinc-900">Controls & Elements</h2>
+            </div>
+
+            <div class="space-y-16">
+                <!-- Buttons -->
+                <div>
+                    <h3 class="text-2xl font-display font-medium font-dm-sans mb-8">Buttons</h3>
+                    <div class="flex flex-wrap items-end gap-12 border border-zinc-200 rounded-3xl p-8 bg-zinc-50">
+                        <div class="flex flex-col gap-4">
+                            <span class="text-xs text-zinc-500 font-mono">Nav / Primary (Hover State Included)</span>
+                            <button class="flex bg-zinc-900 text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-zinc-800 transition-all items-center gap-2 group w-max">
+                                Start Project
+                                <iconify-icon class="group-hover:translate-x-0.5 transition-transform" icon="solar:arrow-right-linear" width="18"></iconify-icon>
+                            </button>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <span class="text-xs text-zinc-500 font-mono">Large CTA</span>
+                            <a class="group relative inline-flex items-center justify-center w-max px-8 py-4 text-lg font-medium text-white bg-zinc-900 rounded-full overflow-hidden transition-all hover:bg-zinc-800 hover:scale-105" href="#">
+                                <span class="relative flex items-center gap-3">
+                                    Let's Talk Business
+                                    <iconify-icon icon="solar:letter-linear" width="20"></iconify-icon>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <span class="text-xs text-zinc-500 font-mono">Outline Large</span>
+                            <button class="w-14 h-14 rounded-full border border-zinc-200 flex items-center justify-center hover:bg-zinc-100 transition-colors group">
+                                <iconify-icon class="text-zinc-400 group-hover:text-zinc-900 transition-colors" icon="solar:arrow-right-down-bold-duotone" width="24"></iconify-icon>
+                            </button>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <span class="text-xs text-zinc-500 font-mono">Outline Small</span>
+                            <button class="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center group-hover:bg-zinc-900 group-hover:text-white transition-all">
+                                <iconify-icon icon="solar:arrow-right-up-linear" width="20"></iconify-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tags and Pills -->
+                <div>
+                    <h3 class="text-2xl font-display font-medium font-dm-sans mb-8">Tags & Pills</h3>
+                    <div class="flex flex-wrap gap-12 border border-zinc-200 rounded-3xl p-8 bg-zinc-50 relative overflow-hidden">
+                        <!-- Dark side context -->
+                        <div class="absolute inset-y-0 right-0 w-1/3 bg-zinc-900 rounded-r-3xl"></div>
+                        <div class="relative z-10 flex w-full justify-between items-end gap-8">
+                            <div class="flex gap-12 flex-wrap">
+                                <div class="flex flex-col gap-4">
+                                    <span class="text-xs text-zinc-500 font-mono">Status Indicator</span>
+                                    <div class="flex items-center gap-2 border border-zinc-200 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur shadow-sm w-max">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                        <span class="text-xs font-semibold tracking-wide uppercase text-zinc-500">Available for 2025</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-4">
+                                    <span class="text-xs text-zinc-500 font-mono">Meta Tag</span>
+                                    <div class="flex gap-2">
+                                        <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide border border-zinc-100 shadow-sm w-max">Fintech</span>
+                                        <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide border border-zinc-100 shadow-sm w-max">2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-4 text-right pr-4">
+                                <span class="text-xs text-zinc-400 font-mono">Dark Tag (Hero Floater)</span>
+                                <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white w-max">
+                                    <svg class="lucide lucide-map-pin" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                    <span class="text-xs font-medium tracking-tight uppercase">San Francisco, CA</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cards Overview -->
+                <div>
+                    <h3 class="text-2xl font-display font-medium font-dm-sans mb-8">Card Components</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <!-- Project Card Structure -->
+                        <div class="group cursor-pointer">
+                            <div class="relative overflow-hidden rounded-2xl mb-6 aspect-[4/3] bg-zinc-100 border border-zinc-200">
+                                <div class="absolute inset-0 bg-zinc-200 transition-transform duration-700 group-hover:scale-110"></div>
+                                <div class="absolute bottom-6 left-6 flex gap-2">
+                                    <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide">Category</span>
+                                    <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide">Year</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 class="text-2xl tracking-tight mb-1 font-display font-medium font-dm-sans">Project Title</h4>
+                                    <p class="text-zinc-500 text-sm">Subtitle Description</p>
+                                </div>
+                                <button class="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center group-hover:bg-zinc-900 group-hover:text-white transition-all">
+                                    <iconify-icon icon="solar:arrow-right-up-linear" width="20"></iconify-icon>
+                                </button>
+                            </div>
+                            <div class="mt-4 text-xs text-zinc-500 font-mono border-t border-zinc-200 pt-4">Hover to see connected states</div>
+                        </div>
+
+                        <!-- Service Card Row -->
+                        <div class="group border-t border-zinc-200 pt-8 flex flex-col justify-start">
+                            <div class="flex justify-between items-start mb-6 w-full">
+                                <span class="text-sm font-mono text-zinc-400">01</span>
+                                <div class="p-3 bg-zinc-100 rounded-2xl group-hover:bg-indigo-50 transition-colors">
+                                    <iconify-icon class="text-zinc-600 group-hover:text-indigo-600 transition-colors" icon="solar:screencast-2-bold-duotone" width="32"></iconify-icon>
+                                </div>
+                            </div>
+                            <h3 class="text-2xl font-display font-medium mb-3 font-dm-sans">Service Title</h3>
+                            <p class="text-zinc-500 leading-relaxed max-w-lg mb-8">
+                                Service description defining value prop. Crafting pixel-perfect designs that scale.
+                            </p>
+                            <div class="mt-auto text-xs text-zinc-500 font-mono border-t border-zinc-200 pt-4 w-full">Service List Row</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4) Layout & Spacing -->
+        <section class="max-w-7xl mr-auto ml-auto pr-6 pb-24 pl-6" id="layout">
+            <div class="mb-12 border-t border-zinc-200 pt-16">
+                <div class="inline-flex items-center gap-2 mb-6">
+                    <iconify-icon class="text-indigo-600" icon="solar:slider-vertical-bold" width="24"></iconify-icon>
+                    <span class="text-sm font-semibold tracking-wide uppercase text-zinc-500">04. Layout & Spacing</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl tracking-tighter font-display font-light font-dm-sans text-zinc-900">Composition Patterns</h2>
+            </div>
+          
+            <div class="space-y-16">
+                <!-- Split Service Layout -->
+                <div>
+                    <h3 class="text-2xl font-display font-medium font-dm-sans mb-6">Split Sticky Content (12-Column Grid)</h3>
+                    <div class="p-8 bg-zinc-50 rounded-3xl border border-zinc-200">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+                            <!-- Sticky Sidebar -->
+                            <div class="md:col-span-4 bg-white rounded-xl p-6 h-48 border border-zinc-300 border-dashed flex flex-col justify-center shadow-sm">
+                                <span class="text-zinc-900 font-medium font-dm-sans mb-2">Section Header</span>
+                                <span class="text-zinc-500 font-mono text-xs mb-4">md:col-span-4 • sticky top-32</span>
+                                <div class="w-full bg-zinc-100 h-2 rounded mt-2"></div>
+                                <div class="w-2/3 bg-zinc-100 h-2 rounded mt-2"></div>
+                            </div>
+                            <!-- Scrolling Content -->
+                            <div class="md:col-span-8 flex flex-col gap-6">
+                                <div class="bg-white shadow-sm rounded-xl p-6 h-20 border border-zinc-300 border-dashed flex items-center">
+                                    <span class="text-zinc-500 font-mono text-xs">md:col-span-8 • Lists / Rows</span>
+                                </div>
+                                <div class="bg-white shadow-sm rounded-xl p-6 h-20 border border-zinc-300 border-dashed flex items-center">
+                                    <span class="text-zinc-500 font-mono text-xs">Rows repeat content...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2 Column Project Layout -->
+                <div>
+                    <h3 class="text-2xl font-display font-medium font-dm-sans mb-6">Staggered Photo Grid</h3>
+                    <div class="p-8 bg-zinc-50 rounded-3xl border border-zinc-200">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16 max-h-[600px] overflow-hidden relative">
+                            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-50 z-10"></div>
+                            <div class="bg-white shadow-sm rounded-xl aspect-[4/3] border border-zinc-300 border-dashed flex items-center justify-center p-6 text-center">
+                                <div>
+                                    <span class="text-zinc-900 font-medium font-dm-sans block mb-2">Primary Item</span>
+                                    <span class="text-zinc-500 font-mono text-xs">Even child • Default Alignment</span>
+                                </div>
+                            </div>
+                            <div class="bg-white shadow-sm rounded-xl aspect-[4/3] border border-zinc-300 border-dashed md:mt-24 flex items-center justify-center p-6 text-center">
+                                <div>
+                                    <span class="text-zinc-900 font-medium font-dm-sans block mb-2">Offset Item</span>
+                                    <span class="text-zinc-500 font-mono text-xs">Odd child • md:pt-24 top spacing</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5) Motion & Interaction -->
+        <section class="max-w-7xl mr-auto ml-auto pr-6 pb-24 pl-6" id="motion">
+            <div class="mb-12 border-t border-zinc-200 pt-16">
+                <div class="inline-flex items-center gap-2 mb-6">
+                    <iconify-icon class="text-indigo-600" icon="solar:playback-speed-bold" width="24"></iconify-icon>
+                    <span class="text-sm font-semibold tracking-wide uppercase text-zinc-500">05. Motion & Interaction</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl tracking-tighter font-display font-light font-dm-sans text-zinc-900">Animation Patterns</h2>
+            </div>
+          
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Entrance Transition -->
+                <div class="border border-zinc-200 rounded-3xl p-8 bg-zinc-50 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-display font-medium font-dm-sans mb-4">Masked Reveal</h3>
+                        <p class="text-sm text-zinc-500 mb-8">Text translates Y and un-skews within an overflow-hidden mask for entrance effects.</p>
+                    </div>
+                    <div class="h-32 flex items-center justify-center bg-white border border-zinc-200 rounded-xl mt-auto">
+                        <div class="line-mask overflow-hidden text-2xl font-display font-light font-dm-sans">
+                            <span class="block hover:translate-y-0 translate-y-full hover:skew-y-0 skew-y-6 transition-all duration-700 ease-out cursor-pointer" title="Hover me">Hover to Reveal</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Infinite Marquee -->
+                <div class="border border-zinc-200 rounded-3xl p-8 bg-zinc-50 flex flex-col justify-between overflow-hidden">
+                    <div>
+                        <h3 class="text-xl font-display font-medium font-dm-sans mb-4">Infinite Marquee</h3>
+                        <p class="text-sm text-zinc-500 mb-8">Continuous horizontal translation using linear easing loops.</p>
+                    </div>
+                    <div class="h-32 flex items-center bg-white border border-zinc-200 rounded-xl overflow-hidden px-4">
+                        <div class="w-full flex animate-marquee gap-8 whitespace-nowrap">
+                            <iconify-icon class="text-zinc-300" height="32" icon="simple-icons:nasa" width="32"></iconify-icon>
+                            <iconify-icon class="text-zinc-300" height="32" icon="simple-icons:spacex" width="32"></iconify-icon>
+                            <iconify-icon class="text-zinc-300" height="32" icon="simple-icons:uber" width="32"></iconify-icon>
+                            <iconify-icon class="text-zinc-300" height="32" icon="simple-icons:nasa" width="32"></iconify-icon>
+                            <iconify-icon class="text-zinc-300" height="32" icon="simple-icons:spacex" width="32"></iconify-icon>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Image Scale Hover -->
+                <div class="border border-zinc-200 rounded-3xl p-8 bg-zinc-50 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-display font-medium font-dm-sans mb-4">Picture Box Hover</h3>
+                        <p class="text-sm text-zinc-500 mb-8">Group hover transforms image scale inside rounded mask with background wash un-fade.</p>
+                    </div>
+                    <div class="h-32 flex items-center justify-center bg-zinc-200 rounded-xl cursor-pointer group relative overflow-hidden">
+                        <div class="absolute inset-0 bg-zinc-300 transition-transform duration-700 group-hover:scale-110"></div>
+                        <div class="absolute inset-0 bg-zinc-900/10 group-hover:bg-transparent transition-colors duration-500"></div>
+                        <span class="relative z-10 text-xs text-zinc-600 font-mono">Hover me</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6) Icons -->
+        <section class="max-w-7xl mr-auto ml-auto pr-6 pb-32 pl-6" id="icons">
+            <div class="mb-12 border-t border-zinc-200 pt-16">
+                <div class="inline-flex items-center gap-2 mb-6">
+                    <iconify-icon class="text-indigo-600" icon="solar:pen-bold" width="24"></iconify-icon>
+                    <span class="text-sm font-semibold tracking-wide uppercase text-zinc-500">06. Iconography</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl tracking-tighter font-display font-light font-dm-sans text-zinc-900">Icon System</h2>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6">
+                <div class="flex flex-col items-center justify-center p-6 border border-zinc-200 rounded-2xl bg-zinc-50">
+                    <iconify-icon class="text-zinc-900 mb-4" icon="solar:infinity-linear" width="32"></iconify-icon>
+                    <span class="text-xs font-mono text-zinc-500 text-center">infinity<br>linear</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-6 border border-zinc-200 rounded-2xl bg-zinc-50">
+                    <iconify-icon class="text-zinc-900 mb-4" icon="solar:arrow-right-linear" width="32"></iconify-icon>
+                    <span class="text-xs font-mono text-zinc-500 text-center">arrow-right<br>linear</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-6 border border-zinc-200 rounded-2xl bg-zinc-50">
+                    <iconify-icon class="text-zinc-900 mb-4" icon="solar:arrow-right-down-bold-duotone" width="32"></iconify-icon>
+                    <span class="text-xs font-mono text-zinc-500 text-center">arrow-down<br>duotone</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-6 border border-zinc-200 rounded-2xl bg-zinc-50">
+                    <iconify-icon class="text-zinc-900 mb-4" icon="solar:screencast-2-bold-duotone" width="32"></iconify-icon>
+                    <span class="text-xs font-mono text-zinc-500 text-center">screencast<br>duotone</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-6 border border-zinc-200 rounded-2xl bg-zinc-50">
+                    <iconify-icon class="text-zinc-900 mb-4" icon="solar:stars-minimalistic-bold-duotone" width="32"></iconify-icon>
+                    <span class="text-xs font-mono text-zinc-500 text-center">stars<br>duotone</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-6 border border-zinc-200 rounded-2xl bg-zinc-50">
+                    <iconify-icon class="text-zinc-900 mb-4" icon="solar:quote-up-square-bold-duotone" width="32"></iconify-icon>
+                    <span class="text-xs font-mono text-zinc-500 text-center">quote<br>duotone</span>
+                </div>
+            </div>
+            <div class="mt-8 bg-zinc-100 p-6 rounded-2xl border border-zinc-200 text-sm text-zinc-500 font-mono">
+                System utilizes Iconify with <strong class="text-zinc-900 font-medium">Solar Icon Set</strong>. Variants used: Linear, Bold, Bold Duotone. Size variants standard at class equivalents of 16px, 18px, 20px, 24px, 32px.
+            </div>
+        </section>
+        
+        <footer class="border-t border-zinc-200 bg-zinc-50 w-full relative">
+            <div class="max-w-7xl mx-auto px-6 py-12">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+            <iconify-icon class="text-zinc-400" icon="solar:infinity-linear" width="24"></iconify-icon>
+            <span class="text-lg tracking-tighter font-semibold font-display uppercase text-zinc-400">Lumina Design System</span>
+            </div>
+            <div class="text-sm text-zinc-400">
+                                    © 2025 Lumina Inc. Pattern Library.
+                                </div>
+            </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts Integration from Original HTML -->
+    <script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+            if(typeof gsap !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+
+                // 1. Masked Word Reveal Animation (Hero)
+                const textElements = document.querySelectorAll(".reveal-text");
+                gsap.fromTo(textElements, 
+                    { y: "100%", skewY: 7 },
+                    { 
+                        y: "0%", 
+                        skewY: 0,
+                        duration: 1.5, 
+                        stagger: 0.15, 
+                        ease: "power4.out",
+                        delay: 0.2
+                    }
+                );
+
+                // 2. Fade in paragraph and button
+                gsap.to(".reveal-para", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    stagger: 0.2,
+                    delay: 1,
+                    ease: "power2.out"
+                });
+
+                // 3. Parallax Effect on Hero Image
+                const parallaxImages = document.querySelectorAll(".parallax-img");
+                if (parallaxImages.length > 0) {
+                    gsap.to(".parallax-img", {
+                        yPercent: 20, // Move image down slightly
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: ".parallax-img",
+                            start: "top bottom", 
+                            end: "bottom top",
+                            scrub: true
+                        }
+                    });
+                }
+            }
+
+            // Fallback classes to un-hide if JS doesn't animate them properly
+            setTimeout(() => {
+                document.querySelectorAll('.reveal-para').forEach(el => {
+                    if(el.style.opacity === "0" || el.style.opacity === "") {
+                        el.style.opacity = "1";
+                    }
+                });
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

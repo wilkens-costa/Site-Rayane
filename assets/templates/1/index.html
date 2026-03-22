@@ -1,0 +1,470 @@
+<html class="scroll-smooth" lang="en"><head>
+<script id="aura-supabase-token-firewall">(function () {
+  if (window.__AURA_SUPABASE_FIREWALL__) return;
+  window.__AURA_SUPABASE_FIREWALL__ = true;
+
+  var SUPABASE_HOST = "hoirqrkdgbmvpwutwuwj.supabase.co";
+  var BLOCKED_KEY_PATTERNS = [
+    /^sb-[a-z0-9-]+-auth-token$/i,
+    /^supabase\.auth\.token$/i
+  ];
+
+  function isBlockedStorageKey(key) {
+    if (typeof key !== "string") return false;
+    for (var i = 0; i < BLOCKED_KEY_PATTERNS.length; i++) {
+      if (BLOCKED_KEY_PATTERNS[i].test(key)) return true;
+    }
+    return false;
+  }
+
+  function toAbsoluteUrl(input) {
+    try {
+      return new URL(input, window.location.href);
+    } catch {
+      return null;
+    }
+  }
+
+  function isSupabaseDestination(input) {
+    var parsed = toAbsoluteUrl(input);
+    if (!parsed) return false;
+    if (SUPABASE_HOST && parsed.host === SUPABASE_HOST) return true;
+    return parsed.host.endsWith(".supabase.co");
+  }
+
+  function pathLooksSensitive(input) {
+    var parsed = toAbsoluteUrl(input);
+    if (!parsed) return false;
+    return /^\/(auth|rest|functions)\/v1\//.test(parsed.pathname || "");
+  }
+
+  function headersContainAuth(headersLike) {
+    if (!headersLike) return false;
+
+    try {
+      if (typeof Headers !== "undefined" && headersLike instanceof Headers) {
+        return !!(headersLike.get("authorization") || headersLike.get("apikey"));
+      }
+    } catch {}
+
+    if (Array.isArray(headersLike)) {
+      for (var i = 0; i < headersLike.length; i++) {
+        var pair = headersLike[i] || [];
+        var name = String(pair[0] || "").toLowerCase();
+        if (name === "authorization" || name === "apikey") return true;
+      }
+      return false;
+    }
+
+    if (typeof headersLike === "object") {
+      var keys = Object.keys(headersLike);
+      for (var j = 0; j < keys.length; j++) {
+        var k = keys[j].toLowerCase();
+        if (k === "authorization" || k === "apikey") return true;
+      }
+    }
+    return false;
+  }
+
+  function requestLooksSensitive(input, init, extraHeaders) {
+    var url = "";
+    try {
+      if (typeof input === "string") {
+        url = input;
+      } else if (input && typeof input.url === "string") {
+        url = input.url;
+      }
+    } catch {}
+
+    var headers =
+      (init && init.headers) ||
+      (input && input.headers) ||
+      extraHeaders ||
+      null;
+    var hasAuthHeaders = headersContainAuth(headers);
+    if (hasAuthHeaders) return true;
+
+    if (!url) return false;
+    if (isSupabaseDestination(url) && pathLooksSensitive(url)) return true;
+    return false;
+  }
+
+  function patchStorage(storage, storageName) {
+    if (!storage) return;
+    var proto = Object.getPrototypeOf(storage);
+    if (!proto || proto.__auraSupabaseFirewallPatched) return;
+
+    var rawGetItem = proto.getItem;
+    var rawSetItem = proto.setItem;
+    var rawRemoveItem = proto.removeItem;
+    var rawClear = proto.clear;
+    var rawKey = proto.key;
+    var rawLengthDescriptor = Object.getOwnPropertyDescriptor(proto, "length");
+    var rawLengthGet = rawLengthDescriptor && rawLengthDescriptor.get;
+
+    function getRawLength(instance) {
+      try {
+        if (rawLengthGet) return Number(rawLengthGet.call(instance) || 0);
+      } catch {}
+      try {
+        return Number(instance.length || 0);
+      } catch {}
+      return 0;
+    }
+
+    function getVisibleKeys(instance) {
+      var visible = [];
+      var total = getRawLength(instance);
+      for (var i = 0; i < total; i++) {
+        var currentKey = rawKey.call(instance, i);
+        if (currentKey && !isBlockedStorageKey(currentKey)) {
+          visible.push(currentKey);
+        }
+      }
+      return visible;
+    }
+
+    function maskBlockedKeyProperty(instance, keyName) {
+      if (!keyName || !isBlockedStorageKey(keyName)) return;
+      try {
+        Object.defineProperty(instance, keyName, {
+          configurable: true,
+          enumerable: false,
+          get: function () {
+            return null;
+          },
+          set: function () {
+            return true;
+          }
+        });
+      } catch {}
+    }
+
+    function syncBlockedKeyProperties(instance) {
+      var total = getRawLength(instance);
+      for (var i = 0; i < total; i++) {
+        var k = rawKey.call(instance, i);
+        if (k) maskBlockedKeyProperty(instance, k);
+      }
+    }
+
+    proto.getItem = function (key) {
+      syncBlockedKeyProperties(this);
+      if (isBlockedStorageKey(String(key))) return null;
+      return rawGetItem.call(this, key);
+    };
+
+    proto.setItem = function (key, value) {
+      if (isBlockedStorageKey(String(key))) return;
+      return rawSetItem.call(this, key, value);
+    };
+
+    proto.removeItem = function (key) {
+      if (isBlockedStorageKey(String(key))) return;
+      return rawRemoveItem.call(this, key);
+    };
+
+    proto.clear = function () {
+      if (typeof rawClear !== "function") return;
+
+      // Preserve blocked keys across clear() to prevent auth token/session wipe.
+      var preservedBlockedEntries = [];
+      var total = getRawLength(this);
+      for (var i = 0; i < total; i++) {
+        var blockedKey = rawKey.call(this, i);
+        if (blockedKey && isBlockedStorageKey(blockedKey)) {
+          preservedBlockedEntries.push([
+            blockedKey,
+            rawGetItem.call(this, blockedKey),
+          ]);
+        }
+      }
+
+      rawClear.call(this);
+
+      for (var j = 0; j < preservedBlockedEntries.length; j++) {
+        var entry = preservedBlockedEntries[j];
+        var key = entry[0];
+        var value = entry[1];
+        if (typeof key === "string" && typeof value === "string") {
+          rawSetItem.call(this, key, value);
+        }
+      }
+
+      syncBlockedKeyProperties(this);
+    };
+
+    proto.key = function (index) {
+      syncBlockedKeyProperties(this);
+      var visible = getVisibleKeys(this);
+      return visible[index] || null;
+    };
+
+    try {
+      Object.defineProperty(proto, "length", {
+        configurable: true,
+        enumerable: false,
+        get: function () {
+          syncBlockedKeyProperties(this);
+          return getVisibleKeys(this).length;
+        }
+      });
+    } catch {}
+
+    var proxyStorage = null;
+    try {
+      proxyStorage = new Proxy(storage, {
+        get: function (target, prop) {
+          if (typeof prop === "string" && isBlockedStorageKey(prop)) return null;
+          if (prop === "length") return getVisibleKeys(target).length;
+          if (prop === "key") {
+            return function (index) {
+              var visible = getVisibleKeys(target);
+              return visible[index] || null;
+            };
+          }
+          if (prop === "clear") {
+            return function () {
+              if (typeof rawClear !== "function") return;
+
+              var preservedBlockedEntries = [];
+              var total = getRawLength(target);
+              for (var i = 0; i < total; i++) {
+                var blockedKey = rawKey.call(target, i);
+                if (blockedKey && isBlockedStorageKey(blockedKey)) {
+                  preservedBlockedEntries.push([
+                    blockedKey,
+                    rawGetItem.call(target, blockedKey),
+                  ]);
+                }
+              }
+
+              rawClear.call(target);
+
+              for (var j = 0; j < preservedBlockedEntries.length; j++) {
+                var entry = preservedBlockedEntries[j];
+                var key = entry[0];
+                var value = entry[1];
+                if (typeof key === "string" && typeof value === "string") {
+                  rawSetItem.call(target, key, value);
+                }
+              }
+
+              syncBlockedKeyProperties(target);
+            };
+          }
+
+          var value = target[prop];
+          if (typeof value === "function") return value.bind(target);
+          return value;
+        },
+        set: function (target, prop, value) {
+          if (typeof prop === "string" && isBlockedStorageKey(prop)) return true;
+          target[prop] = value;
+          return true;
+        },
+        has: function (target, prop) {
+          if (typeof prop === "string" && isBlockedStorageKey(prop)) return false;
+          return prop in target;
+        },
+        deleteProperty: function (target, prop) {
+          if (typeof prop === "string" && isBlockedStorageKey(prop)) return true;
+          try {
+            delete target[prop];
+          } catch {}
+          return true;
+        },
+        ownKeys: function (target) {
+          return getVisibleKeys(target);
+        },
+        getOwnPropertyDescriptor: function (target, prop) {
+          if (typeof prop === "string" && isBlockedStorageKey(prop)) {
+            return undefined;
+          }
+          if (prop === "length") {
+            return {
+              configurable: true,
+              enumerable: false,
+              value: getVisibleKeys(target).length,
+              writable: false
+            };
+          }
+          return Object.getOwnPropertyDescriptor(target, prop);
+        }
+      });
+    } catch {}
+
+    try {
+      if (proxyStorage) {
+        Object.defineProperty(window, storageName, {
+          configurable: true,
+          enumerable: true,
+          get: function () {
+            return proxyStorage;
+          }
+        });
+      }
+    } catch {}
+
+    syncBlockedKeyProperties(storage);
+    proto.__auraSupabaseFirewallPatched = true;
+  }
+
+  function patchCookieAccess() {
+    try {
+      var cookieDescriptor = Object.getOwnPropertyDescriptor(Document.prototype, "cookie");
+      if (!cookieDescriptor || !cookieDescriptor.configurable) return;
+
+      Object.defineProperty(document, "cookie", {
+        configurable: true,
+        enumerable: false,
+        get: function () {
+          return "";
+        },
+        set: function () {
+          return true;
+        }
+      });
+    } catch {}
+  }
+
+  function patchFetch() {
+    if (typeof window.fetch !== "function") return;
+    var rawFetch = window.fetch.bind(window);
+    window.fetch = function (input, init) {
+      if (requestLooksSensitive(input, init, null)) {
+        return Promise.reject(new Error("Blocked by Aura security policy"));
+      }
+      return rawFetch(input, init);
+    };
+  }
+
+  function patchXHR() {
+    if (typeof XMLHttpRequest === "undefined") return;
+    var rawOpen = XMLHttpRequest.prototype.open;
+    var rawSetHeader = XMLHttpRequest.prototype.setRequestHeader;
+    var rawSend = XMLHttpRequest.prototype.send;
+
+    XMLHttpRequest.prototype.open = function (method, url) {
+      this.__auraRequestUrl = String(url || "");
+      this.__auraHeaders = {};
+      return rawOpen.apply(this, arguments);
+    };
+
+    XMLHttpRequest.prototype.setRequestHeader = function (name, value) {
+      if (!this.__auraHeaders) this.__auraHeaders = {};
+      this.__auraHeaders[String(name || "").toLowerCase()] = String(value || "");
+      return rawSetHeader.apply(this, arguments);
+    };
+
+    XMLHttpRequest.prototype.send = function () {
+      if (requestLooksSensitive(this.__auraRequestUrl || "", null, this.__auraHeaders || null)) {
+        throw new Error("Blocked by Aura security policy");
+      }
+      return rawSend.apply(this, arguments);
+    };
+  }
+
+  function patchBeacon() {
+    if (typeof navigator.sendBeacon !== "function") return;
+    var rawBeacon = navigator.sendBeacon.bind(navigator);
+    navigator.sendBeacon = function (url, data) {
+      if (requestLooksSensitive(url, null, null)) return false;
+      return rawBeacon(url, data);
+    };
+  }
+
+  function patchWebSocket() {
+    if (typeof WebSocket === "undefined") return;
+    var RawWebSocket = WebSocket;
+    window.WebSocket = function (url, protocols) {
+      if (requestLooksSensitive(String(url || ""), null, null)) {
+        throw new Error("Blocked by Aura security policy");
+      }
+      return new RawWebSocket(url, protocols);
+    };
+    window.WebSocket.prototype = RawWebSocket.prototype;
+  }
+
+  patchStorage(window.localStorage, "localStorage");
+  patchStorage(window.sessionStorage, "sessionStorage");
+  patchCookieAccess();
+  patchFetch();
+  patchXHR();
+  patchBeacon();
+  patchWebSocket();
+})();</script>
+<script>
+try{if(window.parent&&window.parent!==window){window.parent.promotekit_referral="1fd2949a-d22c-431b-92bf-02d4ad04ee24";window.parent.document.cookie="promotekit_referral=1fd2949a-d22c-431b-92bf-02d4ad04ee24;path=/;domain=.aura.build;max-age=31536000"}}catch(e){}
+</script>
+<meta charset="utf-8"/> <meta content="width=device-width, initial-scale=1.0" name="viewport"/> <title>Tooth Fairy Dental Clinic - Dentist Pretoria (Dr Lekota)</title> <meta content="Changing lives one smile at a time. Professional, friendly, and pain-free dentistry in Pretoria by Dr Lekota." name="description"/> <script src="assets/resource_3fa48481346f.es"></script> <script src="assets/iconify-icon_e19829e7f0e8.js"></script> <link href="https://fonts.googleapis.com" rel="preconnect"/> <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/> <style> body { font-family: 'Plus Jakarta Sans', sans-serif; } /* Custom scrollbar for a cleaner look */ ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f5f9; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; } ::-webkit-scrollbar-thumb:hover { background: #94a3b8; } /* Checkbox hack for mobile menu */ #mobile-menu-toggle:checked ~ #mobile-menu { display: block; } </style> <link href="assets/css2_86e10c4bcbd4.css" id="all-fonts-link-font-geist" rel="stylesheet"/><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link href="assets/css2_0fc20595ebff.css" id="all-fonts-link-font-roboto" rel="stylesheet"/><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link href="assets/css2_23afcbef9bdd.css" id="all-fonts-link-font-montserrat" rel="stylesheet"/><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link href="assets/css2_82ced711bf49.css" id="all-fonts-link-font-poppins" rel="stylesheet"/><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link href="assets/css2_fa22aa91016e.css" id="all-fonts-link-font-playfair" rel="stylesheet"/><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link href="assets/css2_2b2d87bc82d8.css" id="all-fonts-link-font-instrument-serif" rel="stylesheet"/><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link href="assets/css2_4fef849c83da.css" id="all-fonts-link-font-merriweather" rel="stylesheet"/><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link href="assets/css2_a7b22b336fe1.css" id="all-fonts-link-font-bricolage" rel="stylesheet"/><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link href="assets/css2_0b2072b66163.css" id="all-fonts-link-font-jakarta" rel="stylesheet"/><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link href="assets/css2_9b8bf743d4a8.css" id="all-fonts-link-font-manrope" rel="stylesheet"/><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link href="assets/css2_8e191ef32247.css" id="all-fonts-link-font-space-grotesk" rel="stylesheet"/><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link href="assets/css2_70fd47a02eed.css" id="all-fonts-link-font-work-sans" rel="stylesheet"/><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link href="assets/css2_b52fc18295f8.css" id="all-fonts-link-font-pt-serif" rel="stylesheet"/><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link href="assets/css2_62759cd015bd.css" id="all-fonts-link-font-geist-mono" rel="stylesheet"/><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link href="assets/css2_f495c2faa2a6.css" id="all-fonts-link-font-space-mono" rel="stylesheet"/><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link href="assets/css2_6f16cdd6fd9f.css" id="all-fonts-link-font-quicksand" rel="stylesheet"/><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link href="assets/css2_94cb6f0c406a.css" id="all-fonts-link-font-nunito" rel="stylesheet"/><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style><link href="assets/css2_6c160a0c4e6f.css" id="all-fonts-link-font-newsreader" rel="stylesheet"/><style id="all-fonts-style-font-newsreader">.font-newsreader { font-family: 'Newsreader', serif !important; }</style><link href="assets/css2_bd407d5ceb4b.css" id="all-fonts-link-font-google-sans-flex" rel="stylesheet"/><style id="all-fonts-style-font-google-sans-flex">.font-google-sans-flex { font-family: 'Google Sans Flex', sans-serif !important; }</style><link href="assets/css2_176e25227b5e.css" id="all-fonts-link-font-oswald" rel="stylesheet"/><style id="all-fonts-style-font-oswald">.font-oswald { font-family: 'Oswald', sans-serif !important; }</style><link href="assets/css2_e5ca562f8909.css" id="all-fonts-link-font-dm-sans" rel="stylesheet"/><style id="all-fonts-style-font-dm-sans">.font-dm-sans { font-family: 'DM Sans', sans-serif !important; }</style><link href="assets/css2_bd311904ea29.css" id="all-fonts-link-font-cormorant" rel="stylesheet"/><style id="all-fonts-style-font-cormorant">.font-cormorant { font-family: 'Cormorant Garamond', serif !important; }</style><style data-scroll-fix="true">
+        /* Scroll fixes for offline viewing */
+        html, body {
+            overflow: auto !important;
+            overflow-x: hidden !important;
+            height: auto !important;
+            min-height: 100% !important;
+            scroll-behavior: auto !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        
+        /* Force visibility - many sites use JS animations for initial display */
+        body, .wrapper, main, #__next, #app, .page, .content {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: none !important;
+        }
+        
+        /* Disable loader/preloader overlays */
+        .loader, .preloader, .loading, [class*="loader"], [class*="preloader"] {
+            display: none !important;
+            opacity: 0 !important;
+        }
+        
+        /* Show elements that might be hidden for animation */
+        .word-inner, .char, .line, [data-aos], [data-scroll],
+        .hero-text span, .hero-fade, [class*="hero"] span {
+            opacity: 1 !important;
+            transform: none !important;
+            visibility: visible !important;
+        }
+        
+        /* Reset Tailwind animation utility classes */
+        .translate-y-full, .translate-x-full, .-translate-y-full, .-translate-x-full,
+        .translate-y-1\/2, .-translate-y-1\/2, .translate-y-\[100\%\], .translate-y-\[110\%\] {
+            transform: none !important;
+        }
+        
+        /* Force visibility on common hidden-for-animation patterns */
+        .opacity-0, [class*="opacity-0"] {
+            opacity: 1 !important;
+        }
+        
+        /* Reset scale transforms used for animations */
+        .scale-0, .scale-50, .scale-75 {
+            transform: none !important;
+        }
+        
+        html.lenis, html.lenis-smooth, 
+        body.lenis, body.lenis-smooth,
+        .lenis-wrapper, .lenis-content,
+        [data-lenis-prevent], [data-scroll-container] {
+            overflow: visible !important;
+            height: auto !important;
+        }
+        
+        /* Fix flex containers that might cut off content */
+        body.flex.items-center,
+        body.flex.justify-center {
+            align-items: flex-start !important;
+            min-height: 100vh;
+            height: auto !important;
+        }
+        
+        /* Ensure main content scrolls */
+        main, #__next, #__nuxt, #app, .main-content {
+            overflow: visible !important;
+            height: auto !important;
+        }
+        </style></head> <body class="bg-slate-50 text-slate-600 antialiased selection:bg-blue-100 selection:text-blue-900"> <!-- Navigation --> <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100"> <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"> <!-- Logo --> <a class="flex items-center gap-2 group" href="#"> <div class="bg-blue-50 text-blue-600 p-2 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300"> <iconify-icon height="24" icon="solar:tooth-linear" width="24"></iconify-icon> </div> <div class="flex flex-col"> <span class="font-semibold text-slate-900 tracking-tight leading-none text-lg">Tooth Fairy</span> <span class="text-xs text-slate-500 font-medium tracking-wide uppercase">Dental Clinic</span> </div> </a> <!-- Desktop Links --> <div class="hidden md:flex items-center gap-8"> <a class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors" href="#home">Home</a> <a class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors" href="#about">Meet Dr Lekota</a> <a class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors" href="#services">Services</a> <a class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors" href="#contact">Contact</a> </div> <!-- CTA & Mobile Toggle --> <div class="flex items-center gap-4"> <a class="hidden md:flex items-center gap-2 bg-slate-900 text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-slate-800 transition-all hover:shadow-lg active:scale-95" href="tel:0645043509"> <iconify-icon icon="solar:phone-calling-linear" width="18"></iconify-icon> <span>064 504 3509</span> </a> <label class="md:hidden cursor-pointer p-2 text-slate-600 hover:text-blue-600" for="mobile-menu-toggle"> <iconify-icon height="24" icon="solar:hamburger-menu-linear" width="24"></iconify-icon> </label> </div> </div> <!-- Mobile Menu (Hidden by default) --> <input class="hidden" id="mobile-menu-toggle" type="checkbox"/> <div class="hidden md:hidden bg-white border-b border-slate-100 absolute w-full left-0 top-full px-6 py-4 shadow-xl" id="mobile-menu"> <div class="flex flex-col gap-4"> <a class="text-sm font-medium text-slate-900 py-2 border-b border-slate-50" href="#home">Home</a> <a class="text-sm font-medium text-slate-900 py-2 border-b border-slate-50" href="#about">About</a> <a class="text-sm font-medium text-slate-900 py-2 border-b border-slate-50" href="#services">Services</a> <a class="text-sm font-medium text-slate-900 py-2 border-b border-slate-50" href="#contact">Contact</a> <a class="text-center w-full bg-blue-600 text-white py-3 rounded-lg font-medium text-sm mt-2" href="tel:0645043509"> Call Now </a> </div> </div> </nav> <!-- Hero Section --> <section class="pt-32 pb-20 md:pt-40 md:pb-32 bg-gradient-to-b from-blue-50/50 to-white overflow-hidden" id="home"> <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center"> <div class="space-y-8 max-w-2xl"> <div class="inline-flex items-center gap-2 bg-blue-100/50 border border-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider"> <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span> Accepting New Patients </div> <h1 class="text-4xl md:text-6xl font-semibold text-slate-900 tracking-tight leading-[1.1]"> Dentist Pretoria <br/> <span class="text-blue-600">Dr Lekota</span> </h1> <p class="text-xl text-slate-500 font-medium leading-relaxed"> Changing lives… one smile at a time. Experience anxiety-free, professional dental care tailored for your whole family. </p> <div class="flex flex-col sm:flex-row gap-4 pt-4"> <a class="flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-full text-sm font-medium hover:bg-blue-700 transition-all hover:shadow-blue-200 hover:shadow-xl active:scale-95" href="tel:0645043509"> <iconify-icon icon="solar:phone-calling-linear" width="20"></iconify-icon> Call Now – 064 504 3509 </a> <a class="flex items-center justify-center gap-2 bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-full text-sm font-medium hover:bg-slate-50 hover:border-slate-300 transition-all active:scale-95" href="#contact"> Contact Us <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon> </a> </div> </div> <div class="relative"> <div class="absolute -inset-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full blur-3xl opacity-30"></div> <!-- Abstract Representation of Friendly Dentistry --> <div class="relative rounded-3xl overflow-hidden shadow-2xl shadow-blue-900/10 bg-white aspect-[4/3] flex items-center justify-center border border-slate-100 group"> <img alt="Friendly Dentist Layout" class="object-cover w-full h-full opacity-90 group-hover:scale-105 transition-transform duration-700" src="assets/photo-1629909613654-28e377c37b_2c0c511b743b.avif"/> </div> </div> </div> </section> <!-- Services Quick Links (Floating Cards) --> <section class="mt-[-60px] relative z-10 px-6"> <div class="max-w-7xl mx-auto"> <div class="grid grid-cols-2 md:grid-cols-5 gap-4"> <!-- Card 1 --> <a class="bg-white p-6 rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group flex flex-col items-center text-center gap-3" href="#services"> <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors"> <iconify-icon icon="solar:shield-check-linear" width="24"></iconify-icon> </div> <span class="text-sm font-semibold text-slate-700">Oral Hygiene</span> </a> <!-- Card 2 --> <a class="bg-white p-6 rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group flex flex-col items-center text-center gap-3" href="#services"> <div class="w-12 h-12 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center group-hover:bg-rose-500 group-hover:text-white transition-colors"> <iconify-icon icon="solar:star-shine-linear" width="24"></iconify-icon> </div> <span class="text-sm font-semibold text-slate-700">Whitening</span> </a> <!-- Card 3 --> <a class="bg-white p-6 rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group flex flex-col items-center text-center gap-3" href="#services"> <div class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors"> <iconify-icon icon="solar:emoji-funny-circle-linear" width="24"></iconify-icon> </div> <span class="text-sm font-semibold text-slate-700">Paediatric</span> </a> <!-- Card 4 --> <a class="bg-white p-6 rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group flex flex-col items-center text-center gap-3" href="#services"> <div class="w-12 h-12 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center group-hover:bg-purple-500 group-hover:text-white transition-colors"> <iconify-icon icon="solar:medical-kit-linear" width="24"></iconify-icon> </div> <span class="text-sm font-semibold text-slate-700">Root Canal</span> </a> <!-- Card 5 --> <a class="bg-slate-900 p-6 rounded-2xl shadow-lg shadow-slate-900/20 border border-slate-800 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group flex flex-col items-center text-center gap-3 col-span-2 md:col-span-1" href="#contact"> <div class="w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center group-hover:bg-white group-hover:text-slate-900 transition-colors"> <iconify-icon icon="solar:calendar-add-linear" width="24"></iconify-icon> </div> <span class="text-sm font-semibold text-white">Book Now</span> </a> </div> </div> </section> <!-- Meet Dr Lekota --> <section class="bg-slate-50 pt-24 pb-24" id="about"> <div class="max-w-7xl mx-auto px-6"> <div class="grid md:grid-cols-2 gap-16 items-center"> <div class="order-2 md:order-1 relative"> <div class="absolute -top-4 -left-4 w-24 h-24 bg-blue-100 rounded-full blur-2xl"></div> <img alt="Doctor Consultation" class="relative rounded-2xl shadow-xl border border-white object-cover w-full h-auto" src="assets/cd72c7d3-945a-4c3f-a29d-d988e4_1f6b30ba7a4d.png"/> <div class="absolute -bottom-6 -right-6 bg-white p-6 rounded-xl shadow-lg max-w-xs border border-slate-100 hidden md:block"> <div class="flex items-center gap-3 mb-2"> <iconify-icon class="text-yellow-500 text-2xl" icon="solar:medal-star-linear"></iconify-icon> <span class="font-semibold text-slate-900">10+ Years</span> </div> <p class="text-xs text-slate-500">Dedicated practice providing excellence in patient care.</p> </div> </div> <div class="order-1 md:order-2 space-y-6"> <div class="flex items-center gap-2"> <span class="h-px w-8 bg-blue-600"></span> <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider">About Us</span> </div> <h2 class="text-3xl md:text-4xl font-semibold text-slate-900 tracking-tight">Meet Dr Lekota</h2> <div class="space-y-4 text-slate-600 leading-relaxed"> <p> Dr Lekota has been in practice for over 10 years. She ensures all patients feel welcomed and consistently strives for excellence in patient care during dental treatments. </p> <p> She holds a Bachelor of Dental Science (BDS) and is dedicated to preventative dentistry. She is known for her caring, comfortable personality that helps patients feel at ease. </p> <p class="font-medium text-slate-800"> At the Tooth Fairy Dental Clinic, we focus on ensuring your comfort while providing expert dental services. </p> </div> <div class="pt-4"> <a class="text-blue-600 font-semibold hover:text-blue-700 inline-flex items-center gap-2 transition-colors" href="#contact"> Book an appointment <iconify-icon icon="solar:arrow-right-linear"></iconify-icon> </a> </div> </div> </div> </div> </section> <!-- Mission Statement --> <section class="py-20 bg-blue-600 text-white relative overflow-hidden"> <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div> <div class="max-w-4xl mx-auto px-6 text-center relative z-10 space-y-8"> <iconify-icon class="text-5xl opacity-80" icon="solar:heart-angle-linear"></iconify-icon> <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">Our Mission</h2> <p class="text-xl md:text-2xl font-medium leading-relaxed opacity-90"> "Our mission is to provide every patient with an enjoyable experience that is stress-free, anxiety-free, and pain-free." </p> <div class="w-16 h-1 bg-white/30 mx-auto rounded-full"></div> <p class="text-blue-100 leading-relaxed max-w-2xl mx-auto"> Tooth Fairy Dental Clinic is a modern dental practice fitted with the latest dental technology and expert dentists, allowing us to provide a complete range of dental services — from general dentistry to complex dental surgery and cosmetic dentistry. </p> </div> </section> <!-- Services Detailed --> <section class="py-24 bg-white" id="services"> <div class="max-w-7xl mx-auto px-6"> <div class="text-center max-w-2xl mx-auto mb-16 space-y-4"> <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider">What we do</span> <h2 class="text-3xl md:text-4xl font-semibold text-slate-900 tracking-tight">Services in Brief</h2> <p class="text-slate-500">Comprehensive dental care for the whole family under one roof.</p> </div> <div class="grid md:grid-cols-3 gap-8"> <!-- General --> <div class="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:border-blue-200 transition-colors"> <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6"> <iconify-icon icon="solar:stethoscope-linear" width="24"></iconify-icon> </div> <h3 class="text-xl font-semibold text-slate-900 mb-4">General Dentistry</h3> <p class="text-sm text-slate-500 mb-6">Diagnosis, prevention, and treatment of oral health conditions including routine checkups and scaling.</p> <ul class="space-y-3"> <li class="flex items-center gap-3 text-sm text-slate-700"> <iconify-icon class="text-blue-500" icon="solar:check-circle-linear"></iconify-icon> Checkup &amp; Clean </li> <li class="flex items-center gap-3 text-sm text-slate-700"> <iconify-icon class="text-blue-500" icon="solar:check-circle-linear"></iconify-icon> Dental Fillings </li> <li class="flex items-center gap-3 text-sm text-slate-700"> <iconify-icon class="text-blue-500" icon="solar:check-circle-linear"></iconify-icon> Gum Disease </li> <li class="flex items-center gap-3 text-sm text-slate-700"> <iconify-icon class="text-blue-500" icon="solar:check-circle-linear"></iconify-icon> Toothache Relief </li> </ul> </div> <!-- Cosmetic --> <div class="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:border-rose-200 transition-colors"> <div class="w-12 h-12 bg-rose-100 text-rose-500 rounded-xl flex items-center justify-center mb-6"> <iconify-icon icon="solar:magic-stick-3-linear" width="24"></iconify-icon> </div> <h3 class="text-xl font-semibold text-slate-900 mb-4">Cosmetic Dentistry</h3> <p class="text-sm text-slate-500 mb-6">Enhancing your smile through aesthetic procedures and modern technology.</p> <ul class="space-y-3"> <li class="flex items-center gap-3 text-sm text-slate-700"> <iconify-icon class="text-rose-500" icon="solar:check-circle-linear"></iconify-icon> Teeth Whitening </li> <li class="flex items-center gap-3 text-sm text-slate-700"> <iconify-icon class="text-rose-500" icon="solar:check-circle-linear"></iconify-icon> Invisalign </li> <li class="flex items-center gap-3 text-sm text-slate-700"> <iconify-icon class="text-rose-500" icon="solar:check-circle-linear"></iconify-icon> Porcelain Veneers </li> <li class="flex items-center gap-3 text-sm text-slate-700"> <iconify-icon class="text-rose-500" icon="solar:check-circle-linear"></iconify-icon> Implants &amp; Bridges </li> </ul> </div> <!-- Children --> <div class="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:border-emerald-200 transition-colors"> <div class="w-12 h-12 bg-emerald-100 text-emerald-500 rounded-xl flex items-center justify-center mb-6"> <iconify-icon icon="solar:emoji-funny-square-linear" width="24"></iconify-icon> </div> <h3 class="text-xl font-semibold text-slate-900 mb-4">Children’s Dental</h3> <p class="text-sm text-slate-500 mb-6">Gentle care for little ones. It is good to bring your children when you come in for your regular evaluation.</p> <ul class="space-y-3"> <li class="flex items-center gap-3 text-sm text-slate-700"> <iconify-icon class="text-emerald-500" icon="solar:check-circle-linear"></iconify-icon> Check-ups &amp; X-rays </li> <li class="flex items-center gap-3 text-sm text-slate-700"> <iconify-icon class="text-emerald-500" icon="solar:check-circle-linear"></iconify-icon> Fissure Sealing </li> <li class="flex items-center gap-3 text-sm text-slate-700"> <iconify-icon class="text-emerald-500" icon="solar:check-circle-linear"></iconify-icon> Preventative Care </li> <li class="flex items-center gap-3 text-sm text-slate-700"> <iconify-icon class="text-emerald-500" icon="solar:check-circle-linear"></iconify-icon> Orthodontics for Children </li> </ul> </div> </div> <!-- Additional Service Tags --> <div class="mt-12 flex flex-wrap justify-center gap-3"> <span class="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-medium text-slate-600">Restorative Dentistry</span> <span class="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-medium text-slate-600">Emergency Dental Care</span> <span class="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-medium text-slate-600">Senior Dental Care</span> <span class="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-medium text-slate-600">Dentures</span> </div> </div> </section> <!-- Why Regular Visits Matter (Education) --> <section class="py-24 bg-slate-900 text-slate-300"> <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center"> <div class="space-y-8"> <h2 class="text-3xl md:text-4xl font-semibold text-white tracking-tight">Why Regular Dental Visits Matter</h2> <div class="space-y-6 text-lg leading-relaxed"> <p> To keep your teeth and gums healthy, it is important to schedule regular checkups and dental cleanings. </p> <div class="pl-6 border-l-2 border-blue-500"> <p class="text-white italic"> Adult patients should visit the dentist at least once every six months. Regular cleanings remove plaque and stains, reducing the risk of tooth decay and gum disease. </p> </div> <p> If you experience sudden pain in your teeth or gums, book an appointment immediately for proper evaluation and treatment. </p> </div> <a class="inline-flex items-center gap-2 bg-blue-600 text-white px-8 py-3.5 rounded-full text-sm font-medium hover:bg-blue-500 transition-all" href="tel:0645043509"> <iconify-icon icon="solar:phone-calling-linear" width="20"></iconify-icon> Call Now – 064 504 3509 </a> </div> <div class="relative"> <div class="absolute inset-0 bg-blue-500/20 blur-3xl rounded-full"></div> <div class="relative bg-slate-800 p-8 rounded-3xl border border-slate-700"> <h3 class="text-white font-semibold text-xl mb-6 flex items-center gap-2"> <iconify-icon class="text-blue-400" icon="solar:question-circle-linear"></iconify-icon> Frequently Asked Questions </h3> <div class="space-y-4"> <!-- FAQ Item 1 --> <details class="group bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700/50 open:bg-slate-700 transition-all"> <summary class="flex justify-between items-center p-4 cursor-pointer font-medium text-white hover:text-blue-400 transition-colors"> Why do regular dental visits matter? <iconify-icon class="group-open:rotate-180 transition-transform" icon="solar:alt-arrow-down-linear"></iconify-icon> </summary> <div class="p-4 pt-0 text-sm text-slate-400"> Regular visits help detect issues early, prevent gum disease, and maintain overall oral hygiene through professional cleaning. </div> </details> <!-- FAQ Item 2 --> <details class="group bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700/50 open:bg-slate-700 transition-all"> <summary class="flex justify-between items-center p-4 cursor-pointer font-medium text-white hover:text-blue-400 transition-colors"> How can I prevent cavities? <iconify-icon class="group-open:rotate-180 transition-transform" icon="solar:alt-arrow-down-linear"></iconify-icon> </summary> <div class="p-4 pt-0 text-sm text-slate-400"> Brush twice daily, floss regularly, reduce sugar intake, and ensure you attend your 6-monthly checkups. </div> </details> <!-- FAQ Item 3 --> <details class="group bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700/50 open:bg-slate-700 transition-all"> <summary class="flex justify-between items-center p-4 cursor-pointer font-medium text-white hover:text-blue-400 transition-colors"> Why does the dentist take X-rays? <iconify-icon class="group-open:rotate-180 transition-transform" icon="solar:alt-arrow-down-linear"></iconify-icon> </summary> <div class="p-4 pt-0 text-sm text-slate-400"> X-rays allow us to see problems between teeth and under the gums that aren't visible to the naked eye. </div> </details> <!-- FAQ Item 4 --> <details class="group bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700/50 open:bg-slate-700 transition-all"> <summary class="flex justify-between items-center p-4 cursor-pointer font-medium text-white hover:text-blue-400 transition-colors"> Can I bring my pet with me? <iconify-icon class="group-open:rotate-180 transition-transform" icon="solar:alt-arrow-down-linear"></iconify-icon> </summary> <div class="p-4 pt-0 text-sm text-slate-400"> For hygiene and safety reasons, pets are generally not allowed in the treatment area, but exceptions may apply for service animals. </div> </details> </div> </div> </div> </div> </section> <!-- Contact Section --> <section class="py-24 bg-blue-50/50" id="contact"> <div class="max-w-7xl mx-auto px-6"> <div class="text-center mb-16"> <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider">Get in touch</span> <h2 class="text-3xl md:text-4xl font-semibold text-slate-900 tracking-tight mt-2">Visit Our Clinic</h2> </div> <div class="grid md:grid-cols-3 gap-8"> <!-- Info --> <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 space-y-8 md:col-span-1"> <div> <div class="flex items-center gap-3 mb-2 text-blue-600"> <iconify-icon icon="solar:map-point-linear" width="24"></iconify-icon> <h3 class="font-semibold text-slate-900">Address</h3> </div> <address class="not-italic text-slate-600 text-sm leading-relaxed pl-9"> Shop 122 Tramshed Shopping Centre<br/> Cnr Francis Baard &amp; Lilian Ngoyi St<br/> Pretoria, 0002 </address> </div> <div> <div class="flex items-center gap-3 mb-2 text-blue-600"> <iconify-icon icon="solar:phone-calling-linear" width="24"></iconify-icon> <h3 class="font-semibold text-slate-900">Phone Numbers</h3> </div> <div class="flex flex-col gap-1 pl-9"> <a class="text-slate-600 hover:text-blue-600 text-sm" href="tel:+27645043509">+27 64 504 3509</a> <a class="text-slate-600 hover:text-blue-600 text-sm" href="tel:+27615830032">+27 61 583 0032</a> </div> </div> <div class="pt-4"> <a class="w-full flex items-center justify-center gap-2 bg-blue-600 text-white py-3 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors" href="tel:0645043509"> Call to Book </a> </div> </div> <!-- Hours --> <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 md:col-span-2"> <div class="flex items-center gap-3 mb-6 text-blue-600"> <iconify-icon icon="solar:clock-circle-linear" width="24"></iconify-icon> <h3 class="font-semibold text-slate-900">Operating Hours</h3> </div> <div class="grid sm:grid-cols-2 gap-x-12 gap-y-4"> <div class="flex justify-between items-center py-2 border-b border-slate-50"> <span class="text-sm font-medium text-slate-700">Monday</span> <span class="text-sm text-slate-500">8am – 5pm</span> </div> <div class="flex justify-between items-center py-2 border-b border-slate-50"> <span class="text-sm font-medium text-slate-700">Tuesday</span> <span class="text-sm text-slate-500">8am – 5pm</span> </div> <div class="flex justify-between items-center py-2 border-b border-slate-50"> <span class="text-sm font-medium text-slate-700">Wednesday</span> <span class="text-sm text-slate-500">8am – 5pm</span> </div> <div class="flex justify-between items-center py-2 border-b border-slate-50"> <span class="text-sm font-medium text-slate-700">Thursday</span> <span class="text-sm text-slate-500">8am – 5pm</span> </div> <div class="flex justify-between items-center py-2 border-b border-slate-50"> <span class="text-sm font-medium text-slate-700">Friday</span> <span class="text-sm text-slate-500">8am – 5pm</span> </div> <div class="flex justify-between items-center py-2 border-b border-slate-50"> <span class="text-sm font-medium text-slate-700">Saturday</span> <span class="text-sm text-slate-500">9am – 1pm</span> </div> <div class="flex justify-between items-center py-2 border-b border-slate-50"> <span class="text-sm font-medium text-slate-700">Sunday</span> <span class="text-sm text-rose-500 font-medium">Closed</span> </div> </div> </div> </div> </div> </section> <!-- Footer --> <footer class="bg-white border-t border-slate-100 pt-16 pb-8"> <div class="max-w-7xl mx-auto px-6"> <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12"> <div class="col-span-1 md:col-span-1 space-y-4"> <div class="flex items-center gap-2 text-blue-600"> <iconify-icon icon="solar:tooth-linear" width="24"></iconify-icon> <span class="font-semibold text-slate-900 tracking-tight">Tooth Fairy Dental</span> </div> <p class="text-xs text-slate-500 leading-relaxed"> Modern, pain-free dental care for the whole family in the heart of Pretoria. </p> </div> <div class="space-y-4"> <h4 class="font-semibold text-slate-900 text-sm">Navigation</h4> <ul class="space-y-2 text-sm text-slate-500"> <li><a class="hover:text-blue-600 transition-colors" href="#home">Home</a></li> <li><a class="hover:text-blue-600 transition-colors" href="#about">About</a></li> <li><a class="hover:text-blue-600 transition-colors" href="#services">Services</a></li> <li><a class="hover:text-blue-600 transition-colors" href="#contact">Contact</a></li> </ul> </div> <div class="space-y-4"> <h4 class="font-semibold text-slate-900 text-sm">Contact</h4> <ul class="space-y-2 text-sm text-slate-500"> <li>Shop 122 Tramshed Shopping Centre</li> <li>Pretoria, 0002</li> <li> <a class="hover:text-blue-600 transition-colors" href="tel:0645043509">064 504 3509</a> </li> </ul> </div> <div class="space-y-4"> <h4 class="font-semibold text-slate-900 text-sm">Social</h4> <div class="flex gap-4 text-slate-400"> <a class="hover:text-blue-600 transition-colors" href="#"><iconify-icon icon="brandico:facebook-rect" width="20"></iconify-icon></a> <a class="hover:text-blue-600 transition-colors" href="#"><iconify-icon icon="brandico:twitter-bird" width="20"></iconify-icon></a> <a class="hover:text-blue-600 transition-colors" href="#"><iconify-icon icon="brandico:instagram" width="20"></iconify-icon></a> <a class="hover:text-blue-600 transition-colors" href="#"><iconify-icon icon="brandico:linkedin" width="20"></iconify-icon></a> </div> </div> </div> <div class="border-t border-slate-100 pt-8 text-center"> <p class="text-xs text-slate-400">© 2026 Dentist Pretoria Dr Lekota. All rights reserved.</p> </div> </div> </footer> <script data-img-fallback-handler="">!function(){var f=["https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/917d6f93-fb36-439a-8c48-884b67b35381_1600w.jpg","https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/4734259a-bad7-422f-981e-ce01e79184f2_1600w.jpg","https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/c543a9e1-f226-4ced-80b0-feb8445a75b9_1600w.jpg","https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/5bab247f-35d9-400d-a82b-fd87cfe913d2_1600w.webp","https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/30104e3c-5eea-4b93-93e9-5313698a7156_1600w.webp"],h=new Set;function g(s){for(var x=0,i=0;i<s.length;i++)x=(x<<5)-x+s.charCodeAt(i)|0;return f[Math.abs(x)%f.length]}function r(t){var s=t.src;if(s&&!h.has(s)){h.add(s);t.src=g(s)}}window.addEventListener("error",function(e){var t=e.target;if(t&&t.tagName==="IMG")r(t)},!0);function c(){document.querySelectorAll("img").forEach(function(i){if(i.complete&&!i.naturalWidth&&i.src)r(i)})}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",c);else c()}()</script></body></html>

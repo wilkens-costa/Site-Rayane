@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Design System & Pattern Library</title>
+    <meta content="Living design system for the platform." name="description"/>
+    <script src="assets/resource_3fa48481346f.es"></script>
+    <script src="assets/iconify-icon_e19829e7f0e8.js"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        /* DS specific helper classes to show raw color patches without adding arbitrary styles inline */
+        .color-patch { height: 80px; width: 100%; border-radius: 12px; }
+    </style>
+    <!-- Keeping fonts and existing scroll-fix styles as reference links/styles if possible, mirroring origin -->
+    <link href="assets/css2_0b2072b66163.css" id="all-fonts-link-font-jakarta" rel="stylesheet"/>
+    <style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style>
+</head>
+<body class="bg-slate-50 text-slate-600 antialiased selection:bg-blue-100 selection:text-blue-900 pt-20">
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <!-- Logo -->
+        <a class="flex items-center gap-2 group" href="#">
+            <div class="bg-blue-50 text-blue-600 p-2 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                <iconify-icon height="24" icon="solar:pen-linear" width="24"></iconify-icon>
+            </div>
+            <div class="flex flex-col">
+                <span class="font-semibold text-slate-900 tracking-tight leading-none text-lg">Design System</span>
+                <span class="text-xs text-slate-500 font-medium tracking-wide uppercase">Pattern Library</span>
+            </div>
+        </a>
+        <!-- Desktop Links -->
+        <div class="hidden md:flex items-center gap-6">
+            <a class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors" href="#hero">Hero</a>
+            <a class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors" href="#typography">Typography</a>
+            <a class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors" href="#colors">Colors & Surfaces</a>
+            <a class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors" href="#components">Components</a>
+            <a class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors" href="#layout">Layout</a>
+            <a class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors" href="#motion">Motion</a>
+            <a class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors" href="#icons">Icons</a>
+        </div>
+    </div>
+</nav>
+
+<!-- 0) Hero (Exact Clone, Text Adapted) -->
+<section class="pt-32 pb-20 md:pt-40 md:pb-32 bg-gradient-to-b from-blue-50/50 to-white overflow-hidden" id="hero">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+        <div class="space-y-8 max-w-2xl">
+            <div class="inline-flex items-center gap-2 bg-blue-100/50 border border-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">
+                <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span> Canonical Library
+            </div>
+            <h1 class="text-4xl md:text-6xl font-semibold text-slate-900 tracking-tight leading-[1.1]">
+                Living Pattern <br/>
+                <span class="text-blue-600">Design System</span>
+            </h1>
+            <p class="text-xl text-slate-500 font-medium leading-relaxed">
+                A single source of truth for UI components, layout structures, typography scales, and motion behaviors used across our products.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                <a class="flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-full text-sm font-medium hover:bg-blue-700 transition-all hover:shadow-blue-200 hover:shadow-xl active:scale-95" href="#typography">
+                    <iconify-icon icon="solar:layers-linear" width="20"></iconify-icon> Explore UI
+                </a>
+                <a class="flex items-center justify-center gap-2 bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-full text-sm font-medium hover:bg-slate-50 hover:border-slate-300 transition-all active:scale-95" href="#components">
+                    View Components <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
+                </a>
+            </div>
+        </div>
+        <div class="relative">
+            <div class="absolute -inset-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full blur-3xl opacity-30"></div>
+            <!-- Abstract Representation -->
+            <div class="relative rounded-3xl overflow-hidden shadow-2xl shadow-blue-900/10 bg-white aspect-[4/3] flex items-center justify-center border border-slate-100 group">
+                <img alt="Design System Preview" class="object-cover w-full h-full opacity-90 group-hover:scale-105 transition-transform duration-700" src="assets/photo-1629909613654-28e377c37b_2c0c511b743b.avif"/>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Separator Component used in layout -->
+<div class="max-w-7xl mx-auto px-6 py-20"><span class="block h-px w-full bg-slate-200"></span></div>
+
+<!-- 1) Typography -->
+<section class="pb-24" id="typography">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12 space-y-2">
+            <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider">Foundation</span>
+            <h2 class="text-3xl md:text-4xl font-semibold text-slate-900 tracking-tight">Typography</h2>
+        </div>
+        
+        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+            <!-- Heading 1 -->
+            <div class="grid grid-cols-1 md:grid-cols-4 items-center p-8 border-b border-slate-100 hover:bg-slate-50 transition-colors group">
+                <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider md:col-span-1">Heading 1</div>
+                <div class="md:col-span-2">
+                    <h1 class="text-4xl md:text-6xl font-semibold text-slate-900 tracking-tight leading-[1.1]">The quick brown fox</h1>
+                </div>
+                <div class="text-right text-sm font-medium text-slate-400 mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    36px+ / 1.1
+                </div>
+            </div>
+            
+            <!-- Heading 2 -->
+            <div class="grid grid-cols-1 md:grid-cols-4 items-center p-8 border-b border-slate-100 hover:bg-slate-50 transition-colors group">
+                <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider md:col-span-1">Heading 2</div>
+                <div class="md:col-span-2">
+                    <h2 class="text-3xl md:text-4xl font-semibold text-slate-900 tracking-tight">The quick brown fox</h2>
+                </div>
+                <div class="text-right text-sm font-medium text-slate-400 mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    30px+ / tight
+                </div>
+            </div>
+
+            <!-- Heading 3 -->
+            <div class="grid grid-cols-1 md:grid-cols-4 items-center p-8 border-b border-slate-100 hover:bg-slate-50 transition-colors group">
+                <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider md:col-span-1">Heading 3</div>
+                <div class="md:col-span-2">
+                    <h3 class="text-xl font-semibold text-slate-900 mb-0">The quick brown fox</h3>
+                </div>
+                <div class="text-right text-sm font-medium text-slate-400 mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    20px / normal
+                </div>
+            </div>
+
+            <!-- Heading 4 -->
+            <div class="grid grid-cols-1 md:grid-cols-4 items-center p-8 border-b border-slate-100 hover:bg-slate-50 transition-colors group">
+                <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider md:col-span-1">Heading 4</div>
+                <div class="md:col-span-2">
+                    <h4 class="font-semibold text-slate-900 text-sm">The quick brown fox</h4>
+                </div>
+                <div class="text-right text-sm font-medium text-slate-400 mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    14px / normal
+                </div>
+            </div>
+
+            <!-- Bold L -->
+            <div class="grid grid-cols-1 md:grid-cols-4 items-center p-8 border-b border-slate-100 hover:bg-slate-50 transition-colors group">
+                <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider md:col-span-1">Bold L</div>
+                <div class="md:col-span-2">
+                    <span class="font-semibold text-slate-900 tracking-tight leading-none text-lg">The quick brown fox</span>
+                </div>
+                <div class="text-right text-sm font-medium text-slate-400 mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    18px / none
+                </div>
+            </div>
+
+            <!-- Bold M -->
+            <div class="grid grid-cols-1 md:grid-cols-4 items-center p-8 border-b border-slate-100 hover:bg-slate-50 transition-colors group">
+                <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider md:col-span-1">Bold M</div>
+                <div class="md:col-span-2">
+                    <span class="text-sm font-semibold text-slate-700">The quick brown fox jumps</span>
+                </div>
+                <div class="text-right text-sm font-medium text-slate-400 mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    14px / normal
+                </div>
+            </div>
+
+            <!-- Bold S -->
+            <div class="grid grid-cols-1 md:grid-cols-4 items-center p-8 border-b border-slate-100 hover:bg-slate-50 transition-colors group">
+                <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider md:col-span-1">Bold S</div>
+                <div class="md:col-span-2">
+                    <span class="text-xs font-semibold uppercase tracking-wider">The quick brown fox</span>
+                </div>
+                <div class="text-right text-sm font-medium text-slate-400 mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    12px / uppercase
+                </div>
+            </div>
+
+            <!-- Paragraph -->
+            <div class="grid grid-cols-1 md:grid-cols-4 items-center p-8 border-b border-slate-100 hover:bg-slate-50 transition-colors group">
+                <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider md:col-span-1">Paragraph</div>
+                <div class="md:col-span-2">
+                    <p class="text-xl text-slate-500 font-medium leading-relaxed">The quick brown fox jumps over the lazy dog. Sphinx of black quartz, judge my vow.</p>
+                </div>
+                <div class="text-right text-sm font-medium text-slate-400 mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    20px / relaxed
+                </div>
+            </div>
+
+            <!-- Regular L -->
+            <div class="grid grid-cols-1 md:grid-cols-4 items-center p-8 border-b border-slate-100 hover:bg-slate-50 transition-colors group">
+                <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider md:col-span-1">Regular L</div>
+                <div class="md:col-span-2">
+                    <p class="text-lg leading-relaxed">The quick brown fox jumps over the lazy dog. Sphinx of black quartz, judge my vow.</p>
+                </div>
+                <div class="text-right text-sm font-medium text-slate-400 mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    18px / relaxed
+                </div>
+            </div>
+
+            <!-- Regular M -->
+            <div class="grid grid-cols-1 md:grid-cols-4 items-center p-8 border-b border-slate-100 hover:bg-slate-50 transition-colors group">
+                <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider md:col-span-1">Regular M</div>
+                <div class="md:col-span-2">
+                    <p class="text-sm text-slate-500 mb-0">The quick brown fox jumps over the lazy dog. Sphinx of black quartz, judge my vow.</p>
+                </div>
+                <div class="text-right text-sm font-medium text-slate-400 mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    14px / normal
+                </div>
+            </div>
+
+            <!-- Regular S -->
+            <div class="grid grid-cols-1 md:grid-cols-4 items-center p-8 hover:bg-slate-50 transition-colors group">
+                <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider md:col-span-1">Regular S</div>
+                <div class="md:col-span-2">
+                    <p class="text-xs text-slate-500 mb-0">The quick brown fox jumps over the lazy dog.</p>
+                </div>
+                <div class="text-right text-sm font-medium text-slate-400 mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    12px / normal
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 2) Colors & Surfaces -->
+<section class="py-24 bg-white" id="colors">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12 space-y-2">
+            <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider">Foundation</span>
+            <h2 class="text-3xl md:text-4xl font-semibold text-slate-900 tracking-tight">Colors &amp; Surfaces</h2>
+        </div>
+
+        <div class="space-y-16">
+            <!-- Solid Backgrounds -->
+            <div>
+                <h3 class="text-xl font-semibold text-slate-900 mb-6">Solid Backgrounds</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6">
+                    <div class="space-y-2">
+                        <div class="color-patch bg-white border border-slate-100 shadow-sm"></div>
+                        <div class="text-xs font-semibold text-slate-700">bg-white</div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="color-patch bg-slate-50 border border-slate-100"></div>
+                        <div class="text-xs font-semibold text-slate-700">bg-slate-50</div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="color-patch bg-blue-50"></div>
+                        <div class="text-xs font-semibold text-slate-700">bg-blue-50</div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="color-patch bg-rose-50"></div>
+                        <div class="text-xs font-semibold text-slate-700">bg-rose-50</div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="color-patch bg-emerald-50"></div>
+                        <div class="text-xs font-semibold text-slate-700">bg-emerald-50</div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="color-patch bg-purple-50"></div>
+                        <div class="text-xs font-semibold text-slate-700">bg-purple-50</div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="color-patch bg-slate-900"></div>
+                        <div class="text-xs font-semibold text-slate-700">bg-slate-900</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Foreground/Text Colors -->
+            <div>
+                <h3 class="text-xl font-semibold text-slate-900 mb-6">Core Text Colors</h3>
+                <div class="flex flex-wrap gap-8">
+                    <span class="text-4xl font-semibold text-slate-900">text-slate-900</span>
+                    <span class="text-4xl font-semibold text-slate-700">text-slate-700</span>
+                    <span class="text-4xl font-semibold text-slate-600">text-slate-600</span>
+                    <span class="text-4xl font-semibold text-slate-500">text-slate-500</span>
+                    <span class="text-4xl font-semibold text-slate-400">text-slate-400</span>
+                    <span class="text-4xl font-semibold text-blue-600">text-blue-600</span>
+                </div>
+            </div>
+
+            <!-- Special Surfaces -->
+            <div>
+                <h3 class="text-xl font-semibold text-slate-900 mb-6">Glass & Special Surfaces</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="p-8 rounded-3xl bg-slate-50 relative overflow-hidden bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-opacity-20 border border-slate-200">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-rose-100 to-blue-100 opacity-50 blur-xl"></div>
+                        <div class="relative w-full h-32 bg-white/90 backdrop-blur-md border border-slate-100 rounded-2xl flex items-center justify-center shadow-lg">
+                            <span class="text-sm font-semibold text-slate-700">bg-white/90 + backdrop-blur-md + border-slate-100</span>
+                        </div>
+                    </div>
+                    
+                    <div class="p-8 rounded-3xl bg-slate-900 relative border border-slate-800">
+                        <div class="absolute inset-0 bg-blue-500/20 blur-3xl rounded-full"></div>
+                        <div class="relative w-full h-32 bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700/50 flex items-center justify-center">
+                            <span class="text-sm font-semibold text-slate-300">bg-slate-800/50 + border-slate-700/50</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gradients -->
+            <div>
+                <h3 class="text-xl font-semibold text-slate-900 mb-6">Gradients</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="p-8 rounded-3xl bg-gradient-to-b from-blue-50/50 to-white border border-slate-100 flex items-center justify-center h-48">
+                        <span class="text-sm font-semibold text-slate-700">bg-gradient-to-b from-blue-50/50 to-white</span>
+                    </div>
+                    <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 flex items-center justify-center h-48 relative overflow-hidden">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full blur-3xl opacity-50"></div>
+                        <span class="text-sm font-semibold text-slate-700 relative z-10">bg-gradient-to-r from-blue-100 to-purple-100 (blur-3xl)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 3) UI Components -->
+<section class="py-24 bg-slate-50 border-y border-slate-200" id="components">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12 space-y-2">
+            <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider">Library</span>
+            <h2 class="text-3xl md:text-4xl font-semibold text-slate-900 tracking-tight">UI Components</h2>
+        </div>
+
+        <div class="space-y-16">
+            <!-- Buttons -->
+            <div>
+                <h3 class="text-xl font-semibold text-slate-900 mb-6">Buttons</h3>
+                <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-[700px]">
+                        <thead>
+                            <tr class="border-b border-slate-100">
+                                <th class="py-4 text-xs font-semibold text-slate-400 uppercase">Style</th>
+                                <th class="py-4 text-xs font-semibold text-slate-400 uppercase">Default</th>
+                                <th class="py-4 text-xs font-semibold text-slate-400 uppercase">Hover State (Simulated)</th>
+                                <th class="py-4 text-xs font-semibold text-slate-400 uppercase">Classes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Primary -->
+                            <tr class="border-b border-slate-50">
+                                <td class="py-6 text-sm font-medium text-slate-700">Primary</td>
+                                <td class="py-6">
+                                    <a class="inline-flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-full text-sm font-medium transition-all" href="javascript:void(0)">
+                                        <iconify-icon icon="solar:phone-calling-linear" width="20"></iconify-icon> Call Now
+                                    </a>
+                                </td>
+                                <td class="py-6">
+                                    <a class="inline-flex items-center justify-center gap-2 bg-blue-700 text-white px-8 py-4 rounded-full text-sm font-medium shadow-blue-200 shadow-xl transition-all" href="javascript:void(0)">
+                                        <iconify-icon icon="solar:phone-calling-linear" width="20"></iconify-icon> Call Now
+                                    </a>
+                                </td>
+                                <td class="py-6">
+                                    <code class="text-xs bg-slate-100 text-pink-600 px-2 py-1 rounded">bg-blue-600 text-white hover:bg-blue-700 hover:shadow-xl</code>
+                                </td>
+                            </tr>
+                            <!-- Outline -->
+                            <tr class="border-b border-slate-50">
+                                <td class="py-6 text-sm font-medium text-slate-700">Secondary / Outline</td>
+                                <td class="py-6">
+                                    <a class="inline-flex items-center justify-center gap-2 bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-full text-sm font-medium transition-all" href="javascript:void(0)">
+                                        Contact Us <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
+                                    </a>
+                                </td>
+                                <td class="py-6">
+                                    <a class="inline-flex items-center justify-center gap-2 bg-slate-50 text-slate-700 border border-slate-300 px-8 py-4 rounded-full text-sm font-medium transition-all" href="javascript:void(0)">
+                                        Contact Us <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
+                                    </a>
+                                </td>
+                                <td class="py-6">
+                                    <code class="text-xs bg-slate-100 text-pink-600 px-2 py-1 rounded">bg-white border-slate-200 hover:bg-slate-50 hover:border-slate-300</code>
+                                </td>
+                            </tr>
+                            <!-- Dark Mini -->
+                            <tr class="border-b border-slate-50">
+                                <td class="py-6 text-sm font-medium text-slate-700">Dark (Nav)</td>
+                                <td class="py-6">
+                                    <a class="inline-flex items-center gap-2 bg-slate-900 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all" href="javascript:void(0)">
+                                        <iconify-icon icon="solar:phone-calling-linear" width="18"></iconify-icon> <span>Action</span>
+                                    </a>
+                                </td>
+                                <td class="py-6">
+                                    <a class="inline-flex items-center gap-2 bg-slate-800 text-white px-5 py-2.5 rounded-full text-sm font-medium shadow-lg transition-all" href="javascript:void(0)">
+                                        <iconify-icon icon="solar:phone-calling-linear" width="18"></iconify-icon> <span>Action</span>
+                                    </a>
+                                </td>
+                                <td class="py-6">
+                                    <code class="text-xs bg-slate-100 text-pink-600 px-2 py-1 rounded">bg-slate-900 hover:bg-slate-800 hover:shadow-lg</code>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tags -->
+            <div>
+                <h3 class="text-xl font-semibold text-slate-900 mb-6">Badges & Tags</h3>
+                <div class="flex flex-wrap gap-6 bg-white p-8 rounded-3xl border border-slate-100 shadow-sm items-center">
+                    <!-- Hero Tag -->
+                    <div class="inline-flex items-center gap-2 bg-blue-100/50 border border-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">
+                        <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span> Active Tag
+                    </div>
+                    <!-- Outline Tag -->
+                    <span class="px-4 py-2 bg-white border border-slate-200 rounded-full text-xs font-medium text-slate-600">Outline Tag</span>
+                    <!-- Icon Wrappers -->
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center">
+                        <iconify-icon icon="solar:stethoscope-linear" width="24"></iconify-icon>
+                    </div>
+                    <div class="w-12 h-12 bg-rose-100 text-rose-500 rounded-xl flex items-center justify-center">
+                        <iconify-icon icon="solar:magic-stick-3-linear" width="24"></iconify-icon>
+                    </div>
+                    <!-- Floating Round Icon -->
+                    <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors cursor-pointer">
+                        <iconify-icon icon="solar:shield-check-linear" width="24"></iconify-icon>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cards -->
+            <div>
+                <h3 class="text-xl font-semibold text-slate-900 mb-6">Cards</h3>
+                <div class="grid md:grid-cols-2 gap-8 items-start">
+                    
+                    <!-- Base Service Card -->
+                    <div class="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:border-blue-200 transition-colors">
+                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">
+                            <iconify-icon icon="solar:stethoscope-linear" width="24"></iconify-icon>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-900 mb-4">Service Card</h3>
+                        <p class="text-sm text-slate-500 mb-6">Standard descriptive card with a light background and a thin outline border.</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3 text-sm text-slate-700">
+                                <iconify-icon class="text-blue-500" icon="solar:check-circle-linear"></iconify-icon> List item feature
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Floating Action Card -->
+                    <div class="space-y-4">
+                        <a class="bg-white p-6 rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group flex flex-col items-center text-center gap-3" href="javascript:void(0)">
+                            <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                <iconify-icon icon="solar:shield-check-linear" width="24"></iconify-icon>
+                            </div>
+                            <span class="text-sm font-semibold text-slate-700">Floating Card</span>
+                        </a>
+                        <p class="text-xs text-slate-500 text-center">Interactive hover state (group-hover + translateY)</p>
+                    </div>
+
+                    <!-- Details Accordion -->
+                    <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 w-full relative">
+                        <h3 class="text-white font-semibold text-xl mb-6 flex items-center gap-2">
+                            Dark Container
+                        </h3>
+                        <details class="group bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700/50 open:bg-slate-700 transition-all" open>
+                            <summary class="flex justify-between items-center p-4 cursor-pointer font-medium text-white hover:text-blue-400 transition-colors">
+                                Accordion Item
+                                <iconify-icon class="group-open:rotate-180 transition-transform" icon="solar:alt-arrow-down-linear"></iconify-icon>
+                            </summary>
+                            <div class="p-4 pt-0 text-sm text-slate-400">
+                                This reveals details with a smooth background color shift and a rotating arrow icon.
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- 4) Layout & Spacing -->
+<section class="py-24 bg-white" id="layout">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12 space-y-2">
+            <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider">Architecture</span>
+            <h2 class="text-3xl md:text-4xl font-semibold text-slate-900 tracking-tight">Layout &amp; Spacing</h2>
+        </div>
+        
+        <div class="space-y-16">
+            <!-- Split View -->
+            <div>
+                <h3 class="text-xl font-semibold text-slate-900 mb-6">Hero / Split Content Container <span class="text-sm font-normal text-slate-500">(grid md:grid-cols-2 gap-12 items-center)</span></h3>
+                <div class="border border-dashed border-slate-300 rounded-2xl p-6 bg-slate-50">
+                    <div class="grid md:grid-cols-2 gap-12 items-center opacity-70">
+                        <div class="h-32 bg-slate-200 rounded-xl flex items-center justify-center text-sm font-medium text-slate-500">Content / Text Block</div>
+                        <div class="h-32 bg-slate-200 rounded-xl flex items-center justify-center text-sm font-medium text-slate-500">Media / Image</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Standard Grid -->
+            <div>
+                <h3 class="text-xl font-semibold text-slate-900 mb-6">Service Overview Container <span class="text-sm font-normal text-slate-500">(grid md:grid-cols-3 gap-8)</span></h3>
+                <div class="border border-dashed border-slate-300 rounded-2xl p-6 bg-slate-50">
+                    <div class="grid md:grid-cols-3 gap-8 opacity-70">
+                        <div class="h-32 bg-slate-200 rounded-xl flex items-center justify-center text-sm font-medium text-slate-500">Col 1</div>
+                        <div class="h-32 bg-slate-200 rounded-xl flex items-center justify-center text-sm font-medium text-slate-500">Col 2</div>
+                        <div class="h-32 bg-slate-200 rounded-xl flex items-center justify-center text-sm font-medium text-slate-500">Col 3</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Links Grid -->
+            <div>
+                <h3 class="text-xl font-semibold text-slate-900 mb-6">Quick Links Layout <span class="text-sm font-normal text-slate-500">(grid grid-cols-2 md:grid-cols-5 gap-4)</span></h3>
+                <div class="border border-dashed border-slate-300 rounded-2xl p-6 bg-slate-50">
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 opacity-70">
+                        <div class="h-20 bg-slate-200 rounded-xl flex items-center justify-center text-sm">1</div>
+                        <div class="h-20 bg-slate-200 rounded-xl flex items-center justify-center text-sm">2</div>
+                        <div class="h-20 bg-slate-200 rounded-xl flex items-center justify-center text-sm">3</div>
+                        <div class="h-20 bg-slate-200 rounded-xl flex items-center justify-center text-sm">4</div>
+                        <div class="h-20 bg-slate-200 rounded-xl flex items-center justify-center text-sm col-span-2 md:col-span-1">5 (Span 2 to 1)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section paddings block -->
+            <div>
+                <h3 class="text-xl font-semibold text-slate-900 mb-6">Standard Section Utility</h3>
+                <div class="flex gap-4 items-center">
+                    <code class="text-sm bg-slate-100 text-pink-600 px-3 py-2 rounded">py-24</code>
+                    <code class="text-sm bg-slate-100 text-pink-600 px-3 py-2 rounded">max-w-7xl mx-auto px-6</code>
+                </div>
+                <p class="text-sm text-slate-500 mt-2">Pages consist of full width wrapper sections with vertical padding (`py-24`), containing a fixed max-width container (`max-w-7xl`) inside.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 5) Motion & Interaction -->
+<section class="py-24 bg-slate-900 border-t border-slate-800 relative overflow-hidden" id="motion">
+    <div class="absolute inset-0 bg-blue-500/10 blur-3xl rounded-full translate-y-1/2"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="mb-12 space-y-2 text-center">
+            <span class="text-sm font-semibold text-blue-400 uppercase tracking-wider">Animation</span>
+            <h2 class="text-3xl md:text-4xl font-semibold text-white tracking-tight">Motion Gallery</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Pulsing Badge -->
+            <div class="bg-slate-800/80 p-8 rounded-2xl border border-slate-700 flex flex-col items-center justify-center gap-6 min-h-[250px]">
+                <div class="inline-flex items-center gap-2 bg-blue-900/30 border border-blue-800/50 text-blue-400 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">
+                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span> Pulse Point
+                </div>
+                <div class="text-center">
+                    <h4 class="text-white font-medium mb-1">Attention Indicator</h4>
+                    <p class="text-xs text-slate-400">animate-pulse utility</p>
+                </div>
+            </div>
+
+            <!-- Hover Lift -->
+            <div class="bg-slate-800/80 p-8 rounded-2xl border border-slate-700 flex flex-col items-center justify-center gap-6 min-h-[250px]">
+                <div class="bg-white p-4 rounded-xl shadow-lg border border-slate-100 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-900/50 transition-all duration-300 w-32 cursor-pointer flex flex-col items-center gap-2 text-slate-800">
+                    <iconify-icon icon="solar:mouse-circle-linear" class="text-2xl text-blue-600"></iconify-icon>
+                    <span class="text-xs font-medium">Hover me</span>
+                </div>
+                <div class="text-center">
+                    <h4 class="text-white font-medium mb-1">Card Lift</h4>
+                    <p class="text-xs text-slate-400">hover:-translate-y-2 + shadow transition</p>
+                </div>
+            </div>
+
+            <!-- Group Hover & Scale -->
+            <div class="bg-slate-800/80 p-8 rounded-2xl border border-slate-700 flex flex-col items-center justify-center gap-6 min-h-[250px]">
+                <div class="w-40 aspect-[4/3] rounded-xl overflow-hidden border border-slate-600 group cursor-pointer relative">
+                    <img alt="Demo" src="assets/photo-1629909613654-28e377c37b_2c0c511b743b.avif" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80 group-hover:opacity-100" />
+                    <div class="absolute inset-0 flex items-center justify-center -translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold drop-shadow-lg">Scale</div>
+                </div>
+                <div class="text-center">
+                    <h4 class="text-white font-medium mb-1">Image Scale</h4>
+                    <p class="text-xs text-slate-400">group-hover:scale-110 duration-700</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 6) Icons -->
+<section class="py-24 bg-slate-50" id="icons">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+        <div class="mb-12 space-y-2">
+            <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider">Assets</span>
+            <h2 class="text-3xl md:text-4xl font-semibold text-slate-900 tracking-tight">Icon System</h2>
+            <p class="text-slate-500 max-w-xl mx-auto">This project relies on <a href="https://iconify.design" target="_blank" class="text-blue-600 hover:underline">Iconify Solar Icons (Linear)</a> for lightweight SVG rendering via the custom element.</p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-8">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-colors">
+                <iconify-icon icon="solar:tooth-linear" width="28"></iconify-icon>
+                <span class="text-[10px] mt-2 text-slate-400 font-mono">tooth</span>
+            </div>
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-colors">
+                <iconify-icon icon="solar:phone-calling-linear" width="28"></iconify-icon>
+                <span class="text-[10px] mt-2 text-slate-400 font-mono">phone</span>
+            </div>
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-colors">
+                <iconify-icon icon="solar:shield-check-linear" width="28"></iconify-icon>
+                <span class="text-[10px] mt-2 text-slate-400 font-mono">shield</span>
+            </div>
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-colors">
+                <iconify-icon icon="solar:star-shine-linear" width="28"></iconify-icon>
+                <span class="text-[10px] mt-2 text-slate-400 font-mono">star</span>
+            </div>
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-colors">
+                <iconify-icon icon="solar:emoji-funny-circle-linear" width="28"></iconify-icon>
+                <span class="text-[10px] mt-2 text-slate-400 font-mono">emoji</span>
+            </div>
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-colors">
+                <iconify-icon icon="solar:medical-kit-linear" width="28"></iconify-icon>
+                <span class="text-[10px] mt-2 text-slate-400 font-mono">kit</span>
+            </div>
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-colors">
+                <iconify-icon icon="solar:stethoscope-linear" width="28"></iconify-icon>
+                <span class="text-[10px] mt-2 text-slate-400 font-mono">stethoscope</span>
+            </div>
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-colors">
+                <iconify-icon icon="solar:magic-stick-3-linear" width="28"></iconify-icon>
+                <span class="text-[10px] mt-2 text-slate-400 font-mono">magic</span>
+            </div>
+        </div>
+        <div class="text-xs text-slate-400 code block mb-8">
+            <code>&lt;iconify-icon icon="solar:tooth-linear" width="24"&gt;&lt;/iconify-icon&gt;</code>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

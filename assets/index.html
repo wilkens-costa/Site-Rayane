@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dra. Luzia Rayane — Cirurgiã Dentista</title>
+    <meta name="description" content="Dra. Luzia Rayane — Especialista em odontologia estética e funcional. Agende sua consulta e conquiste seu sorriso perfeito." />
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+
+    <!-- Iconify -->
+    <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js" defer></script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+    <style>
+        :root {
+            /* Colors: Burgundy + White */
+            --color-bordo:       #7A1B29;
+            --color-bordo-light: #9B283A;
+            --color-bordo-dark:  #5D121D;
+            --color-white:       #FFFFFF;
+            --color-creme:       #FDFBF9;
+            --color-gray-text:   #4A4A4A;
+            
+            /* Fonts */
+            --font-sans:  'Inter', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+
+            /* Dimensions */
+            --nav-height: 80px;
+            --space-xs:  0.5rem;
+            --space-sm:  0.75rem;
+            --space-md:  1rem;
+            --space-lg:  1.5rem;
+            --space-xl:  2rem;
+            --space-2xl: 3rem;
+            --space-3xl: 4rem;
+
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-sans); color: var(--color-bordo); background: var(--color-creme); overflow-x: hidden; line-height: 1.6; }
+        ::selection { background-color: var(--color-bordo); color: var(--color-white); }
+        img { display: block; max-width: 100%; height: auto; }
+
+        /* ============================================================
+           NAVIGATION (Glassmorphism)
+           ============================================================ */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.85);
+            border-bottom: 1px solid rgba(122, 27, 41, 0.1);
+        }
+        .nav__inner {
+            max-width: 1400px; margin: 0 auto;
+            padding: var(--space-md) var(--space-lg);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .nav__brand { display: flex; align-items: center; gap: var(--space-sm); text-decoration: none; color: var(--color-bordo); }
+        .nav__logo { width: 36px; height: 36px; background: var(--color-bordo); color: var(--color-white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-size: 0.85rem; font-weight: 700; }
+        .nav__name { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; }
+        .nav__name-sub { display: none; margin-left: var(--space-sm); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; background: rgba(122, 27, 41, 0.1); color: var(--color-bordo); padding: 0.3em 0.6em; border-radius: 4px; }
+        
+        .nav__links { display: none; align-items: center; gap: var(--space-lg); list-style: none; }
+        .nav__links a { font-size: 0.875rem; font-weight: 500; color: var(--color-gray-text); text-decoration: none; transition: color 0.3s; }
+        .nav__links a:hover { color: var(--color-bordo); }
+
+        .nav__cta { display: none; align-items: center; gap: var(--space-xs); background: var(--color-bordo); color: var(--color-white); border: 1px solid var(--color-bordo); padding: 0.6rem 1.5rem; border-radius: 999px; font-size: 0.875rem; font-weight: 500; text-decoration: none; transition: all 0.3s; }
+        .nav__cta:hover { background: var(--color-bordo-light); transform: translateY(-1px); }
+        .nav__cta-mobile { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; background: var(--color-bordo); color: var(--color-white); border-radius: 50%; text-decoration: none; transition: all 0.3s; }
+        .nav__cta-mobile:hover { transform: scale(1.08); background: var(--color-bordo-light); }
+        
+        @media (min-width: 768px) {
+            .nav__name-sub { display: inline-block; }
+            .nav__cta-mobile { display: none; }
+            .nav__cta { display: flex; }
+        }
+        @media (min-width: 1024px) { .nav__links { display: flex; } }
+
+        /* ============================================================
+           HERO (Full Page Background)
+           ============================================================ */
+        .hero {
+            position: relative;
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Push card to bottom on mobile */
+            overflow: hidden;
+            padding-top: 45vh; /* Forces space for the photo on mobile */
+        }
+
+        /* Full Background Image */
+        .hero__bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 75% 15%; /* Keeps face visible at top right on mobile */
+            z-index: 0;
+            will-change: transform;
+        }
+
+        @media (min-width: 1024px) {
+            .hero__bg {
+                object-position: 70% 30%; /* Shifted right for desktop */
+            }
+        }
+
+        /* Overlay to ensure text readability over photo */
+        .hero__overlay {
+            position: absolute;
+            inset: 0;
+            /* White fade from bottom and center focus */
+            background: linear-gradient(
+                to top,
+                rgba(255, 255, 255, 0.95) 0%,
+                rgba(255, 255, 255, 0.8) 40%,
+                rgba(255, 255, 255, 0.2) 100%
+            );
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @media (min-width: 1024px) {
+            .hero__overlay {
+                /* On desktop, strong gradient on the left, fading fully transparent on the right to show face */
+                background: linear-gradient(
+                    95deg,
+                    rgba(255, 255, 255, 0.95) 0%,
+                    rgba(255, 255, 255, 0.85) 30%,
+                    rgba(255, 255, 255, 0.3) 55%,
+                    transparent 75%
+                );
+            }
+            .hero {
+                /* Align to the left and center vertically on desktop */
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-start;
+                padding-left: 8%;
+                padding-top: var(--nav-height); /* Reset padding on desktop */
+            }
+        }
+
+        /* Content Container */
+        .hero__content {
+            position: relative;
+            z-index: 10;
+            max-width: 650px;
+            width: 100%;
+            padding: var(--space-xl) var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            
+            /* Glassmorphism card effect on mobile to increase contrast */
+            background: rgba(255, 255, 255, 0.85); /* Slightly more opaque on mobile for readability */
+            backdrop-filter: blur(16px);
+            border-radius: 24px 24px 0 0; /* Only top rounded for bottom flush */
+            border-top: 1px solid rgba(255, 255, 255, 0.9);
+            margin: 0; /* Flush to bottom */
+            padding: var(--space-xl) var(--space-lg) calc(var(--space-2xl) + env(safe-area-inset-bottom, 0px));
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.06);
+            /* z-index is 10 inherently */
+        }
+
+        @media (min-width: 1024px) {
+            .hero__content {
+                /* Remove glass box heavily on desktop since the gradient overlay handles it */
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: none;
+                box-shadow: none;
+                border-color: transparent;
+                margin: 0;
+                padding: var(--space-2xl) var(--space-xl);
+                max-width: 680px;
+                /* Note: Inherits center alignment from mobile base */
+            }
+        }
+
+        /* Pill */
+        .hero__pill {
+            display: inline-flex; align-items: center; gap: var(--space-xs);
+            padding: 0.4rem 0.8rem; border-radius: 999px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(122, 27, 41, 0.15);
+            margin-bottom: var(--space-lg);
+            opacity: 0; transform: translateY(15px);
+        }
+        .hero__pill-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-bordo); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.6); opacity: 0.6; } }
+        .hero__pill-text { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-bordo); }
+
+        /* Titles */
+        .hero__doctor-name { margin-bottom: var(--space-xs); opacity: 0; transform: translateY(20px); }
+        .hero__doctor-name h1 { font-family: var(--font-serif); font-weight: 600; font-size: clamp(3rem, 8vw, 6.5rem); line-height: 0.95; color: var(--color-bordo); letter-spacing: -0.02em; }
+        .hero__doctor-name h1 span { display: block; }
+
+        .hero__tagline { margin-bottom: var(--space-lg); opacity: 0; transform: translateY(20px); }
+        .hero__tagline p { font-family: var(--font-sans); font-weight: 600; font-size: clamp(1.4rem, 4vw, 2.5rem); line-height: 1.1; letter-spacing: -0.02em; color: var(--color-bordo-light); }
+
+        /* Specialties Tags */
+        .hero__specialties {
+            display: flex; flex-wrap: wrap; gap: var(--space-xs);
+            margin-bottom: var(--space-lg);
+            justify-content: center;
+            opacity: 0; transform: translateY(20px);
+        }
+        .hero__specialty-tag {
+            font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+            padding: 0.25rem 0.65rem; border-radius: 999px;
+            background: rgba(122, 27, 41, 0.06); color: var(--color-bordo);
+            border: 1px solid rgba(122, 27, 41, 0.1);
+        }
+
+        /* Subtitle */
+        .hero__subtitle { font-size: 1.05rem; line-height: 1.6; color: var(--color-gray-text); font-weight: 500; margin-bottom: var(--space-md); max-width: 580px; opacity: 0; transform: translateY(20px); }
+
+        /* Buttons */
+        .hero__actions { display: flex; flex-direction: column; width: 100%; gap: var(--space-sm); margin-bottom: var(--space-xl); opacity: 0; transform: translateY(20px); }
+        @media (min-width: 768px) { .hero__actions { flex-direction: row; width: auto; } }
+        
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs); font-family: var(--font-sans); font-weight: 600; font-size: 0.95rem; border-radius: 999px; cursor: pointer; transition: all 0.35s var(--ease-out-expo); text-decoration: none; border: none; padding: 1rem 2rem; }
+        .btn--primary { background: var(--color-bordo); color: var(--color-white); box-shadow: 0 8px 24px rgba(122, 27, 41, 0.25); }
+        .btn--primary:hover { background: var(--color-bordo-light); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(122, 27, 41, 0.35); color: var(--color-white); }
+        
+        .btn--instagram { background: transparent; color: var(--color-bordo); border: 1px solid var(--color-bordo); }
+        .btn--instagram:hover { background: rgba(122, 27, 41, 0.04); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(122, 27, 41, 0.1); }
+        .btn svg, .btn iconify-icon { width: 18px; height: 18px; transition: transform 0.35s; }
+        .btn:hover svg, .btn:hover iconify-icon { transform: translateX(3px); }
+
+        /* Stats */
+        .hero__stats { display: flex; gap: var(--space-xl); opacity: 0; transform: translateY(20px); justify-content: center; padding-top: var(--space-md); border-top: 1px solid rgba(122, 27, 41, 0.1); width: 100%; }
+        .hero__stat { display: flex; flex-direction: column; }
+        .hero__stat-number { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 700; color: var(--color-bordo); line-height: 1; margin-bottom: 0.2rem; }
+        .hero__stat-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-gray-text); }
+
+
+        /* Floating Credential */
+        .cert-card {
+            display: flex; align-items: center; gap: var(--space-sm);
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px);
+            padding: var(--space-sm) var(--space-md); border-radius: var(--radius-lg);
+            border: 1px solid rgba(122, 27, 41, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            opacity: 0; transform: translateY(20px);
+            margin: var(--space-sm) auto var(--space-xl);
+            z-index: 20; position: relative;
+        }
+        @media (min-width: 1024px) {
+            .cert-card { position: absolute; bottom: 8%; right: 8%; margin: 0; }
+        }
+        .cert-card__icon { width: 36px; height: 36px; background: rgba(122, 27, 41, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-bordo); }
+        .cert-card__text { display: flex; flex-direction: column; text-align: left; }
+        .cert-card__title { font-size: 0.8rem; font-weight: 700; color: var(--color-bordo); line-height: 1.2; }
+        .cert-card__sub { font-size: 0.65rem; color: var(--color-gray-text); }
+
+
+        /* ============================================================
+           CONTACT SECTION
+           ============================================================ */
+        .contact { padding: var(--space-4xl) 0; background: var(--color-white); position: relative; z-index: 10; }
+        .contact__container { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-lg); }
+        .contact__header { text-align: center; margin-bottom: var(--space-3xl); }
+        .contact__header h2 { font-family: var(--font-serif); font-size: clamp(2.5rem, 5vw, 3.5rem); color: var(--color-bordo); margin-bottom: var(--space-sm); line-height: 1.1; }
+        .contact__header h2 span { font-style: italic; color: var(--color-bordo-light); font-weight: 400; }
+        .contact__header p { color: var(--color-gray-text); max-width: 600px; margin: 0 auto; font-size: 1.05rem; }
+        
+        .contact__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-2xl); }
+        @media (min-width: 900px) { .contact__grid { grid-template-columns: 1fr 1.2fr; gap: var(--space-3xl); align-items: stretch; } }
+        
+        .contact__info { display: flex; flex-direction: column; gap: var(--space-lg); background: var(--color-creme); padding: var(--space-xl) var(--space-lg); border-radius: 24px; border: 1px solid rgba(122,27,41,0.08); }
+        @media (min-width: 768px) { .contact__info { padding: var(--space-2xl); } }
+        .contact__card { display: flex; align-items: flex-start; gap: var(--space-md); }
+        .contact__card-icon { width: 50px; height: 50px; background: var(--color-white); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-bordo); flex-shrink: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .contact__card h3 { font-size: 1.1rem; font-weight: 600; color: var(--color-bordo); margin-bottom: 0.2rem; line-height: 1.2; }
+        .contact__card p { font-size: 0.95rem; color: var(--color-gray-text); line-height: 1.5; }
+        
+        .contact__map { width: 100%; height: 350px; border-radius: 24px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.06); border: 1px solid rgba(122,27,41,0.08); display: flex; }
+        @media (min-width: 900px) { .contact__map { height: auto; min-height: 100%; } }
+        .contact__map iframe { width: 100%; height: 100%; border: none; flex: 1; min-height: 350px; }
+
+        /* Scroll Spacer */
+        .scroll-spacer { height: 10vh; background: var(--color-white); position: relative; z-index: 10; }
+
+        /* ============================================================
+           FIXED WHATSAPP POPUP
+           ============================================================ */
+        .wpp-popup { position: fixed; bottom: var(--space-lg); right: var(--space-lg); z-index: 200; display: flex; flex-direction: row; align-items: center; gap: var(--space-sm); }
+        .wpp-popup__tooltip { background: var(--color-bordo); color: var(--color-white); padding: 0.6rem 1rem; border-radius: var(--radius-lg); font-size: 0.8rem; font-weight: 600; box-shadow: 0 8px 30px rgba(0,0,0,0.2); white-space: nowrap; opacity: 0; transform: translateX(10px) scale(0.95); animation: tooltipIn 0.6s 2s var(--ease-out-expo) forwards; pointer-events: none; position: relative; }
+        .wpp-popup__tooltip::after { content: ''; position: absolute; top: 50%; right: -5px; width: 10px; height: 10px; background: var(--color-bordo); transform: translateY(-50%) rotate(45deg); border-radius: 2px; }
+        @keyframes tooltipIn { to { opacity: 1; transform: translateX(0) scale(1); } }
+        .wpp-popup__btn { width: 60px; height: 60px; border-radius: 50%; background: #25D366; color: white; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 6px 24px rgba(37,211,102,0.4); transition: transform 0.35s var(--ease-out-expo), box-shadow 0.35s; animation: wppBounce 0.6s 1.5s var(--ease-out-expo) forwards; opacity: 0; transform: scale(0.5); text-decoration: none; }
+        @keyframes wppBounce { 0% { opacity: 0; transform: scale(0.5); } 60% { opacity: 1; transform: scale(1.12); } 100% { opacity: 1; transform: scale(1); } }
+        .wpp-popup__btn:hover { transform: scale(1.1); box-shadow: 0 8px 32px rgba(37,211,102,0.55); }
+        .wpp-popup__btn svg { width: 30px; height: 30px; }
+        @media (min-width: 768px) { .wpp-popup { bottom: var(--space-xl); right: var(--space-xl); } .wpp-popup__btn { width: 66px; height: 66px; } }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--color-creme); }
+        ::-webkit-scrollbar-thumb { background: rgba(122, 27, 41, 0.3); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--color-bordo); }
+    </style>
+</head>
+<body>
+
+    <!-- =============== NAVIGATION =============== -->
+    <nav class="nav" role="navigation" aria-label="Navegação principal">
+        <div class="nav__inner">
+            <a href="#" class="nav__brand" aria-label="Dra. Luzia Rayane">
+                <div class="nav__logo">LR</div>
+                <span class="nav__name">Dra. Luzia Rayane</span>
+                <span class="nav__name-sub">CRO Ativo</span>
+            </a>
+            <ul class="nav__links">
+                <li><a href="#hero">Início</a></li>
+                <li><a href="#tratamentos">Tratamentos</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#depoimentos">Depoimentos</a></li>
+            </ul>
+            <a href="https://wa.me/5585996309485" class="nav__cta" target="_blank" rel="noopener noreferrer">
+                Agendar
+                <iconify-icon icon="solar:arrow-right-bold" width="18"></iconify-icon>
+            </a>
+            <a href="https://wa.me/5585996309485" class="nav__cta-mobile" target="_blank" rel="noopener noreferrer">
+                <iconify-icon icon="solar:chat-round-dots-bold-duotone" width="20"></iconify-icon>
+            </a>
+        </div>
+    </nav>
+
+    <!-- =============== HERO SECTION =============== -->
+    <section class="hero" id="hero">
+        <!-- Full Page Background Image -->
+        <img
+            class="hero__bg"
+            id="heroBg"
+            src="1333.png"
+            alt="Dra. Luzia Rayane sorrindo em seu consultório"
+            loading="eager"
+            fetchpriority="high"
+        />
+        <div class="hero__overlay" id="heroBgOverlay"></div>
+
+        <!-- Glassmorphism Context Card -->
+        <div class="hero__content">
+            
+            <div class="hero__pill" id="heroPill">
+                <span class="hero__pill-dot"></span>
+                <span class="hero__pill-text">Atendimento Exclusivo</span>
+            </div>
+
+            <div class="hero__doctor-name" id="heroDoctorName">
+                <h1>
+                    <span>Dra. Luzia</span>
+                    <span>Rayane</span>
+                </h1>
+            </div>
+
+            <div class="hero__tagline" id="heroTagline">
+                <p>Seu Sorriso Perfeito</p>
+            </div>
+
+            <!-- Subtitle with Updated Copy -->
+            <p class="hero__subtitle" id="heroSubtitle">
+                <strong>Fortaleza, CE.</strong> Ajudo pacientes a conquistarem um sorriso mais bonito, natural e saudável através de tratamentos humanizados e totalmente personalizados ao seu bem-estar.
+            </p>
+
+            <!-- Specialties representing her services -->
+            <div class="hero__specialties" id="heroIcons">
+                <span class="hero__specialty-tag" title="Avaliação completa">Clínica Geral</span>
+                <span class="hero__specialty-tag" title="Lentes e Facetas">Facetas em Resina</span>
+                <span class="hero__specialty-tag" title="Branqueamento a laser e caseiro">Clareamento</span>
+                <span class="hero__specialty-tag" title="Profilaxia e prevenção">Limpeza Completa</span>
+                <span class="hero__specialty-tag" title="Cirurgias diversas">Cirurgias</span>
+                <span class="hero__specialty-tag" title="Lingua presa em bebês e adultos">Freios Orais</span>
+                <span class="hero__specialty-tag" title="Atendimento imediato">Urgência</span>
+            </div>
+
+            <!-- CTA Actions -->
+            <div class="hero__actions" id="heroActions">
+                <a href="https://wa.me/5585996309485?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Luzia%20Rayane%20em%20Fortaleza." class="btn btn--primary" target="_blank" rel="noopener noreferrer">
+                    Agendar Avaliação
+                </a>
+                <a href="https://www.instagram.com/luziarayane.g/" class="btn btn--instagram" target="_blank" rel="noopener noreferrer">
+                    <iconify-icon icon="lucide:instagram" width="18" style="margin-right: 4px;"></iconify-icon>
+                    Instagram
+                </a>
+            </div>
+
+            <div class="hero__stats" id="heroStats">
+                <div class="hero__stat">
+                    <span class="hero__stat-number">CE</span>
+                    <span class="hero__stat-label">Fortaleza</span>
+                </div>
+                <div class="hero__stat">
+                    <span class="hero__stat-number">CRO</span>
+                    <span class="hero__stat-label">Profissional Ativa</span>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Floating Certificate moved outside text container to accurately float relative to full screen -->
+        <div class="cert-card" id="heroFloatCard">
+            <div class="cert-card__icon">
+                <iconify-icon icon="solar:diploma-verified-bold-duotone" width="22"></iconify-icon>
+            </div>
+            <div class="cert-card__text">
+                <span class="cert-card__title">Profissional Certificada</span>
+                <span class="cert-card__sub">CRO Ativo — CE</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============== CONTACT SECTION =============== -->
+    <section class="contact" id="contato">
+        <div class="contact__container">
+            <div class="contact__header">
+                <h2>Onde <span>Atendemos</span></h2>
+                <p>Será um prazer receber você para uma avaliação e planejar o melhor para o seu sorriso e sua saúde bucal.</p>
+            </div>
+            
+            <div class="contact__grid">
+                <!-- Left: Contact Info -->
+                <div class="contact__info">
+                    <div class="contact__card">
+                        <div class="contact__card-icon">
+                            <iconify-icon icon="solar:map-point-bold-duotone" width="24"></iconify-icon>
+                        </div>
+                        <div>
+                            <h3>Marv Clinic</h3>
+                            <p>R. Martinho Rodrigues, 129 - Fátima<br>Fortaleza - CE, 60411-280</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact__card">
+                        <div class="contact__card-icon">
+                            <iconify-icon icon="solar:phone-bold-duotone" width="24"></iconify-icon>
+                        </div>
+                        <div>
+                            <h3>Telefone / WhatsApp</h3>
+                            <p>(85) 99630-9485</p>
+                        </div>
+                    </div>
+                    
+                    <a href="https://wa.me/5585996309485?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Luzia%20Rayane%20na%20Marv%20Clinic." class="btn btn--primary" style="width: 100%; margin-top: auto; padding-top: 1.1rem; padding-bottom: 1.1rem;">
+                        Agendar via WhatsApp
+                        <iconify-icon icon="solar:arrow-right-bold" width="18"></iconify-icon>
+                    </a>
+                </div>
+
+                <!-- Right: Map -->
+                <div class="contact__map">
+                    <iframe 
+                        src="https://maps.google.com/maps?q=Marv%20Clinic,%20R.%20Martinho%20Rodrigues,%20129%20-%20F%C3%A1tima,%20Fortaleza&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Localização da Marv Clinic em Fortaleza">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Spacer -->
+    <div class="scroll-spacer"></div>
+
+    <!-- =============== FIXED WHATSAPP POPUP =============== -->
+    <div class="wpp-popup">
+        <div class="wpp-popup__tooltip">
+            <iconify-icon icon="solar:tooth-bold-duotone" width="14" style="vertical-align: -2px; margin-right: 4px;"></iconify-icon>
+            Fale com a Dra. Luzia!
+        </div>
+        <a href="https://wa.me/5585996309485?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Luzia%20Rayane." class="wpp-popup__btn" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+        </a>
+    </div>
+
+    <!-- =============== GSAP SCRIPT =============== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof gsap === 'undefined') return;
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Intro Animations
+            const tl = gsap.timeline({ defaults: { ease: 'power4.out', duration: 1.2 } });
+            tl.to('#heroPill', { opacity: 1, y: 0, duration: 0.8, delay: 0.2 });
+            tl.to('#heroDoctorName', { opacity: 1, y: 0, duration: 1 }, '-=0.6');
+            tl.to('#heroTagline', { opacity: 1, y: 0, duration: 0.9 }, '-=0.8');
+            tl.to('#heroIcons', { opacity: 1, y: 0, duration: 0.8 }, '-=0.7');
+            tl.to('#heroSubtitle', { opacity: 1, y: 0, duration: 0.8 }, '-=0.6');
+            tl.to('#heroActions', { opacity: 1, y: 0, duration: 0.8 }, '-=0.5');
+            tl.to('#heroStats', { opacity: 1, y: 0, duration: 0.8 }, '-=0.4');
+            tl.to('#heroFloatCard', { opacity: 1, y: 0, duration: 1, ease: 'back.out(1.2)' }, '-=0.4');
+
+            // Parallax Scrubbing
+            const mm = gsap.matchMedia();
+
+            // Desktop parallax (image scales and moves slightly behind)
+            mm.add('(min-width: 1024px)', () => {
+                gsap.to('#heroBg', {
+                    scale: 1.15, yPercent: 10, ease: 'none',
+                    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
+                });
+                gsap.to('.hero__content', {
+                    yPercent: -15, opacity: 0.1, ease: 'none',
+                    scrollTrigger: { trigger: '.hero', start: '10% top', end: '80% top', scrub: 1 }
+                });
+                gsap.to('#heroBgOverlay', {
+                    opacity: 0.4, ease: 'none',
+                    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
+                });
+            });
+
+            // Mobile/Tablet parallax (softer)
+            mm.add('(max-width: 1023px)', () => {
+                gsap.to('#heroBg', {
+                    scale: 1.08, yPercent: 5, ease: 'none',
+                    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.5 }
+                });
+                gsap.to('.hero__content', {
+                    yPercent: -5, opacity: 0.3, ease: 'none',
+                    scrollTrigger: { trigger: '.hero', start: '20% top', end: 'bottom top', scrub: 1.5 }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
