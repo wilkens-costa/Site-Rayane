@@ -66,7 +66,7 @@
             padding: var(--space-md) var(--space-lg);
             display: flex; align-items: center; justify-content: space-between;
         }
-        .nav__brand { display: flex; align-items: center; gap: var(--space-sm); text-decoration: none; color: var(--color-bordo); }
+        .nav__brand { display: flex; align-items: center; gap: var(--space-md); text-decoration: none; color: var(--color-bordo); }
         .nav__logo { width: 36px; height: 36px; background: var(--color-bordo); color: var(--color-white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-size: 0.85rem; font-weight: 700; }
         .nav__name { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; }
         .nav__name-sub { display: none; margin-left: var(--space-sm); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; background: rgba(122, 27, 41, 0.1); color: var(--color-bordo); padding: 0.3em 0.6em; border-radius: 4px; }
@@ -88,54 +88,48 @@
         @media (min-width: 1024px) { .nav__links { display: flex; } }
 
         /* ============================================================
-           HERO (Full Page Background)
+           HERO (Mobile First)
            ============================================================ */
         .hero {
             position: relative;
-            min-height: 100svh;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; /* Push card to bottom on mobile */
-            overflow: hidden;
-            padding-top: 45vh; /* Forces space for the photo on mobile */
+            min-height: 100svh;
+            background: var(--color-creme);
+            padding-top: var(--nav-height);
         }
 
         /* Full Background Image */
         .hero__bg {
-            position: absolute;
-            inset: 0;
+            position: relative;
             width: 100%;
-            height: 100%;
+            height: 45vh; /* Half screen on mobile */
             object-fit: cover;
-            object-position: 75% 15%; /* Keeps face visible at top right on mobile */
+            object-position: center top;
             z-index: 0;
             will-change: transform;
         }
 
-        @media (min-width: 1024px) {
-            .hero__bg {
-                object-position: 70% 30%; /* Shifted right for desktop */
-            }
-        }
-
-        /* Overlay to ensure text readability over photo */
         .hero__overlay {
-            position: absolute;
-            inset: 0;
-            /* White fade from bottom and center focus */
-            background: linear-gradient(
-                to top,
-                rgba(255, 255, 255, 0.95) 0%,
-                rgba(255, 255, 255, 0.8) 40%,
-                rgba(255, 255, 255, 0.2) 100%
-            );
-            z-index: 1;
-            pointer-events: none;
+            display: none; /* No overlay on mobile, stacked layout */
         }
 
         @media (min-width: 1024px) {
+            .hero {
+                flex-direction: row;
+                align-items: center;
+                padding-top: 0;
+            }
+            .hero__bg {
+                position: absolute;
+                inset: 0;
+                height: 100%;
+                object-position: right 30%; /* Shifted right for desktop */
+            }
             .hero__overlay {
-                /* On desktop, strong gradient on the left, fading fully transparent on the right to show face */
+                display: block;
+                position: absolute;
+                inset: 0;
                 background: linear-gradient(
                     95deg,
                     rgba(255, 255, 255, 0.95) 0%,
@@ -143,14 +137,8 @@
                     rgba(255, 255, 255, 0.3) 55%,
                     transparent 75%
                 );
-            }
-            .hero {
-                /* Align to the left and center vertically on desktop */
-                flex-direction: row;
-                align-items: center;
-                justify-content: flex-start;
-                padding-left: 8%;
-                padding-top: var(--nav-height); /* Reset padding on desktop */
+                z-index: 1;
+                pointer-events: none;
             }
         }
 
@@ -158,36 +146,27 @@
         .hero__content {
             position: relative;
             z-index: 10;
-            max-width: 650px;
             width: 100%;
             padding: var(--space-xl) var(--space-lg);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
-            
-            /* Glassmorphism card effect on mobile to increase contrast */
-            background: rgba(255, 255, 255, 0.85); /* Slightly more opaque on mobile for readability */
-            backdrop-filter: blur(16px);
-            border-radius: 24px 24px 0 0; /* Only top rounded for bottom flush */
-            border-top: 1px solid rgba(255, 255, 255, 0.9);
-            margin: 0; /* Flush to bottom */
-            padding: var(--space-xl) var(--space-lg) calc(var(--space-2xl) + env(safe-area-inset-bottom, 0px));
+            align-items: flex-start;
+            text-align: left;
+            background: var(--color-white); /* Solid bg on mobile */
+            border-radius: 24px 24px 0 0;
+            margin-top: -24px; /* Pulls up slightly over the image */
             box-shadow: 0 -10px 40px rgba(0,0,0,0.06);
-            /* z-index is 10 inherently */
+            flex: 1;
         }
 
         @media (min-width: 1024px) {
             .hero__content {
-                /* Remove glass box heavily on desktop since the gradient overlay handles it */
-                background: rgba(255, 255, 255, 0.1);
-                backdrop-filter: none;
+                background: transparent;
                 box-shadow: none;
-                border-color: transparent;
-                margin: 0;
-                padding: var(--space-2xl) var(--space-xl);
+                border-radius: 0;
+                margin-top: 0;
+                padding: var(--space-2xl) var(--space-xl) var(--space-2xl) 8%;
                 max-width: 680px;
-                /* Note: Inherits center alignment from mobile base */
             }
         }
 
@@ -216,15 +195,21 @@
         .hero__specialties {
             display: flex; flex-wrap: wrap; gap: var(--space-xs);
             margin-bottom: var(--space-lg);
-            justify-content: center;
+            justify-content: flex-start;
             opacity: 0; transform: translateY(20px);
         }
         .hero__specialty-tag {
+            display: inline-flex; align-items: center; gap: 4px;
             font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
-            padding: 0.25rem 0.65rem; border-radius: 999px;
+            padding: 0.35rem 0.8rem; border-radius: 999px;
             background: rgba(122, 27, 41, 0.06); color: var(--color-bordo);
             border: 1px solid rgba(122, 27, 41, 0.1);
+            transition: all 0.3s var(--ease-out-expo);
         }
+        .hero__specialty-tag:hover {
+            background: rgba(122, 27, 41, 0.1); transform: translateY(-2px);
+        }
+        .hero__specialty-tag iconify-icon { font-size: 1.1em; color: var(--color-bordo-light); }
 
         /* Subtitle */
         .hero__subtitle { font-size: 1.05rem; line-height: 1.6; color: var(--color-gray-text); font-weight: 500; margin-bottom: var(--space-md); max-width: 580px; opacity: 0; transform: translateY(20px); }
@@ -243,11 +228,49 @@
         .btn:hover svg, .btn:hover iconify-icon { transform: translateX(3px); }
 
         /* Stats */
-        .hero__stats { display: flex; gap: var(--space-xl); opacity: 0; transform: translateY(20px); justify-content: center; padding-top: var(--space-md); border-top: 1px solid rgba(122, 27, 41, 0.1); width: 100%; }
+        .hero__stats { display: flex; gap: var(--space-xl); opacity: 0; transform: translateY(20px); justify-content: flex-start; padding-top: var(--space-md); border-top: 1px solid rgba(122, 27, 41, 0.1); width: 100%; }
         .hero__stat { display: flex; flex-direction: column; }
         .hero__stat-number { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 700; color: var(--color-bordo); line-height: 1; margin-bottom: 0.2rem; }
         .hero__stat-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-gray-text); }
 
+
+        /* ============================================================
+           SECTIONS GLOBALS
+           ============================================================ */
+        .section-padding { padding: 6rem 0; }
+        .section-title { text-align: center; margin-bottom: var(--space-3xl); }
+        .section-title h2 { font-family: var(--font-serif); font-size: clamp(2.5rem, 5vw, 3.5rem); color: var(--color-bordo); margin-bottom: var(--space-sm); line-height: 1.1; }
+        .section-title h2 span { font-style: italic; color: var(--color-bordo-light); font-weight: 400; }
+        .section-title p { color: var(--color-gray-text); font-size: 1.05rem; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+
+        /* ============================================================
+           TRATAMENTOS SECTION
+           ============================================================ */
+        .tratamentos { background: var(--color-white); position: relative; z-index: 10; }
+        .tratamentos__container { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-lg); }
+        .tratamentos__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-xl); margin-top: var(--space-xl); }
+        @media (min-width: 768px) { .tratamentos__grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-2xl); } }
+        @media (min-width: 1024px) { .tratamentos__grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .tratamento-card { background: var(--color-creme); border-radius: 24px; padding: var(--space-xl); border: 1px solid rgba(122, 27, 41, 0.06); transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; gap: var(--space-md); }
+        .tratamento-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(122, 27, 41, 0.06); border-color: rgba(122, 27, 41, 0.15); }
+        .tratamento-card iconify-icon { font-size: 2.2rem; color: var(--color-bordo); padding: 14px; background: rgba(122, 27, 41, 0.05); border-radius: 16px; align-self: flex-start; }
+        .tratamento-card h3 { font-size: 1.25rem; font-weight: 700; color: var(--color-bordo); line-height: 1.3; margin: 0; }
+        .tratamento-card p { font-size: 0.95rem; color: var(--color-gray-text); line-height: 1.6; margin: 0; }
+
+        /* ============================================================
+           SOBRE SECTION
+           ============================================================ */
+        .sobre { background: var(--color-creme); position: relative; z-index: 10; }
+        .sobre__container { max-width: 900px; margin: 0 auto; padding: 0 var(--space-lg); }
+        .sobre__content { background: var(--color-white); padding: var(--space-xl); border-radius: 24px; border: 1px solid rgba(122,27,41,0.06); box-shadow: 0 10px 40px rgba(0,0,0,0.04); }
+        @media (min-width: 768px) { .sobre__content { padding: var(--space-3xl); } }
+        .sobre__content p { font-size: 1.1rem; color: var(--color-gray-text); line-height: 1.7; margin-bottom: var(--space-lg); text-align: left; }
+        .sobre__servicos { margin-top: var(--space-2xl); padding-top: var(--space-xl); border-top: 1px solid rgba(122,27,41,0.08); text-align: left; }
+        .sobre__servicos h3 { font-size: 1.3rem; color: var(--color-bordo); margin-bottom: var(--space-md); font-weight: 700; }
+        .sobre__servicos ul { list-style: none; display: flex; flex-direction: column; gap: var(--space-md); }
+        .sobre__servicos li { display: flex; align-items: flex-start; gap: var(--space-sm); font-size: 1.05rem; color: var(--color-gray-text); line-height: 1.5; font-weight: 500; }
+        .sobre__servicos li iconify-icon { color: var(--color-bordo-light); font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
 
         /* Floating Credential */
         .cert-card {
@@ -272,12 +295,8 @@
         /* ============================================================
            CONTACT SECTION
            ============================================================ */
-        .contact { padding: 6rem 0; background: var(--color-white); position: relative; z-index: 10; }
+        .contact { background: var(--color-white); position: relative; z-index: 10; }
         .contact__container { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-lg); }
-        .contact__header { text-align: center; margin-bottom: var(--space-3xl); }
-        .contact__header h2 { font-family: var(--font-serif); font-size: clamp(2.5rem, 5vw, 3.5rem); color: var(--color-bordo); margin-bottom: var(--space-sm); line-height: 1.1; }
-        .contact__header h2 span { font-style: italic; color: var(--color-bordo-light); font-weight: 400; }
-        .contact__header p { color: var(--color-gray-text); max-width: 600px; margin: 0 auto; font-size: 1.05rem; }
         
         .contact__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-2xl); }
         @media (min-width: 900px) { .contact__grid { grid-template-columns: 1fr 1.2fr; gap: var(--space-3xl); align-items: stretch; } }
@@ -309,6 +328,57 @@
         .wpp-popup__btn svg { width: 30px; height: 30px; }
         @media (min-width: 768px) { .wpp-popup { bottom: var(--space-xl); right: var(--space-xl); } .wpp-popup__btn { width: 66px; height: 66px; } }
 
+
+
+        /* ============================================================
+           DECORATIVE ELEMENTS (Tooth PNG)
+           ============================================================ */
+        .hero__floating-tooth {
+            position: absolute;
+            z-index: 25;
+            width: 60px; /* Small icon size for mobile */
+            right: 1.5rem;
+            top: calc(45vh - 40px); /* Peeking above the absolute content card bounding box */
+            opacity: 0.9;
+            pointer-events: none;
+            animation: floatTooth 6s ease-in-out infinite;
+        }
+        @keyframes floatTooth {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-12px) rotate(5deg); }
+        }
+        
+        .contact__watermark {
+            display: block;
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 150px;
+            opacity: 0.25; /* Noticeable on white bg */
+            pointer-events: none;
+            z-index: 1; /* Sits naturally behind text (text container is z-index:10) */
+            transform: rotate(-10deg);
+        }
+
+        @media (min-width: 1024px) {
+            .hero__floating-tooth {
+                width: clamp(150px, 18vw, 280px); /* Substantial graphic for empty shelf background */
+                top: 25%;
+                left: auto; /* Removes legacy left anchors */
+                right: 5%; /* Perfect anchoring on the far-right edge */
+                opacity: 0.8;
+            }
+            .contact__watermark {
+                top: 0;
+                left: -2%;
+                right: auto;
+                width: 35vw;
+                max-width: 500px;
+                opacity: 0.1;
+                transform: rotate(-15deg);
+            }
+        }
+
         /* Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--color-creme); }
@@ -324,13 +394,12 @@
             <a href="#" class="nav__brand" aria-label="Dra. Luzia Rayane">
                 <div class="nav__logo">LR</div>
                 <span class="nav__name">Dra. Luzia Rayane</span>
-                <span class="nav__name-sub">CRO Ativo</span>
+                <span class="nav__name-sub">CRO CE 16735</span>
             </a>
             <ul class="nav__links">
                 <li><a href="#hero">Início</a></li>
                 <li><a href="#tratamentos">Tratamentos</a></li>
                 <li><a href="#sobre">Sobre</a></li>
-                <li><a href="#depoimentos">Depoimentos</a></li>
             </ul>
             <a href="https://wa.me/5585996309485" class="nav__cta" target="_blank" rel="noopener noreferrer">
                 Agendar
@@ -354,6 +423,9 @@
             fetchpriority="high"
         />
         <div class="hero__overlay" id="heroBgOverlay"></div>
+
+        <!-- Floating Tooth Decoration (Absolute to full-bleed hero container) -->
+        <img src="assets/images/dente.png" class="hero__floating-tooth" alt="" aria-hidden="true" />
 
         <!-- Glassmorphism Context Card -->
         <div class="hero__content">
@@ -379,15 +451,14 @@
                 <strong>Fortaleza, CE.</strong> Ajudo pacientes a conquistarem um sorriso mais bonito, natural e saudável através de tratamentos humanizados e totalmente personalizados ao seu bem-estar.
             </p>
 
-            <!-- Specialties representing her services -->
+            <!-- Specialties representing her services with Dental Icons -->
             <div class="hero__specialties" id="heroIcons">
-                <span class="hero__specialty-tag" title="Avaliação completa">Clínica Geral</span>
-                <span class="hero__specialty-tag" title="Lentes e Facetas">Facetas em Resina</span>
-                <span class="hero__specialty-tag" title="Branqueamento a laser e caseiro">Clareamento</span>
-                <span class="hero__specialty-tag" title="Profilaxia e prevenção">Limpeza Completa</span>
-                <span class="hero__specialty-tag" title="Cirurgias diversas">Cirurgias</span>
-                <span class="hero__specialty-tag" title="Lingua presa em bebês e adultos">Freios Orais</span>
-                <span class="hero__specialty-tag" title="Atendimento imediato">Urgência</span>
+                <span class="hero__specialty-tag"><iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon> Adulto e Infantil</span>
+                <span class="hero__specialty-tag"><iconify-icon icon="solar:magic-stick-3-bold-duotone"></iconify-icon> Clareamento</span>
+                <span class="hero__specialty-tag"><iconify-icon icon="solar:adhesive-plaster-bold-duotone"></iconify-icon> Restaurações</span>
+                <span class="hero__specialty-tag"><iconify-icon icon="solar:star-fall-bold-duotone"></iconify-icon> Facetas de Resina</span>
+                <span class="hero__specialty-tag"><iconify-icon icon="solar:health-bold-duotone"></iconify-icon> Cirurgias</span>
+                <span class="hero__specialty-tag"><iconify-icon icon="solar:siren-loud-bold-duotone"></iconify-icon> Urgência</span>
             </div>
 
             <!-- CTA Actions -->
@@ -407,8 +478,8 @@
                     <span class="hero__stat-label">Fortaleza</span>
                 </div>
                 <div class="hero__stat">
-                    <span class="hero__stat-number">CRO</span>
-                    <span class="hero__stat-label">Profissional Ativa</span>
+                    <span class="hero__stat-number">16735</span>
+                    <span class="hero__stat-label">CRO / CE</span>
                 </div>
             </div>
             
@@ -421,17 +492,89 @@
             </div>
             <div class="cert-card__text">
                 <span class="cert-card__title">Profissional Certificada</span>
-                <span class="cert-card__sub">CRO Ativo — CE</span>
+                <span class="cert-card__sub">CRO CE 16735</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============== TRATAMENTOS SECTION =============== -->
+    <section class="tratamentos section-padding" id="tratamentos">
+        <div class="tratamentos__container">
+            <div class="section-title">
+                <h2>Nossos <span>Tratamentos</span></h2>
+                <p>Soluções completas e inovadoras para conquistar um sorriso perfeito e manter a saúde bucal da sua família.</p>
+            </div>
+            
+            <div class="tratamentos__grid">
+                <div class="tratamento-card">
+                    <iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon>
+                    <h3>Atendimento adulto e infantil</h3>
+                    <p>Prevenção e cuidado odontológico focado em todas as idades, com uma abordagem extremamente acolhedora e pacífica.</p>
+                </div>
+                <div class="tratamento-card">
+                    <iconify-icon icon="solar:magic-stick-3-bold-duotone"></iconify-icon>
+                    <h3>Clareamento</h3>
+                    <p>Técnicas modernas e seguras de branqueamento dental para trazer radiância e juventude imediata ao seu sorriso.</p>
+                </div>
+                <div class="tratamento-card">
+                    <iconify-icon icon="solar:adhesive-plaster-bold-duotone"></iconify-icon>
+                    <h3>Restaurações</h3>
+                    <p>Devolução integral da função mastigatória e da anatomia estética do dente, utilizando resinas de última geração.</p>
+                </div>
+                <div class="tratamento-card">
+                    <iconify-icon icon="solar:star-fall-bold-duotone"></iconify-icon>
+                    <h3>Facetas de resina</h3>
+                    <p>Correção impecável de cor, formato e alinhamento dos dentes de forma ágil com lentes e facetas de resina composta.</p>
+                </div>
+                <div class="tratamento-card">
+                    <iconify-icon icon="solar:health-bold-duotone"></iconify-icon>
+                    <h3>Cirurgia</h3>
+                    <p>Procedimentos cirúrgicos precisos e indolores, incluindo extrações dentárias seguras e cirurgias curativas de freios orais (língua presa).</p>
+                </div>
+                <div class="tratamento-card">
+                    <iconify-icon icon="solar:siren-loud-bold-duotone"></iconify-icon>
+                    <h3>Urgência odontológica</h3>
+                    <p>Amparo imediato focado no alívio rápido da dor e no controle absolutamente seguro de condições crônicas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============== SOBRE SECTION =============== -->
+    <section class="sobre section-padding" id="sobre">
+        <div class="sobre__container">
+            <div class="section-title">
+                <h2>Sobre a <span>Doutora</span></h2>
+                <p>Conheça nossa trajetória dedicada a transformar sorrisos de forma humana e respeitosa.</p>
+            </div>
+            <div class="sobre__content">
+                <p>Com um profundo amor pela profissão que escolhi, construí meu método de atendimento baseado majoritariamente na humanização clínica. Para mim, a odontologia vai muito além da estética: é um resgate puro da sua autoestima, sempre alinhado à mais rigorosa preservação da saúde estrutural de quem senta em minha cadeira.</p>
+                
+                <p>Na minha rotina, dedico-me a planejar e executar cada etapa do tratamento respeitando o seu ritmo e as suas expectativas. Esclarecemos integralmente todos os passos da consulta e atuamos incessantemente para que sua visita ao dentista seja percebida amplamente como um momento tranquilo, libertador e de forte autocuidado.</p>
+                
+                <div class="sobre__servicos">
+                    <h3>Serviços Inclusos em Nosso Escopo:</h3>
+                    <ul>
+                        <li><iconify-icon icon="solar:smile-circle-bold-duotone"></iconify-icon> Atendimento acolhedor 100% qualificado para a saúde vitalícia de todas as idades (adultos e infantil) 🦷</li>
+                        <li><iconify-icon icon="solar:magic-stick-3-bold-duotone"></iconify-icon> Clareamentos avançados e refinadas confecções de Restaurações em blocos de alta vida útil ✨</li>
+                        <li><iconify-icon icon="solar:star-fall-bold-duotone"></iconify-icon> Facetas e lentes em resina personalizadas para o encaixe paramétrico ideal com os lábios</li>
+                        <li><iconify-icon icon="solar:health-bold-duotone"></iconify-icon> Procedimentos de cirurgia e reabilitação de micro-tecidos (extrações e diagnóstico de freios orais retidos)</li>
+                        <li><iconify-icon icon="solar:siren-loud-bold-duotone"></iconify-icon> Plantão e recepção instantânea de urgências com analgesia assertiva 🚨</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- =============== CONTACT SECTION =============== -->
-    <section class="contact" id="contato">
+    <section class="contact section-padding" id="contato">
+        <!-- Abstract Watermark (Desktop Only) -->
+        <img src="assets/images/dente.png" class="contact__watermark" alt="" aria-hidden="true" />
+        
         <div class="contact__container">
-            <div class="contact__header">
+            <div class="section-title">
                 <h2>Onde <span>Atendemos</span></h2>
-                <p>Será um prazer receber você para uma avaliação e planejar o melhor para o seu sorriso e sua saúde bucal.</p>
+                <p>Será um prazer receber você para uma avaliação minuciosa e planejar o futuro do seu sorriso.</p>
             </div>
             
             <div class="contact__grid">
@@ -540,6 +683,8 @@
                     scrollTrigger: { trigger: '.hero', start: '20% top', end: 'bottom top', scrub: 1.5 }
                 });
             });
+
+
         });
     </script>
 </body>
