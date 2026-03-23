@@ -197,7 +197,16 @@
                 z-index: 10;
                 margin-left: 10%; /* Shifted right for better visual 'sweet spot' */
             }
-            .hero__specialties { justify-content: flex-start; }
+            .hero__subtitle {
+                max-width: 480px; /* Strict left containment */
+                text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9), 0 2px 10px rgba(255, 255, 255, 0.6); /* Reading safety glow */
+            }
+            .hero__specialties { 
+                justify-content: flex-start; 
+                flex-wrap: wrap; 
+                gap: 10px; 
+                max-width: 480px; /* Match subtitle width */
+            }
             .hero__container { align-items: flex-start; justify-content: flex-start; width: 100%; }
         }
 
@@ -287,17 +296,28 @@
         .tratamentos__container .section-title { padding: 0 var(--space-lg); text-align: left; }
         
         .tratamentos__grid { 
-            display: flex; gap: var(--space-md); overflow-x: auto; 
-            scroll-snap-type: x mandatory; padding: var(--space-lg) var(--space-xl); 
-            scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Hide scrollbar Firefox */
+            display: flex; overflow: hidden; /* Prevent manual scrolling */
+            gap: var(--space-md); /* Ensures concrete space between the duplicated tracks */
+            padding: var(--space-lg) 0; /* Remove horizontal padding so loop is seamless */
             margin-top: var(--space-xl);
+            width: 100%;
         }
-        .tratamentos__grid::-webkit-scrollbar { display: none; } /* Hide scrollbar Chrome/Safari */
+        .tratamentos__track {
+            display: flex; gap: var(--space-md);
+            animation: marquee 35s linear infinite;
+            width: max-content;
+            flex-shrink: 0; /* CRITICAL: Prevents flexbox from squeezing the tracks and overlapping cards */
+        }
+        .tratamentos__track:hover { animation-play-state: paused; }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-100% - var(--space-md))); } /* Exact width minus gap for seamless loop */
+        }
 
         .tratamento-card { 
             background: var(--color-creme); border-radius: 24px; padding: var(--space-xl); border: 1px solid rgba(122, 27, 41, 0.06); 
-            transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; gap: var(--space-md); min-width: 85vw; scroll-snap-align: center; flex-shrink: 0; 
+            transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; gap: var(--space-md);
+            width: 85vw; max-width: 320px; flex-shrink: 0; 
         }
         .tratamento-card iconify-icon { font-size: 2.2rem; color: var(--color-bordo); padding: 14px; background: rgba(122, 27, 41, 0.05); border-radius: 16px; align-self: flex-start; }
         .tratamento-card h3 { font-size: 1.3rem; font-weight: 700; color: var(--color-bordo); line-height: 1.3; margin: 0; }
@@ -305,8 +325,7 @@
 
         @media (min-width: 1024px) { 
             .tratamentos__container .section-title { text-align: center; padding: 0; }
-            .tratamentos__grid { display: grid; grid-template-columns: repeat(3, 1fr); overflow-x: visible; padding: 0 var(--space-lg); margin-top: var(--space-2xl); }
-            .tratamento-card { min-width: auto; }
+            .tratamento-card { width: 350px; }
             .tratamento-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(122, 27, 41, 0.06); border-color: rgba(122, 27, 41, 0.15); }
         }
 
@@ -375,6 +394,15 @@
 
         /* Scroll Spacer */
         .scroll-spacer { height: 10vh; background: var(--color-white); position: relative; z-index: 10; }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        .footer {
+            text-align: center; padding: var(--space-lg); background: var(--color-white); border-top: 1px solid rgba(122,27,41,0.05); font-size: 0.85rem; color: var(--color-gray-text); margin-bottom: 65px; /* Offset for mobile tab bar */
+        }
+        .footer a { color: var(--color-bordo); text-decoration: none; font-weight: 600; }
+        @media(min-width: 1024px) { .footer { margin-bottom: 0; } }
 
         /* ============================================================
            FIXED WHATSAPP POPUP
@@ -586,35 +614,71 @@
             </div>
             
             <div class="tratamentos__grid">
-                <div class="tratamento-card">
-                    <iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon>
-                    <h3>Atendimento adulto e infantil</h3>
-                    <p>Prevenção e cuidado odontológico focado em todas as idades, com uma abordagem extremamente acolhedora e pacífica.</p>
+                <!-- Track 1 -->
+                <div class="tratamentos__track">
+                    <div class="tratamento-card">
+                        <iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon>
+                        <h3>Atendimento adulto e infantil</h3>
+                        <p>Prevenção e cuidado odontológico focado em todas as idades, com uma abordagem extremamente acolhedora e pacífica.</p>
+                    </div>
+                    <div class="tratamento-card">
+                        <iconify-icon icon="solar:magic-stick-3-bold-duotone"></iconify-icon>
+                        <h3>Clareamento</h3>
+                        <p>Técnicas modernas e seguras de branqueamento dental para trazer radiância e juventude imediata ao seu sorriso.</p>
+                    </div>
+                    <div class="tratamento-card">
+                        <iconify-icon icon="solar:adhesive-plaster-bold-duotone"></iconify-icon>
+                        <h3>Restaurações</h3>
+                        <p>Devolução integral da função mastigatória e da anatomia estética do dente, utilizando resinas de última geração.</p>
+                    </div>
+                    <div class="tratamento-card">
+                        <iconify-icon icon="solar:star-fall-bold-duotone"></iconify-icon>
+                        <h3>Facetas de resina</h3>
+                        <p>Correção impecável de cor, formato e alinhamento dos dentes de forma ágil com lentes e facetas de resina composta.</p>
+                    </div>
+                    <div class="tratamento-card">
+                        <iconify-icon icon="solar:health-bold-duotone"></iconify-icon>
+                        <h3>Cirurgia</h3>
+                        <p>Procedimentos cirúrgicos precisos e indolores, incluindo extrações dentárias seguras e cirurgias curativas de freios orais (língua presa).</p>
+                    </div>
+                    <div class="tratamento-card">
+                        <iconify-icon icon="solar:siren-loud-bold-duotone"></iconify-icon>
+                        <h3>Urgência odontológica</h3>
+                        <p>Amparo imediato focado no alívio rápido da dor e no controle absolutamente seguro de condições crônicas.</p>
+                    </div>
                 </div>
-                <div class="tratamento-card">
-                    <iconify-icon icon="solar:magic-stick-3-bold-duotone"></iconify-icon>
-                    <h3>Clareamento</h3>
-                    <p>Técnicas modernas e seguras de branqueamento dental para trazer radiância e juventude imediata ao seu sorriso.</p>
-                </div>
-                <div class="tratamento-card">
-                    <iconify-icon icon="solar:adhesive-plaster-bold-duotone"></iconify-icon>
-                    <h3>Restaurações</h3>
-                    <p>Devolução integral da função mastigatória e da anatomia estética do dente, utilizando resinas de última geração.</p>
-                </div>
-                <div class="tratamento-card">
-                    <iconify-icon icon="solar:star-fall-bold-duotone"></iconify-icon>
-                    <h3>Facetas de resina</h3>
-                    <p>Correção impecável de cor, formato e alinhamento dos dentes de forma ágil com lentes e facetas de resina composta.</p>
-                </div>
-                <div class="tratamento-card">
-                    <iconify-icon icon="solar:health-bold-duotone"></iconify-icon>
-                    <h3>Cirurgia</h3>
-                    <p>Procedimentos cirúrgicos precisos e indolores, incluindo extrações dentárias seguras e cirurgias curativas de freios orais (língua presa).</p>
-                </div>
-                <div class="tratamento-card">
-                    <iconify-icon icon="solar:siren-loud-bold-duotone"></iconify-icon>
-                    <h3>Urgência odontológica</h3>
-                    <p>Amparo imediato focado no alívio rápido da dor e no controle absolutamente seguro de condições crônicas.</p>
+                <!-- Track 2 (Duplicate for Loop) -->
+                <div class="tratamentos__track" aria-hidden="true">
+                    <div class="tratamento-card">
+                        <iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon>
+                        <h3>Atendimento adulto e infantil</h3>
+                        <p>Prevenção e cuidado odontológico focado em todas as idades, com uma abordagem extremamente acolhedora e pacífica.</p>
+                    </div>
+                    <div class="tratamento-card">
+                        <iconify-icon icon="solar:magic-stick-3-bold-duotone"></iconify-icon>
+                        <h3>Clareamento</h3>
+                        <p>Técnicas modernas e seguras de branqueamento dental para trazer radiância e juventude imediata ao seu sorriso.</p>
+                    </div>
+                    <div class="tratamento-card">
+                        <iconify-icon icon="solar:adhesive-plaster-bold-duotone"></iconify-icon>
+                        <h3>Restaurações</h3>
+                        <p>Devolução integral da função mastigatória e da anatomia estética do dente, utilizando resinas de última geração.</p>
+                    </div>
+                    <div class="tratamento-card">
+                        <iconify-icon icon="solar:star-fall-bold-duotone"></iconify-icon>
+                        <h3>Facetas de resina</h3>
+                        <p>Correção impecável de cor, formato e alinhamento dos dentes de forma ágil com lentes e facetas de resina composta.</p>
+                    </div>
+                    <div class="tratamento-card">
+                        <iconify-icon icon="solar:health-bold-duotone"></iconify-icon>
+                        <h3>Cirurgia</h3>
+                        <p>Procedimentos cirúrgicos precisos e indolores, incluindo extrações dentárias seguras e cirurgias curativas de freios orais (língua presa).</p>
+                    </div>
+                    <div class="tratamento-card">
+                        <iconify-icon icon="solar:siren-loud-bold-duotone"></iconify-icon>
+                        <h3>Urgência odontológica</h3>
+                        <p>Amparo imediato focado no alívio rápido da dor e no controle absolutamente seguro de condições crônicas.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -709,6 +773,11 @@
     <!-- Spacer -->
     <div class="scroll-spacer"></div>
 
+    <!-- =============== FOOTER =============== -->
+    <footer class="footer">
+        <p>Desenvolvido por <a href="https://wa.me/5585986177778" target="_blank" rel="noopener noreferrer">Wilkens Costa</a></p>
+    </footer>
+
     <!-- =============== FIXED WHATSAPP POPUP =============== -->
     <div class="wpp-popup">
         <div class="wpp-popup__tooltip">
@@ -740,24 +809,7 @@
             tl.to('#heroStats', { opacity: 1, y: 0, duration: 0.8 }, '-=0.4');
             tl.to('#heroFloatCard', { opacity: 1, y: 0, duration: 1, ease: 'back.out(1.2)' }, '-=0.4');
 
-            // Auto-scroll Tratamentos Carousel (Mobile Only)
-            const grid = document.querySelector('.tratamentos__grid');
-            if (grid && window.innerWidth < 1024) {
-                let autoScroll = setInterval(() => {
-                    const card = grid.querySelector('.tratamento-card');
-                    if (!card) return;
-                    const scrollAmount = card.offsetWidth + 20; // width + gap
-                    
-                    if (grid.scrollLeft + grid.offsetWidth >= grid.scrollWidth - 50) {
-                        grid.scrollTo({ left: 0, behavior: 'smooth' });
-                    } else {
-                        grid.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-                    }
-                }, 4000);
-
-                // Stop auto-scroll on user interaction
-                grid.addEventListener('touchstart', () => clearInterval(autoScroll), { passive: true });
-            }
+            // Removed redundant manual auto-scroll logic in favor of CSS pure marquee
 
             // Scroll Spy for Bottom Bar
             const sections = document.querySelectorAll('section[id]');
@@ -792,10 +844,6 @@
                     scale: 1.15, yPercent: 10, ease: 'none',
                     scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
                 });
-                gsap.to('.hero__content', {
-                    yPercent: -15, opacity: 0.1, ease: 'none',
-                    scrollTrigger: { trigger: '.hero', start: '10% top', end: '80% top', scrub: 1 }
-                });
                 gsap.to('#heroBgOverlay', {
                     opacity: 0.4, ease: 'none',
                     scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
@@ -807,10 +855,6 @@
                 gsap.to('#heroBg', {
                     scale: 1.08, yPercent: 5, ease: 'none',
                     scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.5 }
-                });
-                gsap.to('.hero__content', {
-                    yPercent: -5, opacity: 0.3, ease: 'none',
-                    scrollTrigger: { trigger: '.hero', start: '20% top', end: 'bottom top', scrub: 1.5 }
                 });
             });
 
