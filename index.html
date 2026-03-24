@@ -50,7 +50,7 @@
             --glass-shadow: 0 8px 32px rgba(122, 27, 41, 0.08);
 
             /* Responsive Header Height */
-            --nav-height: 60px; /* Thinner mobile header */
+            --nav-height: 75px; /* Increased to fit the full cert-card */
         }
         @media (min-width: 1024px) { :root { --nav-height: 85px; } }
 
@@ -69,16 +69,17 @@
             background: var(--color-white);
             border-bottom: 1px solid rgba(122, 27, 41, 0.08);
             box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+            height: var(--nav-height); /* Explicit height seals the gap */
+            display: flex; align-items: center; /* Center children vertically */
         }
         .nav__inner {
-            max-width: 1400px; margin: 0 auto;
-            padding: var(--space-sm) var(--space-lg); /* Reduced padding for thinner header */
+            max-width: 1400px; margin: 0 auto; width: 100%;
+            padding: 0 var(--space-lg); /* Allow height to stretch instead of padding */
             display: flex; align-items: center; justify-content: space-between;
         }
-        .nav__brand { display: flex; align-items: center; gap: var(--space-sm); text-decoration: none; color: var(--color-bordo); width: 100%; }
-        .nav__logo { width: 34px; height: 34px; background: var(--color-bordo); color: var(--color-white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-size: 0.85rem; font-weight: 700; }
-        .nav__name { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.02em; }
-        .nav__name-sub { display: inline-block; margin-left: auto; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; background: rgba(122, 27, 41, 0.1); color: var(--color-bordo); padding: 0.3em 0.5em; border-radius: 4px; }
+        .nav__brand { display: flex; align-items: center; gap: 6px; text-decoration: none; color: var(--color-bordo); max-width: 50%; }
+        .nav__logo { width: 30px; height: 30px; background: var(--color-bordo); color: var(--color-white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+        .nav__name { font-size: 0.95rem; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .nav__links-desktop { display: none; } /* Strictly hidden on mobile */
 
 
@@ -101,7 +102,6 @@
             .nav__inner { justify-content: space-between; padding: var(--space-md) var(--space-lg); }
             .nav__logo { width: 36px; height: 36px; font-size: 0.85rem; }
             .nav__name { font-size: 1.1rem; }
-            .nav__name-sub { margin-left: var(--space-sm); padding: 0.3em 0.6em; }
             .nav__brand { gap: var(--space-md); width: auto; }
             .nav-bottom { display: none; } 
             .nav__links-desktop { display: flex; align-items: center; gap: var(--space-lg); list-style: none; margin: 0; padding: 0; }
@@ -425,24 +425,29 @@
             .sobre__block p { font-size: 1.1rem; line-height: 1.6; }
         }
 
-        /* Floating Credential */
+        /* Header Certification Card */
         .cert-card {
-            display: flex; align-items: center; gap: var(--space-sm);
+            display: flex; align-items: center; gap: 6px;
             background: #ffffff;
-            padding: var(--space-sm) var(--space-md); border-radius: 12px;
+            padding: 4px 6px; border-radius: 6px;
             border: 1px solid rgba(39, 174, 96, 0.3);
-            box-shadow: 0 10px 30px rgba(39, 174, 96, 0.15);
-            opacity: 0; transform: translateY(20px);
-            margin-top: var(--space-xl);
-            z-index: 20; position: relative;
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.1);
+            transform: scale(0.9);
+            transform-origin: right center;
         }
-        @media (min-width: 1024px) {
-            .cert-card { position: absolute; bottom: 8%; right: 8%; margin: 0; }
-        }
-        .cert-card__icon { width: 36px; height: 36px; background: rgba(39, 174, 96, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #27ae60; }
+        .cert-card__icon { width: 22px; height: 22px; background: rgba(39, 174, 96, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #27ae60; flex-shrink: 0; }
+        .cert-card__icon iconify-icon { font-size: 12px; }
         .cert-card__text { display: flex; flex-direction: column; text-align: left; }
-        .cert-card__title { font-size: 0.8rem; font-weight: 700; color: #333333; line-height: 1.2; }
-        .cert-card__sub { font-size: 0.65rem; color: #27ae60; font-weight: 600; }
+        .cert-card__title { font-size: 0.55rem; font-weight: 800; color: #333333; line-height: 1.1; display: block; } /* Full text visible on mobile */
+        .cert-card__sub { font-size: 0.5rem; color: #27ae60; font-weight: 700; }
+        
+        @media (min-width: 1024px) {
+            .cert-card { padding: 6px 12px; gap: 8px; border-radius: 10px; transform: none; }
+            .cert-card__icon { width: 32px; height: 32px; }
+            .cert-card__icon iconify-icon { font-size: 18px; }
+            .cert-card__title { font-size: 0.7rem; }
+            .cert-card__sub { font-size: 0.6rem; }
+        }
 
 
         /* ============================================================
@@ -558,8 +563,17 @@
             <a href="#" class="nav__brand" aria-label="Dra. Luzia Rayane">
                 <div class="nav__logo">LR</div>
                 <span class="nav__name">Dra. Luzia Rayane</span>
-                <span class="nav__name-sub">CRO CE 16735</span>
             </a>
+            
+            <div class="cert-card" id="headerCertCard">
+                <div class="cert-card__icon">
+                    <iconify-icon icon="solar:diploma-verified-bold-duotone"></iconify-icon>
+                </div>
+                <div class="cert-card__text">
+                    <span class="cert-card__title">Profissional Certificada</span>
+                    <span class="cert-card__sub">CRO CE 16735</span>
+                </div>
+            </div>
 
             <!-- Desktop Links -->
             <ul class="nav__links-desktop">
@@ -666,15 +680,6 @@
                 </a>
             </div>
 
-            <!-- Floating Certificate (inside white container to prevent background leak) -->
-            <div class="cert-card" id="heroFloatCard">
-                <div class="cert-card__icon">
-                    <iconify-icon icon="solar:diploma-verified-bold-duotone" width="22"></iconify-icon>
-                </div>
-                <div class="cert-card__text">
-                    <span class="cert-card__title">Profissional Certificada</span>
-                    <span class="cert-card__sub">CRO CE 16735</span>
-                </div>
             </div>
 
         </div>
@@ -882,7 +887,6 @@
             tl.to('#heroSubtitle', { opacity: 1, y: 0, duration: 0.8 }, '-=0.6');
             tl.to('#heroIcons', { opacity: 1, y: 0, duration: 0.8 }, '-=0.5');
             tl.to('#heroActions', { opacity: 1, y: 0, duration: 0.8 }, '-=0.5');
-            tl.to('#heroFloatCard', { opacity: 1, y: 0, duration: 1, ease: 'back.out(1.2)' }, '-=0.4');
 
             // Hide scroll indicator on scroll
             const scrollInd = document.getElementById('heroScrollIndicator');
