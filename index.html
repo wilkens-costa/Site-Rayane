@@ -56,7 +56,7 @@
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; overflow-x: hidden; width: 100%; scroll-padding-top: var(--nav-height); }
-        body { font-family: var(--font-sans); color: var(--color-bordo); background: var(--color-creme); overflow-x: hidden; width: 100%; position: relative; line-height: 1.6; padding-top: var(--nav-height); }
+        body { font-family: var(--font-sans); color: var(--color-bordo); background: var(--color-white); overflow-x: hidden; width: 100%; position: relative; line-height: 1.6; padding-top: var(--nav-height); }
         body.no-scroll { overflow: hidden; }
         ::selection { background-color: var(--color-bordo); color: var(--color-white); }
         img { display: block; max-width: 100%; height: auto; }
@@ -116,21 +116,19 @@
            ============================================================ */
         .hero {
             position: relative;
-            display: flex;
-            flex-direction: column;
-            min-height: calc(100vh - var(--nav-height));
-            background: var(--color-creme);
+            background: transparent; /* Let fixed image show through */
         }
 
-        /* Full Background Image */
+        /* Fixed Background Image — locked as wallpaper on mobile */
         .hero__bg {
-            position: relative;
+            position: fixed;
+            top: var(--nav-height); /* Start below the header */
+            left: 0;
             width: 100%;
-            height: 45vh; /* Half screen on mobile */
+            height: 60vh;
             object-fit: cover;
             object-position: center top;
             z-index: 0;
-            will-change: transform;
         }
 
         .hero__overlay {
@@ -139,15 +137,20 @@
 
         @media (min-width: 1024px) {
             .hero {
+                display: flex;
                 flex-direction: row;
                 align-items: center;
                 min-height: calc(100vh - var(--nav-height));
+                background: var(--color-creme);
             }
             .hero__bg {
                 position: absolute;
+                top: auto;
+                left: auto;
                 inset: 0;
                 height: 100%;
-                object-position: right 20%; /* Pushed right to balance with shifted text */
+                object-position: right 20%;
+                z-index: auto;
             }
             .hero__overlay {
                 display: block;
@@ -164,24 +167,64 @@
             }
         }
 
-        /* Content Container */
+        /* Content Container — slides OVER the fixed photo on mobile */
         .hero__content {
             position: relative;
-            z-index: 10;
+            z-index: 2;
             width: 100%;
-            padding: var(--space-xl) var(--space-lg);
+            padding: 1.25rem var(--space-lg) var(--space-xl);
             display: flex;
             flex-direction: column;
-            align-items: center; /* Center on mobile */
-            text-align: center; /* Center on mobile */
+            align-items: center;
+            text-align: center;
             background: var(--color-white);
             border: 1px solid rgba(122, 27, 41, 0.05);
-            border-radius: 24px 24px 0 0;
-            margin-top: -24px; /* Pulls up slightly over the image */
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.06);
-            flex: 1;
+            border-radius: 32px 32px 0 0;
+            margin-top: 53vh; /* Balanced for 1.25rem top padding to keep text visible */
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.08);
         }
-        .hero__specialties { justify-content: center; } /* Center tags on mobile */
+        .hero__specialties { justify-content: center; }
+
+        /* Scroll Indicator */
+        .hero__scroll-indicator {
+            position: fixed;
+            bottom: 85px; /* Above mobile bottom bar */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            animation: scrollBounce 2s ease-in-out infinite;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+        .hero__scroll-indicator span {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+        }
+        .hero__scroll-indicator svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.9);
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4));
+        }
+        @keyframes scrollBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+            50% { transform: translateX(-50%) translateY(8px); opacity: 0.6; }
+        }
+        @media (min-width: 1024px) {
+            .hero__scroll-indicator { display: none; }
+        }
 
         @media (min-width: 1024px) {
             .hero__content {
@@ -195,17 +238,17 @@
                 padding: var(--space-3xl) 0;
                 width: 50%;
                 z-index: 10;
-                margin-left: 10%; /* Shifted right for better visual 'sweet spot' */
+                margin-left: 10%;
             }
             .hero__subtitle {
-                max-width: 480px; /* Strict left containment */
-                text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9), 0 2px 10px rgba(255, 255, 255, 0.6); /* Reading safety glow */
+                max-width: 480px;
+                text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9), 0 2px 10px rgba(255, 255, 255, 0.6);
             }
             .hero__specialties { 
                 justify-content: flex-start; 
                 flex-wrap: wrap; 
                 gap: 10px; 
-                max-width: 480px; /* Match subtitle width */
+                max-width: 480px;
             }
             .hero__container { align-items: flex-start; justify-content: flex-start; width: 100%; }
         }
@@ -224,8 +267,8 @@
         .hero__pill-text { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-bordo); }
 
         /* Titles */
-        .hero__doctor-name { margin-bottom: var(--space-xs); opacity: 0; transform: translateY(20px); }
-        .hero__doctor-name h1 { font-family: var(--font-serif); font-weight: 600; font-size: clamp(3rem, 8vw, 6.5rem); line-height: 0.95; color: var(--color-bordo); letter-spacing: -0.02em; }
+        .hero__doctor-name { margin-top: 0; margin-bottom: var(--space-xs); opacity: 0; transform: translateY(20px); }
+        .hero__doctor-name h1 { margin-top: 0; font-family: var(--font-serif); font-weight: 600; font-size: clamp(3rem, 8vw, 6.5rem); line-height: 0.95; color: var(--color-bordo); letter-spacing: -0.02em; }
         .hero__doctor-name h1 span { display: block; }
 
         .hero__tagline { margin-bottom: var(--space-lg); opacity: 0; transform: translateY(20px); }
@@ -288,7 +331,7 @@
         /* ============================================================
            SECTIONS GLOBALS
            ============================================================ */
-        .section-padding { padding: 3.5rem 0; }
+        .section-padding { padding-top: 3.5rem; padding-bottom: 3.5rem; }
         .section-title { text-align: center; margin-bottom: var(--space-xl); }
         .section-title h2 { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.5rem); color: var(--color-bordo); margin-bottom: var(--space-xs); line-height: 1.05; }
         .section-title h2 span { font-style: italic; color: var(--color-bordo-light); font-weight: 400; }
@@ -385,12 +428,12 @@
         /* Floating Credential */
         .cert-card {
             display: flex; align-items: center; gap: var(--space-sm);
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px);
+            background: #ffffff;
             padding: var(--space-sm) var(--space-md); border-radius: 12px;
-            border: 1px solid rgba(39, 174, 96, 0.3); /* Green Verification Border */
-            box-shadow: 0 10px 30px rgba(39, 174, 96, 0.15); /* Success Glow */
+            border: 1px solid rgba(39, 174, 96, 0.3);
+            box-shadow: 0 10px 30px rgba(39, 174, 96, 0.15);
             opacity: 0; transform: translateY(20px);
-            margin: var(--space-2xl) auto var(--space-xl); /* Increased top margin to compensate for deleted block */
+            margin-top: var(--space-xl);
             z-index: 20; position: relative;
         }
         @media (min-width: 1024px) {
@@ -453,11 +496,11 @@
            DECORATIVE ELEMENTS (Tooth PNG)
            ============================================================ */
         .hero__floating-tooth {
-            position: absolute;
-            z-index: 25;
-            width: 60px; /* Small icon size for mobile */
+            position: fixed;
+            z-index: 1;
+            width: 60px;
             right: 1.5rem;
-            top: calc(45vh - 40px); /* Peeking above the absolute content card bounding box */
+            top: calc(60vh - 40px); /* Sits at edge of fixed image */
             opacity: 0.9;
             pointer-events: none;
             animation: floatTooth 6s ease-in-out infinite;
@@ -481,10 +524,12 @@
 
         @media (min-width: 1024px) {
             .hero__floating-tooth {
-                width: clamp(150px, 18vw, 280px); /* Substantial graphic for empty shelf background */
+                position: absolute; /* Back to absolute on desktop */
+                z-index: 25;
+                width: clamp(150px, 18vw, 280px);
                 top: 25%;
-                left: auto; /* Removes legacy left anchors */
-                right: 5%; /* Perfect anchoring on the far-right edge */
+                left: auto;
+                right: 5%;
                 opacity: 0.8;
             }
             .contact__watermark {
@@ -562,17 +607,18 @@
         />
         <div class="hero__overlay" id="heroBgOverlay"></div>
 
-        <!-- Floating Tooth Decoration (Absolute to full-bleed hero container) -->
+        <!-- Floating Tooth Decoration -->
         <img src="assets/images/dente.png" class="hero__floating-tooth" alt="" aria-hidden="true" loading="lazy" />
 
-        <!-- Glassmorphism Context Card -->
+        <!-- Scroll Indicator -->
+        <div class="hero__scroll-indicator" id="heroScrollIndicator">
+            <span>Deslize</span>
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+
+        <!-- Content Card -->
         <div class="hero__content">
             
-            <div class="hero__pill" id="heroPill">
-                <span class="hero__pill-dot"></span>
-                <span class="hero__pill-text">Atendimento Personalizado</span>
-            </div>
-
             <div class="hero__doctor-name" id="heroDoctorName">
                 <h1>
                     <span>Dra. Luzia</span>
@@ -584,17 +630,22 @@
                 <p>Seu Sorriso Perfeito</p>
             </div>
 
+            <div class="hero__pill" id="heroPill">
+                <span class="hero__pill-dot"></span>
+                <span class="hero__pill-text">Atendimento Personalizado</span>
+            </div>
+
             <!-- Location Line -->
             <div class="hero__location" id="heroLocation">
                 <iconify-icon icon="solar:map-point-bold"></iconify-icon> Fortaleza, CE
             </div>
 
-            <!-- Subtitle with Updated Copy -->
+            <!-- Subtitle -->
             <p class="hero__subtitle" id="heroSubtitle">
                 Ajudo pacientes a conquistarem um sorriso mais bonito, natural e saudável através de tratamentos humanizados e totalmente personalizados ao seu bem-estar.
             </p>
 
-            <!-- Specialties representing her services with Dental Icons -->
+            <!-- Specialties -->
             <div class="hero__specialties" id="heroIcons">
                 <span class="hero__specialty-tag"><iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon> Adulto e Infantil</span>
                 <span class="hero__specialty-tag"><iconify-icon icon="solar:magic-stick-3-bold-duotone"></iconify-icon> Clareamento</span>
@@ -615,19 +666,17 @@
                 </a>
             </div>
 
-
-            
-        </div>
-
-        <!-- Floating Certificate moved outside text container to accurately float relative to full screen -->
-        <div class="cert-card" id="heroFloatCard">
-            <div class="cert-card__icon">
-                <iconify-icon icon="solar:diploma-verified-bold-duotone" width="22"></iconify-icon>
+            <!-- Floating Certificate (inside white container to prevent background leak) -->
+            <div class="cert-card" id="heroFloatCard">
+                <div class="cert-card__icon">
+                    <iconify-icon icon="solar:diploma-verified-bold-duotone" width="22"></iconify-icon>
+                </div>
+                <div class="cert-card__text">
+                    <span class="cert-card__title">Profissional Certificada</span>
+                    <span class="cert-card__sub">CRO CE 16735</span>
+                </div>
             </div>
-            <div class="cert-card__text">
-                <span class="cert-card__title">Profissional Certificada</span>
-                <span class="cert-card__sub">CRO CE 16735</span>
-            </div>
+
         </div>
     </section>
 
@@ -826,14 +875,22 @@
 
             // Intro Animations
             const tl = gsap.timeline({ defaults: { ease: 'power4.out', duration: 1.2 } });
-            tl.to('#heroPill', { opacity: 1, y: 0, duration: 0.8, delay: 0.2 });
-            tl.to('#heroDoctorName', { opacity: 1, y: 0, duration: 1 }, '-=0.6');
-            tl.to('#heroTagline', { opacity: 1, y: 0, duration: 0.9 }, '-=0.8');
-            tl.to('#heroLocation', { opacity: 1, y: 0, duration: 0.8 }, '-=0.7');
-            tl.to('#heroIcons', { opacity: 1, y: 0, duration: 0.8 }, '-=0.7');
+            tl.to('#heroDoctorName', { opacity: 1, y: 0, duration: 1, delay: 0.2 });
+            tl.to('#heroTagline', { opacity: 1, y: 0, duration: 0.9 }, '-=0.7');
+            tl.to('#heroPill', { opacity: 1, y: 0, duration: 0.8 }, '-=0.6');
+            tl.to('#heroLocation', { opacity: 1, y: 0, duration: 0.8 }, '-=0.6');
             tl.to('#heroSubtitle', { opacity: 1, y: 0, duration: 0.8 }, '-=0.6');
+            tl.to('#heroIcons', { opacity: 1, y: 0, duration: 0.8 }, '-=0.5');
             tl.to('#heroActions', { opacity: 1, y: 0, duration: 0.8 }, '-=0.5');
             tl.to('#heroFloatCard', { opacity: 1, y: 0, duration: 1, ease: 'back.out(1.2)' }, '-=0.4');
+
+            // Hide scroll indicator on scroll
+            const scrollInd = document.getElementById('heroScrollIndicator');
+            if (scrollInd) {
+                window.addEventListener('scroll', () => {
+                    scrollInd.style.opacity = window.scrollY > 60 ? '0' : '1';
+                }, { passive: true });
+            }
 
             // Removed redundant manual auto-scroll logic in favor of CSS pure marquee
 
@@ -876,13 +933,7 @@
                 });
             });
 
-            // Mobile/Tablet parallax (softer)
-            mm.add('(max-width: 1023px)', () => {
-                gsap.to('#heroBg', {
-                    scale: 1.08, yPercent: 5, ease: 'none',
-                    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.5 }
-                });
-            });
+            // Mobile/Tablet: no GSAP parallax — handled by CSS sticky overlay
 
 
         });
