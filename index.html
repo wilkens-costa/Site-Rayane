@@ -350,52 +350,81 @@
         .tratamentos__container { max-width: 1200px; margin: 0 auto; padding: 0; }
         .tratamentos__container .section-title { padding: 0 var(--space-lg); text-align: left; }
         
-        .tratamentos__grid { 
-            display: flex; overflow: hidden; 
-            gap: var(--space-sm); /* Reduced gap */
-            padding: var(--space-md) 0; /* Reduced vertical padding */
-            margin-top: var(--space-lg);
+        .tratamentos__carousel-wrapper {
+            position: relative;
             width: 100%;
-            align-items: stretch;
-        }
-        /* Synchronized Pause: When the GRID is hovered, all tracks inside it pause */
-        .tratamentos__grid:hover .tratamentos__track { 
-            animation-play-state: paused; 
-        }
-        
-        .tratamentos__track {
-            display: flex; gap: var(--space-sm); /* Reduced gap */
-            animation: marquee 35s linear infinite;
-            width: max-content;
-            flex-shrink: 0;
-            align-items: stretch;
-            will-change: transform;
-            transform: translateZ(0);
-        }
-        
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-100% - var(--space-sm))); }
         }
 
-        .tratamento-card { 
-            background: var(--color-creme); border-radius: 20px; padding: var(--space-lg); border: 1px solid rgba(122, 27, 41, 0.06); 
-            transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; gap: var(--space-sm);
-            width: 80vw; max-width: 280px; flex-shrink: 0; height: auto; 
+        .tratamentos__grid { 
+            display: flex; 
+            flex-wrap: nowrap;
+            overflow-x: auto; 
+            scroll-snap-type: none;
+            gap: 16px; 
+            padding: var(--space-md) var(--space-lg);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            position: relative;
+            z-index: 1;
         }
-        .tratamento-card iconify-icon { font-size: 1.8rem; color: var(--color-bordo); padding: 10px; background: rgba(122, 27, 41, 0.05); border-radius: 12px; align-self: flex-start; }
-        .tratamento-card h3 { font-size: 1.15rem; font-weight: 700; color: var(--color-bordo); line-height: 1.25; margin: 0; }
-        .tratamento-card p { font-size: 0.9rem; color: var(--color-gray-text); line-height: 1.5; margin: 0; }
+        .tratamentos__grid::-webkit-scrollbar { display: none; }
+        
+        .tratamento-card { 
+            flex: 0 0 85%; 
+            max-width: 300px;
+            scroll-snap-align: center; /* Ensures perfect centering after scroll/swipe */
+            background: var(--color-creme); 
+            border-radius: 16px; 
+            padding: 20px; 
+            border: 1px solid rgba(122, 27, 41, 0.06); 
+            display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px;
+            height: auto; 
+        }
+        .tratamento-card iconify-icon { font-size: 1.6rem; color: var(--color-bordo); padding: 8px; background: rgba(122, 27, 41, 0.05); border-radius: 10px; align-self: center; }
+        .tratamento-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--color-bordo); line-height: 1.2; margin: 0; }
+        .tratamento-card p { font-size: 0.85rem; color: var(--color-gray-text); line-height: 1.4; margin: 0; }
+
+        /* Floating Carousel Navigation Buttons */
+        .tratamentos__nav {
+            position: absolute;
+            top: 50%;
+            left: 4px;
+            right: 4px;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .tratamentos__btn {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(122, 27, 41, 0.1);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-bordo);
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .tratamentos__btn:active {
+            transform: scale(0.9);
+            background: var(--color-bordo);
+            color: var(--color-white);
+        }
 
         @media (min-width: 1024px) { 
             .tratamentos__container .section-title { text-align: center; padding: 0; }
-            .tratamentos__grid { gap: var(--space-md); padding: var(--space-lg) 0; }
-            .tratamentos__track { gap: var(--space-md); }
-            @keyframes marquee {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(calc(-100% - var(--space-md))); }
-            }
-            .tratamento-card { width: 320px; min-width: 320px; padding: var(--space-xl); border-radius: 24px; gap: var(--space-md); }
+            .tratamentos__grid { gap: var(--space-md); padding: var(--space-lg) 0; justify-content: center; overflow-x: visible; flex-wrap: wrap; }
+            .tratamentos__nav { display: none; } /* Hide arrows on desktop since grid wraps */
+            .tratamento-card { flex: 0 0 auto; width: 320px; min-width: 320px; max-width: none; padding: var(--space-xl); border-radius: 24px; gap: var(--space-md); }
             .tratamento-card h3 { font-size: 1.3rem; }
             .tratamento-card p { font-size: 1rem; }
             .tratamento-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(122, 27, 41, 0.06); border-color: rgba(122, 27, 41, 0.15); }
@@ -736,9 +765,9 @@
                 <p>Soluções completas e inovadoras para conquistar um sorriso perfeito e manter a saúde bucal da sua família.</p>
             </div>
             
-            <div class="tratamentos__grid">
-                <!-- Track 1 -->
-                <div class="tratamentos__track">
+            <div class="tratamentos__carousel-wrapper">
+                <div class="tratamentos__grid" id="tratamentosGrid">
+                    <!-- Original 6 Cards -->
                     <div class="tratamento-card">
                         <iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon>
                         <h3>Atendimento adulto e infantil</h3>
@@ -765,43 +794,48 @@
                         <p>Procedimentos cirúrgicos precisos e indolores, incluindo extrações dentárias seguras e cirurgias curativas de freios orais (língua presa).</p>
                     </div>
                     <div class="tratamento-card">
-                        <iconify-icon icon="mdi:tooth-alert-outline"></iconify-icon>
+                        <iconify-icon icon="solar:medical-kit-bold-duotone"></iconify-icon>
+                        <h3>Urgência odontológica</h3>
+                        <p>Amparo imediato focado no alívio rápido da dor e no controle absolutamente seguro de condições crônicas.</p>
+                    </div>
+                    
+                    <!-- Duplicated 6 Cards for Infinite Esteira -->
+                    <div class="tratamento-card" aria-hidden="true">
+                        <iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon>
+                        <h3>Atendimento adulto e infantil</h3>
+                        <p>Prevenção e cuidado odontológico focado em todas as idades, com uma abordagem extremamente acolhedora e pacífica.</p>
+                    </div>
+                    <div class="tratamento-card" aria-hidden="true">
+                        <iconify-icon icon="solar:magic-stick-3-bold-duotone"></iconify-icon>
+                        <h3>Clareamento</h3>
+                        <p>Técnicas modernas e seguras de branqueamento dental para trazer radiância e juventude imediata ao seu sorriso.</p>
+                    </div>
+                    <div class="tratamento-card" aria-hidden="true">
+                        <iconify-icon icon="mdi:tooth-outline"></iconify-icon>
+                        <h3>Restaurações</h3>
+                        <p>Devolução integral da função mastigatória e da anatomia estética do dente, utilizando resinas de última geração.</p>
+                    </div>
+                    <div class="tratamento-card" aria-hidden="true">
+                        <iconify-icon icon="solar:star-fall-bold-duotone"></iconify-icon>
+                        <h3>Facetas de resina</h3>
+                        <p>Correção impecável de cor, formato e alinhamento dos dentes de forma ágil com lentes e facetas de resina composta.</p>
+                    </div>
+                    <div class="tratamento-card" aria-hidden="true">
+                        <iconify-icon icon="mdi:tooth-outline"></iconify-icon>
+                        <h3>Cirurgia</h3>
+                        <p>Procedimentos cirúrgicos precisos e indolores, incluindo extrações dentárias seguras e cirurgias curativas de freios orais (língua presa).</p>
+                    </div>
+                    <div class="tratamento-card" aria-hidden="true">
+                        <iconify-icon icon="solar:medical-kit-bold-duotone"></iconify-icon>
                         <h3>Urgência odontológica</h3>
                         <p>Amparo imediato focado no alívio rápido da dor e no controle absolutamente seguro de condições crônicas.</p>
                     </div>
                 </div>
-                <!-- Track 2 (Duplicate for Loop) -->
-                <div class="tratamentos__track" aria-hidden="true">
-                    <div class="tratamento-card">
-                        <iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon>
-                        <h3>Atendimento adulto e infantil</h3>
-                        <p>Prevenção e cuidado odontológico focado em todas as idades, com uma abordagem extremamente acolhedora e pacífica.</p>
-                    </div>
-                    <div class="tratamento-card">
-                        <iconify-icon icon="solar:magic-stick-3-bold-duotone"></iconify-icon>
-                        <h3>Clareamento</h3>
-                        <p>Técnicas modernas e seguras de branqueamento dental para trazer radiância e juventude imediata ao seu sorriso.</p>
-                    </div>
-                    <div class="tratamento-card">
-                        <iconify-icon icon="mdi:tooth-outline"></iconify-icon>
-                        <h3>Restaurações</h3>
-                        <p>Devolução integral da função mastigatória e da anatomia estética do dente, utilizando resinas de última geração.</p>
-                    </div>
-                    <div class="tratamento-card">
-                        <iconify-icon icon="solar:star-fall-bold-duotone"></iconify-icon>
-                        <h3>Facetas de resina</h3>
-                        <p>Correção impecável de cor, formato e alinhamento dos dentes de forma ágil com lentes e facetas de resina composta.</p>
-                    </div>
-                    <div class="tratamento-card">
-                        <iconify-icon icon="mdi:tooth-outline"></iconify-icon>
-                        <h3>Cirurgia</h3>
-                        <p>Procedimentos cirúrgicos precisos e indolores, incluindo extrações dentárias seguras e cirurgias curativas de freios orais (língua presa).</p>
-                    </div>
-                    <div class="tratamento-card">
-                        <iconify-icon icon="mdi:tooth-alert-outline"></iconify-icon>
-                        <h3>Urgência odontológica</h3>
-                        <p>Amparo imediato focado no alívio rápido da dor e no controle absolutamente seguro de condições crônicas.</p>
-                    </div>
+
+                <!-- Carousel Navigation -->
+                <div class="tratamentos__nav">
+                    <button class="tratamentos__btn" id="tratamentosPrev" aria-label="Navegar para a esquerda"><iconify-icon icon="solar:alt-arrow-left-linear"></iconify-icon></button>
+                    <button class="tratamentos__btn" id="tratamentosNext" aria-label="Navegar para a direita"><iconify-icon icon="solar:alt-arrow-right-linear"></iconify-icon></button>
                 </div>
             </div>
         </div>
@@ -991,5 +1025,112 @@
         <span class="btn-whatsapp-float__bubble">Vamos agendar?</span>
         <img src="assets/images/dente.png" alt="" aria-hidden="true" loading="lazy" />
     </a>
+    
+    <script>
+        // Continuous Esteira Carousel with Manual Arrow Navigation
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('tratamentosGrid');
+            const prevBtn = document.getElementById('tratamentosPrev');
+            const nextBtn = document.getElementById('tratamentosNext');
+            
+            if (grid && prevBtn && nextBtn) {
+                let isPaused = false;
+                let resumeTimeout;
+                const speed = 0.5;
+
+                // Get the width of one card + gap
+                const getStep = () => {
+                    const card = grid.querySelector('.tratamento-card');
+                    return card ? card.offsetWidth + 16 : 280;
+                };
+
+                // The half-point where duplicated cards begin
+                const getHalf = () => getStep() * 6;
+
+                // Continuous pixel-by-pixel animation loop
+                const tick = () => {
+                    if (!isPaused) {
+                        grid.scrollLeft += speed;
+                        // Seamless loop: reset when we pass the original 6 cards
+                        if (grid.scrollLeft >= getHalf()) {
+                            grid.scrollLeft -= getHalf();
+                        }
+                    }
+                    requestAnimationFrame(tick);
+                };
+
+                // Pause animation cleanly
+                const pause = () => {
+                    isPaused = true;
+                    clearTimeout(resumeTimeout);
+                };
+
+                // Resume after a short delay
+                const resume = () => {
+                    clearTimeout(resumeTimeout);
+                    resumeTimeout = setTimeout(() => { isPaused = false; }, 2000);
+                };
+
+                // Arrow click: find current centered card, then scroll to center the next/prev one
+                const scrollByCard = (dir) => {
+                    pause();
+                    const cards = Array.from(grid.querySelectorAll('.tratamento-card'));
+                    const gridCenter = grid.scrollLeft + (grid.clientWidth / 2);
+                    
+                    // Find which card is currently closest to the center of the viewport
+                    let closestIdx = 0;
+                    let closestDist = Infinity;
+                    cards.forEach((card, i) => {
+                        const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+                        const dist = Math.abs(cardCenter - gridCenter);
+                        if (dist < closestDist) {
+                            closestDist = dist;
+                            closestIdx = i;
+                        }
+                    });
+
+                    // Determine the target card index
+                    let targetIdx = closestIdx + dir;
+                    if (targetIdx < 0) targetIdx = cards.length - 1;
+                    if (targetIdx >= cards.length) targetIdx = 0;
+
+                    const targetCard = cards[targetIdx];
+                    // Calculate the exact scrollLeft to perfectly center this card
+                    const targetScroll = targetCard.offsetLeft - (grid.clientWidth / 2) + (targetCard.offsetWidth / 2);
+
+                    grid.scrollTo({ left: targetScroll, behavior: 'smooth' });
+                    
+                    // After the smooth scroll finishes, fix infinite loop position
+                    setTimeout(() => {
+                        if (grid.scrollLeft >= getHalf()) {
+                            grid.scrollLeft -= getHalf();
+                        } else if (grid.scrollLeft <= 0) {
+                            grid.scrollLeft += getHalf();
+                        }
+                        resume();
+                    }, 500);
+                };
+
+                // Start continuous animation
+                requestAnimationFrame(tick);
+
+                // Touch/mouse interactions pause and resume
+                grid.addEventListener('touchstart', pause, { passive: true });
+                grid.addEventListener('touchend', resume, { passive: true });
+                grid.addEventListener('mouseenter', pause);
+                grid.addEventListener('mouseleave', resume);
+
+                // Arrow buttons
+                prevBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    scrollByCard(-1);
+                });
+                nextBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    scrollByCard(1);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
