@@ -500,18 +500,63 @@
         /* ============================================================
            DECORATIVE ELEMENTS (Tooth PNG)
            ============================================================ */
-        .hero__floating-tooth {
+        /* Global Floating WhatsApp Tooth */
+        .btn-whatsapp-float {
             position: fixed;
-            z-index: 1;
-            width: 60px;
-            right: 1.5rem;
-            top: calc(60vh - 40px); /* Sits at edge of fixed image */
-            opacity: 0.9;
-            pointer-events: none;
-            animation: floatTooth 6s ease-in-out infinite;
+            bottom: 90px; /* Restored back down near the tab bar */
+            right: 15px;
+            width: clamp(50px, 10vw, 65px);
+            z-index: 9999;
+            animation: float 4s ease-in-out infinite;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        @keyframes floatTooth {
-            0%, 100% { transform: translateY(0) rotate(-5deg); }
+        
+        .btn-whatsapp-float__bubble {
+            position: absolute;
+            bottom: 100%; /* Position ABOVE the tooth */
+            right: -5px; /* Aligned near the right edge to prevent screen cut-off */
+            left: auto;
+            transform: none;
+            margin-bottom: 8px; /* Space between bubble and tooth */
+            background: #25D366;
+            color: #ffffff;
+            padding: 6px 10px;
+            border-radius: 12px 12px 0 12px; /* Bottom right corner points to tooth */
+            font-size: 0.65rem;
+            font-weight: 700;
+            white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+            pointer-events: none;
+        }
+        
+        /* Little triangle pointing down to the tooth */
+        .btn-whatsapp-float__bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -6px; /* Stick out the bottom */
+            right: 20px; /* Aligned perfectly over the center of the tooth */
+            left: auto;
+            transform: none;
+            border-width: 6px 6px 0 6px; /* Downward triangle */
+            border-style: solid;
+            border-color: #25D366 transparent transparent transparent;
+        }
+        .btn-whatsapp-float:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        .btn-whatsapp-float img {
+            width: 100%;
+            height: auto;
+            pointer-events: none; /* Prevent interference with link click */
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0); }
             50% { transform: translateY(-12px) rotate(5deg); }
         }
         
@@ -528,14 +573,15 @@
         }
 
         @media (min-width: 1024px) {
-            .hero__floating-tooth {
-                position: absolute; /* Back to absolute on desktop */
-                z-index: 25;
-                width: clamp(150px, 18vw, 280px);
-                top: 25%;
-                left: auto;
-                right: 5%;
-                opacity: 0.8;
+            .btn-whatsapp-float {
+                bottom: 40px;
+                right: 40px;
+                width: 80px;
+            }
+            .btn-whatsapp-float__bubble {
+                font-size: 0.8rem;
+                padding: 8px 14px;
+                border-radius: 16px;
             }
             .contact__watermark {
                 top: 0;
@@ -620,9 +666,6 @@
             loading="lazy"
         />
         <div class="hero__overlay" id="heroBgOverlay"></div>
-
-        <!-- Floating Tooth Decoration -->
-        <img src="assets/images/dente.png" class="hero__floating-tooth" alt="" aria-hidden="true" loading="lazy" />
 
         <!-- Scroll Indicator -->
         <div class="hero__scroll-indicator" id="heroScrollIndicator">
@@ -942,5 +985,11 @@
 
         });
     </script>
+
+    <!-- Global Floating WhatsApp Target -->
+    <a href="https://wa.me/558596309485?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Luzia%20Rayane%20em%20Fortaleza." target="_blank" rel="noopener noreferrer" class="btn-whatsapp-float" aria-label="Falar com Dra. Luzia no WhatsApp">
+        <span class="btn-whatsapp-float__bubble">Vamos agendar?</span>
+        <img src="assets/images/dente.png" alt="" aria-hidden="true" loading="lazy" />
+    </a>
 </body>
 </html>
