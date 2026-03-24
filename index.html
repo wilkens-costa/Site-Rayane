@@ -95,7 +95,7 @@
         .nav-bottom__item { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: var(--color-gray-text); font-size: 0.65rem; font-weight: 500; transition: color 0.3s; }
         .nav-bottom__item iconify-icon { font-size: 1.4rem; }
         .nav-bottom__item.is-active { color: var(--color-bordo); }
-        .nav-bottom__item--center { margin-top: -30px; background: var(--color-bordo); width: 56px; height: 56px; border-radius: 50%; color: white; justify-content: center; box-shadow: 0 8px 24px rgba(122,27,41,0.3); display: flex; align-items: center; }
+        .nav-bottom__item--center { margin-top: -30px; background: var(--color-bordo); width: 56px; height: 56px; border-radius: 50%; color: white; justify-content: center; box-shadow: 0 8px 24px rgba(122,27,41,0.3); display: flex; align-items: center; position: relative; animation: pulseGlowCircle 2.5s ease-in-out infinite; }
         .nav-bottom__item--center iconify-icon { font-size: 1.6rem; }
         
         @media (min-width: 1024px) { 
@@ -191,7 +191,7 @@
             bottom: 85px; /* Above mobile bottom bar */
             left: 50%;
             transform: translateX(-50%);
-            z-index: 1;
+            z-index: 15;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -219,8 +219,8 @@
             filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4));
         }
         @keyframes scrollBounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
-            50% { transform: translateX(-50%) translateY(8px); opacity: 0.6; }
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
         }
         @media (min-width: 1024px) {
             .hero__scroll-indicator { display: none; }
@@ -338,7 +338,15 @@
         }
         
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs); font-family: var(--font-sans); font-weight: 600; font-size: 1rem; border-radius: 999px; cursor: pointer; transition: all 0.35s var(--ease-out-expo); text-decoration: none; border: none; padding: 1.1rem 2rem; min-height: 48px; }
-        .btn--primary { background: var(--color-bordo); color: var(--color-white); box-shadow: 0 8px 24px rgba(122, 27, 41, 0.25); }
+        .btn--primary { background: var(--color-bordo); color: var(--color-white); box-shadow: 0 8px 24px rgba(122, 27, 41, 0.25); animation: pulseGlowBtn 3s ease-in-out infinite; }
+        @keyframes pulseGlowBtn {
+            0%, 100% { box-shadow: 0 8px 24px rgba(122, 27, 41, 0.25); }
+            50% { box-shadow: 0 8px 32px rgba(122, 27, 41, 0.45), 0 0 15px rgba(122, 27, 41, 0.15); }
+        }
+        @keyframes pulseGlowCircle {
+            0%, 100% { box-shadow: 0 8px 24px rgba(122, 27, 41, 0.3); }
+            50% { box-shadow: 0 8px 28px rgba(122, 27, 41, 0.5), 0 0 12px rgba(122, 27, 41, 0.2); }
+        }
         .btn--primary:hover { background: var(--color-bordo-light); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(122, 27, 41, 0.35); color: var(--color-white); }
         
         .btn--instagram { background: transparent; color: var(--color-bordo); border: 1px solid var(--color-bordo); }
@@ -458,8 +466,8 @@
         .sobre__container { max-width: 900px; margin: 0 auto; padding: 0 var(--space-lg); }
         .sobre__content { background: var(--color-white); padding: var(--space-lg); border-radius: 24px; border: 1px solid rgba(122,27,41,0.06); box-shadow: 0 10px 40px rgba(0,0,0,0.04); }
         
-        .sobre__block { display: flex; flex-direction: column; gap: var(--space-md); margin-bottom: var(--space-lg); text-align: left; }
-        .sobre__block-icon { font-size: 1.8rem; color: var(--color-bordo-light); background: rgba(122, 27, 41, 0.05); padding: 10px; border-radius: 12px; align-self: flex-start; }
+        .sobre__block { display: flex; flex-direction: column; gap: var(--space-md); margin-bottom: var(--space-lg); text-align: center; align-items: center; }
+        .sobre__block-icon { font-size: 1.8rem; color: var(--color-bordo-light); background: rgba(122, 27, 41, 0.05); padding: 10px; border-radius: 12px; align-self: center; }
         .sobre__block p { font-size: 0.95rem; color: var(--color-gray-text); line-height: 1.5; margin: 0; }
         
         .sobre__servicos { margin-top: var(--space-xl); padding-top: var(--space-lg); border-top: 1px solid rgba(122,27,41,0.08); text-align: left;}
@@ -527,8 +535,12 @@
            FOOTER
            ============================================================ */
         .footer {
-            text-align: center; padding: var(--space-lg); padding-bottom: 90px; background: var(--color-white); border-top: 1px solid rgba(122,27,41,0.05); font-size: 0.85rem; color: var(--color-gray-text); /* Expanded padding-bottom for mobile tab bar clearance */
+            display: flex; justify-content: center; align-items: center; text-align: center;
+            padding: var(--space-lg); padding-bottom: 90px;
+            background: var(--color-white); border-top: 1px solid rgba(122,27,41,0.05);
+            font-size: 0.85rem; color: var(--color-gray-text); margin: 0;
         }
+        .footer p { margin: 0; }
         .footer a { color: var(--color-bordo); text-decoration: none; font-weight: 600; }
         @media(min-width: 1024px) { .footer { padding-bottom: var(--space-lg); } }
 
@@ -883,11 +895,11 @@
                 <div class="sobre__servicos">
                     <h3>Serviços Inclusos em Nosso Escopo:</h3>
                     <ul>
-                        <li><iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon> Atendimento acolhedor 100% qualificado para a saúde vitalícia de todas as idades (adultos e infantil) 🦷</li>
-                        <li><iconify-icon icon="mdi:tooth-outline"></iconify-icon> Clareamentos avançados e refinadas confecções de Restaurações em blocos de alta vida útil ✨</li>
+                        <li><iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon> Atendimento acolhedor 100% qualificado para a saúde vitalícia de todas as idades (adultos e infantil)</li>
+                        <li><iconify-icon icon="mdi:tooth-outline"></iconify-icon> Clareamentos avançados e refinadas confecções de Restaurações em blocos de alta vida útil</li>
                         <li><iconify-icon icon="solar:star-fall-bold-duotone"></iconify-icon> Facetas e lentes em resina personalizadas para o encaixe paramétrico ideal com os lábios</li>
                         <li><iconify-icon icon="mdi:tooth-outline"></iconify-icon> Procedimentos de cirurgia e reabilitação de micro-tecidos (extrações e diagnóstico de freios orais retidos)</li>
-                        <li><iconify-icon icon="mdi:tooth-alert-outline"></iconify-icon> Plantão e recepção instantânea de urgências com analgesia assertiva 🚨</li>
+                        <li><iconify-icon icon="solar:medical-kit-bold-duotone"></iconify-icon> Plantão e recepção instantânea de urgências com analgesia assertiva</li>
                     </ul>
                 </div>
             </div>
@@ -953,7 +965,7 @@
 
     <!-- =============== FOOTER =============== -->
     <footer class="footer">
-        <p>Desenvolvido por <a href="https://wa.me/558596309485" target="_blank" rel="noopener noreferrer">Wilkens Costa</a></p>
+        <p>Desenvolvido por <a href="https://wa.me/558598617778" target="_blank" rel="noopener noreferrer">Wilkens Costa</a></p>
     </footer>
 
     <!-- =============== FIXED WHATSAPP POPUP =============== -->
