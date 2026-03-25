@@ -461,6 +461,228 @@
         }
 
         /* ============================================================
+           DEPOIMENTOS SECTION (Elegant Carousel)
+           ============================================================ */
+        .depoimentos {
+            background: var(--color-creme);
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+        }
+        .depoimentos__container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        /* Carousel Track */
+        .depoimentos__carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+        }
+        .depoimentos__track {
+            display: flex;
+            transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform;
+        }
+        .depoimentos__slide {
+            flex: 0 0 100%;
+            min-width: 100%;
+            padding: 0 4px;
+            box-sizing: border-box;
+        }
+
+        /* Card */
+        .depoimento-card {
+            background: var(--color-white);
+            border-radius: 24px;
+            padding: 1.8rem 1.5rem;
+            border: 1px solid rgba(122, 27, 41, 0.06);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            position: relative;
+            overflow: hidden;
+        }
+        .depoimento-card::before {
+            content: '\201C';
+            position: absolute;
+            top: -10px;
+            right: 16px;
+            font-family: var(--font-serif);
+            font-size: 7rem;
+            line-height: 1;
+            color: rgba(122, 27, 41, 0.04);
+            pointer-events: none;
+        }
+
+        /* Stars */
+        .depoimento-card__stars {
+            display: flex;
+            gap: 3px;
+        }
+        .depoimento-card__stars iconify-icon {
+            font-size: 1.1rem;
+            color: #F5A623;
+            filter: drop-shadow(0 1px 2px rgba(245, 166, 35, 0.3));
+        }
+
+        /* Quote */
+        .depoimento-card__quote {
+            font-size: 0.92rem;
+            line-height: 1.65;
+            color: var(--color-gray-text);
+            font-weight: 400;
+            font-style: italic;
+            flex-grow: 1;
+        }
+
+        /* Author */
+        .depoimento-card__author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-top: var(--space-sm);
+            border-top: 1px solid rgba(122, 27, 41, 0.06);
+        }
+        .depoimento-card__avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-bordo), var(--color-bordo-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-white);
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(122, 27, 41, 0.2);
+        }
+        .depoimento-card__name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-bordo);
+            line-height: 1.2;
+        }
+        .depoimento-card__label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: rgba(122, 27, 41, 0.45);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        /* Dots */
+        .depoimentos__dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: var(--space-lg);
+        }
+        .depoimentos__dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(122, 27, 41, 0.15);
+            border: none;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            padding: 0;
+        }
+        .depoimentos__dot.is-active {
+            background: var(--color-bordo);
+            width: 24px;
+            border-radius: 999px;
+            box-shadow: 0 2px 8px rgba(122, 27, 41, 0.3);
+        }
+
+        /* Navigation Arrows */
+        .depoimentos__nav {
+            position: absolute;
+            top: 50%;
+            left: -4px;
+            right: -4px;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .depoimentos__btn {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(122, 27, 41, 0.1);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-bordo);
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .depoimentos__btn:active {
+            transform: scale(0.9);
+            background: var(--color-bordo);
+            color: var(--color-white);
+        }
+
+        @media (min-width: 768px) {
+            .depoimento-card {
+                padding: 2.5rem 2rem;
+            }
+            .depoimento-card__quote {
+                font-size: 1.05rem;
+                line-height: 1.7;
+            }
+            .depoimentos__btn {
+                width: 42px;
+                height: 42px;
+                font-size: 1.2rem;
+            }
+            .depoimentos__nav {
+                left: -12px;
+                right: -12px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .depoimentos__container {
+                max-width: 780px;
+            }
+            .depoimento-card {
+                padding: 3rem 2.5rem;
+                border-radius: 28px;
+            }
+            .depoimento-card__quote {
+                font-size: 1.1rem;
+            }
+            .depoimento-card__avatar {
+                width: 48px;
+                height: 48px;
+                font-size: 1.1rem;
+            }
+            .depoimentos__nav {
+                left: -24px;
+                right: -24px;
+            }
+            .depoimentos__btn {
+                width: 48px;
+                height: 48px;
+                font-size: 1.3rem;
+            }
+        }
+
+        /* ============================================================
            SOBRE SECTION (Mobile Optimized Scannable)
            ============================================================ */
         .sobre { background: var(--color-creme); position: relative; z-index: 10; }
@@ -879,6 +1101,128 @@
         </div>
     </section>
 
+    <!-- =============== DEPOIMENTOS SECTION =============== -->
+    <section class="depoimentos section-padding" id="depoimentos">
+        <div class="depoimentos__container">
+            <div class="section-title">
+                <h2>O que dizem <span>nossos pacientes</span></h2>
+                <p>A confiança de quem já viveu a experiência de um atendimento humanizado e transformador.</p>
+            </div>
+
+            <div class="depoimentos__carousel" id="depoimentosCarousel">
+                <div class="depoimentos__track" id="depoimentosTrack">
+
+                    <!-- Slide 1 -->
+                    <div class="depoimentos__slide">
+                        <div class="depoimento-card">
+                            <div class="depoimento-card__stars">
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                            </div>
+                            <p class="depoimento-card__quote">
+                                Posso dizer com tranquilidade que ela curou o meu medo de ir ao dentista! A doutora foi extremamente atenciosa e paciente comigo. Ela analisou todo o meu histórico, zelou pelo meu atendimento e foi muito cuidadosa com a minha segurança durante todo o tempo. Para completar, o ambiente de atendimento é simplesmente impecável! Recomendo!
+                            </p>
+                            <div class="depoimento-card__author">
+                                <div class="depoimento-card__avatar">GN</div>
+                                <div>
+                                    <div class="depoimento-card__name">Gustavo Nícolas</div>
+                                    <div class="depoimento-card__label">Paciente</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="depoimentos__slide">
+                        <div class="depoimento-card">
+                            <div class="depoimento-card__stars">
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                            </div>
+                            <p class="depoimento-card__quote">
+                                Nota 10! O grande diferencial foi o atendimento humanizado e personalizado. Em outras experiências, sentia que recebia um tratamento genérico, mas a doutora analisou meu caso com exclusividade e fez eu me sentir único do começo ao fim.
+                            </p>
+                            <div class="depoimento-card__author">
+                                <div class="depoimento-card__avatar">DW</div>
+                                <div>
+                                    <div class="depoimento-card__name">David Wilderson</div>
+                                    <div class="depoimento-card__label">Paciente</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="depoimentos__slide">
+                        <div class="depoimento-card">
+                            <div class="depoimento-card__stars">
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                            </div>
+                            <p class="depoimento-card__quote">
+                                Uma Profissional extremamente capacitada! Dra Luzia Rayane Gomes, é dedicada, atenciosa! Cuidou do meu sorriso com muito carinho e profissionalismo! Super indico!
+                            </p>
+                            <div class="depoimento-card__author">
+                                <div class="depoimento-card__avatar">NJ</div>
+                                <div>
+                                    <div class="depoimento-card__name">Nara Jerônimo</div>
+                                    <div class="depoimento-card__label">Paciente</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 4 -->
+                    <div class="depoimentos__slide">
+                        <div class="depoimento-card">
+                            <div class="depoimento-card__stars">
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                            </div>
+                            <p class="depoimento-card__quote">
+                                Atendimento impecável, ambiente e utensílios higienizados, atenção aos detalhes excepcional.
+                            </p>
+                            <div class="depoimento-card__author">
+                                <div class="depoimento-card__avatar">RS</div>
+                                <div>
+                                    <div class="depoimento-card__name">Rafael Souza</div>
+                                    <div class="depoimento-card__label">Paciente</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Carousel Arrows -->
+                <div class="depoimentos__nav">
+                    <button class="depoimentos__btn" id="depoimentosPrev" aria-label="Depoimento anterior"><iconify-icon icon="solar:alt-arrow-left-linear"></iconify-icon></button>
+                    <button class="depoimentos__btn" id="depoimentosNext" aria-label="Próximo depoimento"><iconify-icon icon="solar:alt-arrow-right-linear"></iconify-icon></button>
+                </div>
+            </div>
+
+            <!-- Dots -->
+            <div class="depoimentos__dots" id="depoimentosDots">
+                <button class="depoimentos__dot is-active" data-index="0" aria-label="Depoimento 1"></button>
+                <button class="depoimentos__dot" data-index="1" aria-label="Depoimento 2"></button>
+                <button class="depoimentos__dot" data-index="2" aria-label="Depoimento 3"></button>
+                <button class="depoimentos__dot" data-index="3" aria-label="Depoimento 4"></button>
+            </div>
+        </div>
+    </section>
+
     <!-- =============== SOBRE SECTION =============== -->
     <section class="sobre section-padding" id="sobre">
         <div class="sobre__container">
@@ -1168,6 +1512,84 @@
                     scrollByCard(1);
                 });
             }
+        });
+    </script>
+
+    <!-- Depoimentos Carousel Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const track = document.getElementById('depoimentosTrack');
+            const dots = document.querySelectorAll('#depoimentosDots .depoimentos__dot');
+            const prevBtn = document.getElementById('depoimentosPrev');
+            const nextBtn = document.getElementById('depoimentosNext');
+            if (!track) return;
+
+            const slides = track.querySelectorAll('.depoimentos__slide');
+            const total = slides.length;
+            let current = 0;
+            let autoTimer;
+            let startX = 0;
+            let isDragging = false;
+
+            const goTo = (idx) => {
+                current = ((idx % total) + total) % total;
+                track.style.transform = `translateX(-${current * 100}%)`;
+                dots.forEach((d, i) => d.classList.toggle('is-active', i === current));
+            };
+
+            const next = () => goTo(current + 1);
+            const prev = () => goTo(current - 1);
+
+            // Auto-play
+            const startAuto = () => {
+                clearInterval(autoTimer);
+                autoTimer = setInterval(next, 5000);
+            };
+            const stopAuto = () => clearInterval(autoTimer);
+
+            // Buttons
+            nextBtn.addEventListener('click', () => { next(); startAuto(); });
+            prevBtn.addEventListener('click', () => { prev(); startAuto(); });
+
+            // Dots
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    goTo(parseInt(dot.dataset.index));
+                    startAuto();
+                });
+            });
+
+            // Swipe support
+            const carousel = document.getElementById('depoimentosCarousel');
+            carousel.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                isDragging = true;
+                stopAuto();
+            }, { passive: true });
+
+            carousel.addEventListener('touchend', (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                const diff = startX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 50) {
+                    diff > 0 ? next() : prev();
+                }
+                startAuto();
+            }, { passive: true });
+
+            // GSAP entrance animation
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.from('.depoimentos .section-title', {
+                    opacity: 0, y: 30, duration: 0.8,
+                    scrollTrigger: { trigger: '.depoimentos', start: 'top 80%' }
+                });
+                gsap.from('.depoimentos__carousel', {
+                    opacity: 0, y: 40, duration: 1, delay: 0.2,
+                    scrollTrigger: { trigger: '.depoimentos', start: 'top 75%' }
+                });
+            }
+
+            startAuto();
         });
     </script>
 </body>
