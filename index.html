@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KXMD47P15S"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-      gtag('config', 'G-KXMD47P15S');
+        gtag('config', 'G-KXMD47P15S');
     </script>
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dra. Luzia Rayane — Cirurgiã Dentista</title>
-    <meta name="description" content="Dra. Luzia Rayane — Especialista em odontologia estética e funcional. Agende sua consulta e conquiste seu sorriso perfeito." />
+    <meta name="description"
+        content="Dra. Luzia Rayane — Especialista em odontologia estética e funcional. Agende sua consulta e conquiste seu sorriso perfeito." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
+        rel="stylesheet" />
 
     <!-- Iconify -->
     <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js" defer></script>
@@ -32,24 +36,24 @@
     <style>
         :root {
             /* Colors: Burgundy + White */
-            --color-bordo:       #7A1B29;
+            --color-bordo: #7A1B29;
             --color-bordo-light: #9B283A;
-            --color-bordo-dark:  #5D121D;
-            --color-white:       #FFFFFF;
-            --color-creme:       #FDFBF9;
-            --color-gray-text:   #4A4A4A;
-            
+            --color-bordo-dark: #5D121D;
+            --color-white: #FFFFFF;
+            --color-creme: #FDFBF9;
+            --color-gray-text: #4A4A4A;
+
             /* Fonts */
-            --font-sans:  'Inter', sans-serif;
+            --font-sans: 'Inter', sans-serif;
             --font-serif: 'Playfair Display', serif;
 
             /* Dimensions */
             --nav-height: 80px;
-            --space-xs:  0.5rem;
-            --space-sm:  0.75rem;
-            --space-md:  1rem;
-            --space-lg:  1.5rem;
-            --space-xl:  2rem;
+            --space-xs: 0.5rem;
+            --space-sm: 0.75rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
             --space-2xl: 3rem;
             --space-3xl: 4rem;
 
@@ -60,65 +64,254 @@
             --glass-shadow: 0 8px 32px rgba(122, 27, 41, 0.08);
 
             /* Responsive Header Height */
-            --nav-height: 75px; /* Increased to fit the full cert-card */
+            --nav-height: 75px;
+            /* Increased to fit the full cert-card */
         }
-        @media (min-width: 1024px) { :root { --nav-height: 85px; } }
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; overflow-x: hidden; width: 100%; scroll-padding-top: var(--nav-height); }
-        body { font-family: var(--font-sans); color: var(--color-bordo); background: var(--color-white); overflow-x: hidden; width: 100%; position: relative; line-height: 1.6; padding-top: var(--nav-height); }
-        body.no-scroll { overflow: hidden; }
-        ::selection { background-color: var(--color-bordo); color: var(--color-white); }
-        img { display: block; max-width: 100%; height: auto; }
+        @media (min-width: 1024px) {
+            :root {
+                --nav-height: 85px;
+            }
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            width: 100%;
+            scroll-padding-top: var(--nav-height);
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--color-bordo);
+            background: var(--color-white);
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+            line-height: 1.6;
+            padding-top: var(--nav-height);
+        }
+
+        body.no-scroll {
+            overflow: hidden;
+        }
+
+        ::selection {
+            background-color: var(--color-bordo);
+            color: var(--color-white);
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
 
         /* ============================================================
            NAVIGATION (Glassmorphism)
            ============================================================ */
         .nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
             background: var(--color-white);
             border-bottom: 1px solid rgba(122, 27, 41, 0.08);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.04);
-            height: var(--nav-height); /* Explicit height seals the gap */
-            display: flex; align-items: center; /* Center children vertically */
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+            height: var(--nav-height);
+            /* Explicit height seals the gap */
+            display: flex;
+            align-items: center;
+            /* Center children vertically */
         }
+
         .nav__inner {
-            max-width: 1400px; margin: 0 auto; width: 100%;
-            padding: 0 var(--space-lg); /* Allow height to stretch instead of padding */
-            display: flex; align-items: center; justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 var(--space-lg);
+            /* Allow height to stretch instead of padding */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        .nav__brand { display: flex; align-items: center; gap: 6px; text-decoration: none; color: var(--color-bordo); max-width: 50%; }
-        .nav__logo { width: 30px; height: 30px; background: var(--color-bordo); color: var(--color-white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
-        .nav__name { font-size: 0.95rem; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .nav__links-desktop { display: none; } /* Strictly hidden on mobile */
+
+        .nav__brand {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--color-bordo);
+            max-width: 50%;
+        }
+
+        .nav__logo {
+            width: 30px;
+            height: 30px;
+            background: var(--color-bordo);
+            color: var(--color-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-serif);
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .nav__name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .nav__links-desktop {
+            display: none;
+        }
+
+        /* Strictly hidden on mobile */
 
 
         /* ============================================================
            BOTTOM BAR (Premium Glass Mobile)
            ============================================================ */
-        .nav-bottom { 
-            position: fixed; bottom: 0; left: 0; right: 0; height: 65px; 
+        .nav-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 65px;
             background: var(--color-white);
-            border-top: 1px solid rgba(122, 27, 41, 0.08); display: flex; align-items: center; justify-content: space-between; 
-            z-index: 9000; padding: 0 var(--space-xs); box-shadow: 0 -4px 24px rgba(0,0,0,0.03);
+            border-top: 1px solid rgba(122, 27, 41, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 9000;
+            padding: 0 var(--space-xs);
+            box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.03);
         }
-        .nav-bottom__item { flex: 1; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: var(--color-gray-text); font-size: 0.65rem; font-weight: 500; transition: color 0.3s; }
-        .nav-bottom__item iconify-icon { font-size: 1.4rem; }
-        .nav-bottom__item.is-active { color: var(--color-bordo); }
-        .nav-bottom__item--center { flex: none; margin-top: -30px; background: var(--color-bordo); width: 56px; height: 56px; border-radius: 50%; color: white; justify-content: center; box-shadow: 0 8px 24px rgba(122,27,41,0.3); display: flex; align-items: center; position: relative; animation: pulseGlowCircle 2.5s ease-in-out infinite; }
-        .nav-bottom__item--center iconify-icon { font-size: 1.6rem; }
-        
-        @media (min-width: 1024px) { 
-            .nav__inner { justify-content: space-between; padding: var(--space-md) var(--space-lg); }
-            .nav__logo { width: 36px; height: 36px; font-size: 0.85rem; }
-            .nav__name { font-size: 1.1rem; }
-            .nav__brand { gap: var(--space-md); width: auto; }
-            .nav-bottom { display: none; } 
-            .nav__links-desktop { display: flex; align-items: center; gap: var(--space-lg); list-style: none; margin: 0; padding: 0; }
-            .nav__link-desktop { font-size: 0.95rem; font-weight: 500; color: var(--color-gray-text); text-decoration: none; padding: 8px 12px; transition: color 0.3s; }
-            .nav__link-desktop:hover { color: var(--color-bordo); }
-            .nav__cta { display: flex; align-items: center; gap: var(--space-xs); background: var(--color-bordo); color: var(--color-white); border: none; padding: 0.8rem 1.8rem; border-radius: 999px; font-weight: 600; text-decoration: none; transition: all 0.3s; min-height: 48px; }
-            .nav__cta:hover { background: var(--color-bordo-light); transform: translateY(-2px); }
+
+        .nav-bottom__item {
+            flex: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+            color: var(--color-gray-text);
+            font-size: 0.65rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-bottom__item iconify-icon {
+            font-size: 1.4rem;
+        }
+
+        .nav-bottom__item.is-active {
+            color: var(--color-bordo);
+        }
+
+        .nav-bottom__item--center {
+            flex: none;
+            margin-top: -30px;
+            background: var(--color-bordo);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            color: white;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(122, 27, 41, 0.3);
+            display: flex;
+            align-items: center;
+            position: relative;
+            animation: pulseGlowCircle 2.5s ease-in-out infinite;
+        }
+
+        .nav-bottom__item--center iconify-icon {
+            font-size: 1.6rem;
+        }
+
+        @media (min-width: 1024px) {
+            .nav__inner {
+                justify-content: space-between;
+                padding: var(--space-md) var(--space-lg);
+            }
+
+            .nav__logo {
+                width: 36px;
+                height: 36px;
+                font-size: 0.85rem;
+            }
+
+            .nav__name {
+                font-size: 1.1rem;
+            }
+
+            .nav__brand {
+                gap: var(--space-md);
+                width: auto;
+            }
+
+            .nav-bottom {
+                display: none;
+            }
+
+            .nav__links-desktop {
+                display: flex;
+                align-items: center;
+                gap: var(--space-lg);
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .nav__link-desktop {
+                font-size: 0.95rem;
+                font-weight: 500;
+                color: var(--color-gray-text);
+                text-decoration: none;
+                padding: 8px 12px;
+                transition: color 0.3s;
+            }
+
+            .nav__link-desktop:hover {
+                color: var(--color-bordo);
+            }
+
+            .nav__cta {
+                display: flex;
+                align-items: center;
+                gap: var(--space-xs);
+                background: var(--color-bordo);
+                color: var(--color-white);
+                border: none;
+                padding: 0.8rem 1.8rem;
+                border-radius: 999px;
+                font-weight: 600;
+                text-decoration: none;
+                transition: all 0.3s;
+                min-height: 48px;
+            }
+
+            .nav__cta:hover {
+                background: var(--color-bordo-light);
+                transform: translateY(-2px);
+            }
         }
 
         /* ============================================================
@@ -126,13 +319,15 @@
            ============================================================ */
         .hero {
             position: relative;
-            background: transparent; /* Let fixed image show through */
+            background: transparent;
+            /* Let fixed image show through */
         }
 
         /* Fixed Background Image — locked as wallpaper on mobile */
         .hero__bg {
             position: fixed;
-            top: var(--nav-height); /* Start below the header */
+            top: var(--nav-height);
+            /* Start below the header */
             left: 0;
             width: 100%;
             height: 60vh;
@@ -142,7 +337,8 @@
         }
 
         .hero__overlay {
-            display: none; /* No overlay on mobile, stacked layout */
+            display: none;
+            /* No overlay on mobile, stacked layout */
         }
 
         @media (min-width: 1024px) {
@@ -153,6 +349,7 @@
                 min-height: calc(100vh - var(--nav-height));
                 background: var(--color-creme);
             }
+
             .hero__bg {
                 position: absolute;
                 top: auto;
@@ -162,16 +359,15 @@
                 object-position: right 20%;
                 z-index: auto;
             }
+
             .hero__overlay {
                 display: block;
                 position: absolute;
                 inset: 0;
-                background: linear-gradient(
-                    90deg,
-                    rgba(255, 255, 255, 0.95) 0%,
-                    rgba(255, 255, 255, 0.6) 20%,
-                    transparent 40%
-                );
+                background: linear-gradient(90deg,
+                        rgba(255, 255, 255, 0.95) 0%,
+                        rgba(255, 255, 255, 0.6) 20%,
+                        transparent 40%);
                 z-index: 1;
                 pointer-events: none;
             }
@@ -190,15 +386,20 @@
             background: var(--color-white);
             border: 1px solid rgba(122, 27, 41, 0.05);
             border-radius: 32px 32px 0 0;
-            margin-top: 53vh; /* Balanced for 1.25rem top padding to keep text visible */
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.08);
+            margin-top: 53vh;
+            /* Balanced for 1.25rem top padding to keep text visible */
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.08);
         }
-        .hero__specialties { justify-content: center; }
+
+        .hero__specialties {
+            justify-content: center;
+        }
 
         /* Scroll Indicator */
         .hero__scroll-indicator {
             position: fixed;
-            bottom: 85px; /* Above mobile bottom bar */
+            bottom: 85px;
+            /* Above mobile bottom bar */
             left: 50%;
             transform: translateX(-50%);
             z-index: 15;
@@ -210,14 +411,16 @@
             pointer-events: none;
             transition: opacity 0.4s;
         }
+
         .hero__scroll-indicator span {
             font-size: 0.6rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.12em;
             color: rgba(255, 255, 255, 0.9);
-            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
         }
+
         .hero__scroll-indicator svg {
             width: 24px;
             height: 24px;
@@ -226,14 +429,25 @@
             stroke-width: 2.5;
             stroke-linecap: round;
             stroke-linejoin: round;
-            filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4));
+            filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
         }
+
         @keyframes scrollBounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(8px); }
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(8px);
+            }
         }
+
         @media (min-width: 1024px) {
-            .hero__scroll-indicator { display: none; }
+            .hero__scroll-indicator {
+                display: none;
+            }
         }
 
         @media (min-width: 1024px) {
@@ -250,178 +464,480 @@
                 z-index: 10;
                 margin-left: 10%;
             }
+
             .hero__subtitle {
                 max-width: 480px;
                 text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9), 0 2px 10px rgba(255, 255, 255, 0.6);
             }
-            .hero__specialties { 
-                justify-content: flex-start; 
-                flex-wrap: wrap; 
-                gap: 10px; 
+
+            .hero__specialties {
+                justify-content: flex-start;
+                flex-wrap: wrap;
+                gap: 10px;
                 max-width: 480px;
             }
-            .hero__container { align-items: flex-start; justify-content: flex-start; width: 100%; }
+
+            .hero__container {
+                align-items: flex-start;
+                justify-content: flex-start;
+                width: 100%;
+            }
         }
 
         /* Pill */
         .hero__pill {
-            display: inline-flex; align-items: center; gap: var(--space-xs);
-            padding: 0.4rem 0.8rem; border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(122, 27, 41, 0.15);
             margin-bottom: var(--space-lg);
-            opacity: 0; transform: translateY(15px);
+            opacity: 0;
+            transform: translateY(15px);
         }
-        .hero__pill-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-bordo); animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.6); opacity: 0.6; } }
-        .hero__pill-text { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-bordo); }
+
+        .hero__pill-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--color-bordo);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(0.6);
+                opacity: 0.6;
+            }
+        }
+
+        .hero__pill-text {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-bordo);
+        }
 
         /* Titles */
-        .hero__doctor-name { margin-top: 0; margin-bottom: var(--space-xs); opacity: 0; transform: translateY(20px); }
-        .hero__doctor-name h1 { margin-top: 0; font-family: var(--font-serif); font-weight: 600; font-size: clamp(3rem, 8vw, 6.5rem); line-height: 0.95; color: var(--color-bordo); letter-spacing: -0.02em; }
-        .hero__doctor-name h1 span { display: block; }
+        .hero__doctor-name {
+            margin-top: 0;
+            margin-bottom: var(--space-xs);
+            opacity: 0;
+            transform: translateY(20px);
+        }
 
-        .hero__tagline { margin-bottom: var(--space-lg); opacity: 0; transform: translateY(20px); }
-        .hero__tagline p { font-family: var(--font-sans); font-weight: 600; font-size: clamp(1.4rem, 4vw, 2.5rem); line-height: 1.1; letter-spacing: -0.02em; color: var(--color-bordo-light); }
+        .hero__doctor-name h1 {
+            margin-top: 0;
+            font-family: var(--font-serif);
+            font-weight: 600;
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            line-height: 0.95;
+            color: var(--color-bordo);
+            letter-spacing: -0.02em;
+        }
+
+        .hero__doctor-name h1 span {
+            display: block;
+        }
+
+        .hero__tagline {
+            margin-bottom: var(--space-lg);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero__tagline p {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: clamp(1.4rem, 4vw, 2.5rem);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            color: var(--color-bordo-light);
+        }
 
         /* Location Metadata */
         .hero__location {
-            display: inline-flex; align-items: center; gap: 6px;
-            font-size: 0.85rem; font-weight: 600; color: var(--color-bordo);
-            background: rgba(122, 27, 41, 0.05); padding: 0.4rem 0.9rem; border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-bordo);
+            background: rgba(122, 27, 41, 0.05);
+            padding: 0.4rem 0.9rem;
+            border-radius: 999px;
             margin-bottom: var(--space-md);
             border: 1px solid rgba(122, 27, 41, 0.1);
-            opacity: 0; transform: translateY(20px);
+            opacity: 0;
+            transform: translateY(20px);
         }
-        .hero__location iconify-icon { font-size: 1.1rem; }
+
+        .hero__location iconify-icon {
+            font-size: 1.1rem;
+        }
 
         /* Specialties Tags */
         .hero__specialties {
-            display: flex; flex-wrap: wrap; gap: 8px; /* Standardized gap to prevent awkward breaks */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            /* Standardized gap to prevent awkward breaks */
             margin-bottom: var(--space-lg);
-            justify-content: center; /* Centered layout for better visual harmony */
-            opacity: 0; transform: translateY(20px);
+            justify-content: center;
+            /* Centered layout for better visual harmony */
+            opacity: 0;
+            transform: translateY(20px);
         }
+
         .hero__specialty-tag {
-            display: inline-flex; align-items: center; gap: 4px;
-            font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
-            padding: 0.35rem 0.8rem; border-radius: 999px;
-            background: rgba(122, 27, 41, 0.06); color: var(--color-bordo);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.35rem 0.8rem;
+            border-radius: 999px;
+            background: rgba(122, 27, 41, 0.06);
+            color: var(--color-bordo);
             border: 1px solid rgba(122, 27, 41, 0.1);
             transition: all 0.3s var(--ease-out-expo);
             position: relative;
             overflow: hidden;
         }
+
         .hero__specialty-tag::after {
             content: '';
             position: absolute;
-            top: 0; left: -100%; width: 60%; height: 100%;
-            background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.6) 50%, transparent 70%);
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.6) 50%, transparent 70%);
             animation: shimmer 4s infinite;
             pointer-events: none;
         }
+
         @keyframes shimmer {
-            0% { left: -100%; }
-            40% { left: 150%; }
-            100% { left: 150%; }
+            0% {
+                left: -100%;
+            }
+
+            40% {
+                left: 150%;
+            }
+
+            100% {
+                left: 150%;
+            }
         }
-        .hero__specialty-tag:nth-child(2)::after { animation-delay: 0.4s; }
-        .hero__specialty-tag:nth-child(3)::after { animation-delay: 0.8s; }
-        .hero__specialty-tag:nth-child(4)::after { animation-delay: 1.2s; }
-        .hero__specialty-tag:nth-child(5)::after { animation-delay: 1.6s; }
-        .hero__specialty-tag:nth-child(6)::after { animation-delay: 2.0s; }
+
+        .hero__specialty-tag:nth-child(2)::after {
+            animation-delay: 0.4s;
+        }
+
+        .hero__specialty-tag:nth-child(3)::after {
+            animation-delay: 0.8s;
+        }
+
+        .hero__specialty-tag:nth-child(4)::after {
+            animation-delay: 1.2s;
+        }
+
+        .hero__specialty-tag:nth-child(5)::after {
+            animation-delay: 1.6s;
+        }
+
+        .hero__specialty-tag:nth-child(6)::after {
+            animation-delay: 2.0s;
+        }
+
         .hero__specialty-tag:hover {
-            background: rgba(122, 27, 41, 0.1); transform: translateY(-2px);
+            background: rgba(122, 27, 41, 0.1);
+            transform: translateY(-2px);
         }
-        .hero__specialty-tag iconify-icon { font-size: 1.1em; color: var(--color-bordo-light); }
+
+        .hero__specialty-tag iconify-icon {
+            font-size: 1.1em;
+            color: var(--color-bordo-light);
+        }
 
         /* Subtitle */
-        .hero__subtitle { font-size: 1.05rem; line-height: 1.6; color: var(--color-gray-text); font-weight: 500; margin-bottom: var(--space-md); max-width: 580px; opacity: 0; transform: translateY(20px); }
+        .hero__subtitle {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--color-gray-text);
+            font-weight: 500;
+            margin-bottom: var(--space-md);
+            max-width: 580px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
 
         /* Buttons */
-        .hero__actions { display: flex; flex-direction: column; width: 100%; gap: var(--space-sm); margin-bottom: var(--space-xl); opacity: 0; transform: translateY(20px); }
-        .hero__actions .btn { width: 100%; } /* Mobile full width */
-        
-        @media (min-width: 1024px) { 
-            .hero__actions { flex-direction: row; width: auto; } 
-            .hero__actions .btn { width: auto; }
+        .hero__actions {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-xl);
+            opacity: 0;
+            transform: translateY(20px);
         }
-        
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs); font-family: var(--font-sans); font-weight: 600; font-size: 1rem; border-radius: 999px; cursor: pointer; transition: all 0.35s var(--ease-out-expo); text-decoration: none; border: none; padding: 1.1rem 2rem; min-height: 48px; }
-        .btn--primary { background: var(--color-bordo); color: var(--color-white); box-shadow: 0 8px 24px rgba(122, 27, 41, 0.25); animation: pulseGlowBtn 3s ease-in-out infinite; }
+
+        .hero__actions .btn {
+            width: 100%;
+        }
+
+        /* Mobile full width */
+
+        @media (min-width: 1024px) {
+            .hero__actions {
+                flex-direction: row;
+                width: auto;
+            }
+
+            .hero__actions .btn {
+                width: auto;
+            }
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-xs);
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.35s var(--ease-out-expo);
+            text-decoration: none;
+            border: none;
+            padding: 1.1rem 2rem;
+            min-height: 48px;
+        }
+
+        .btn--primary {
+            background: var(--color-bordo);
+            color: var(--color-white);
+            box-shadow: 0 8px 24px rgba(122, 27, 41, 0.25);
+            animation: pulseGlowBtn 3s ease-in-out infinite;
+        }
+
         @keyframes pulseGlowBtn {
-            0%, 100% { box-shadow: 0 8px 24px rgba(122, 27, 41, 0.25); }
-            50% { box-shadow: 0 8px 32px rgba(122, 27, 41, 0.45), 0 0 15px rgba(122, 27, 41, 0.15); }
+
+            0%,
+            100% {
+                box-shadow: 0 8px 24px rgba(122, 27, 41, 0.25);
+            }
+
+            50% {
+                box-shadow: 0 8px 32px rgba(122, 27, 41, 0.45), 0 0 15px rgba(122, 27, 41, 0.15);
+            }
         }
+
         @keyframes pulseGlowCircle {
-            0%, 100% { box-shadow: 0 8px 24px rgba(122, 27, 41, 0.3); }
-            50% { box-shadow: 0 8px 28px rgba(122, 27, 41, 0.5), 0 0 12px rgba(122, 27, 41, 0.2); }
+
+            0%,
+            100% {
+                box-shadow: 0 8px 24px rgba(122, 27, 41, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 8px 28px rgba(122, 27, 41, 0.5), 0 0 12px rgba(122, 27, 41, 0.2);
+            }
         }
-        .btn--primary:hover { background: var(--color-bordo-light); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(122, 27, 41, 0.35); color: var(--color-white); }
-        
-        .btn--instagram { background: transparent; color: var(--color-bordo); border: 1px solid var(--color-bordo); }
-        .btn--instagram:hover { background: rgba(122, 27, 41, 0.04); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(122, 27, 41, 0.1); }
-        .btn svg, .btn iconify-icon { width: 18px; height: 18px; transition: transform 0.35s; }
-        .btn:hover svg, .btn:hover iconify-icon { transform: translateX(3px); }
+
+        .btn--primary:hover {
+            background: var(--color-bordo-light);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(122, 27, 41, 0.35);
+            color: var(--color-white);
+        }
+
+        .btn--instagram {
+            background: transparent;
+            color: var(--color-bordo);
+            border: 1px solid var(--color-bordo);
+        }
+
+        .btn--instagram:hover {
+            background: rgba(122, 27, 41, 0.04);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(122, 27, 41, 0.1);
+        }
+
+        .btn svg,
+        .btn iconify-icon {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.35s;
+        }
+
+        .btn:hover svg,
+        .btn:hover iconify-icon {
+            transform: translateX(3px);
+        }
 
 
 
         /* ============================================================
            SECTIONS GLOBALS
            ============================================================ */
-        .section-padding { padding-top: 3.5rem; padding-bottom: 3.5rem; }
-        .section-title { text-align: center; margin-bottom: var(--space-xl); }
-        .section-title h2 { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.5rem); color: var(--color-bordo); margin-bottom: var(--space-xs); line-height: 1.05; }
-        .section-title h2 span { font-style: italic; color: var(--color-bordo-light); font-weight: 400; }
-        .section-title p { color: var(--color-gray-text); font-size: 0.95rem; max-width: 600px; margin: 0 auto; line-height: 1.5; }
+        .section-padding {
+            padding-top: 3.5rem;
+            padding-bottom: 3.5rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+
+        .section-title h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            color: var(--color-bordo);
+            margin-bottom: var(--space-xs);
+            line-height: 1.05;
+        }
+
+        .section-title h2 span {
+            font-style: italic;
+            color: var(--color-bordo-light);
+            font-weight: 400;
+        }
+
+        .section-title p {
+            color: var(--color-gray-text);
+            font-size: 0.95rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
         @media (min-width: 1024px) {
-            .section-padding { padding: 6rem 0; }
-            .section-title { margin-bottom: var(--space-3xl); }
-            .section-title h2 { font-size: 3.5rem; margin-bottom: var(--space-sm); }
-            .section-title p { font-size: 1.05rem; line-height: 1.6; }
+            .section-padding {
+                padding: 6rem 0;
+            }
+
+            .section-title {
+                margin-bottom: var(--space-3xl);
+            }
+
+            .section-title h2 {
+                font-size: 3.5rem;
+                margin-bottom: var(--space-sm);
+            }
+
+            .section-title p {
+                font-size: 1.05rem;
+                line-height: 1.6;
+            }
         }
 
         /* ============================================================
            TRATAMENTOS SECTION (Mobile First Carousel)
            ============================================================ */
-        .tratamentos { background: var(--color-white); position: relative; z-index: 10; overflow: hidden; }
-        .tratamentos__container { max-width: 1200px; margin: 0 auto; padding: 0; }
-        .tratamentos__container .section-title { padding: 0 var(--space-lg); text-align: left; }
-        
+        .tratamentos {
+            background: var(--color-white);
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .tratamentos__container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .tratamentos__container .section-title {
+            padding: 0 var(--space-lg);
+            text-align: left;
+        }
+
         .tratamentos__carousel-wrapper {
             position: relative;
             width: 100%;
         }
 
-        .tratamentos__grid { 
-            display: flex; 
+        .tratamentos__grid {
+            display: flex;
             flex-wrap: nowrap;
-            overflow-x: auto; 
+            overflow-x: auto;
             scroll-snap-type: none;
-            gap: 16px; 
+            gap: 16px;
             padding: var(--space-md) var(--space-lg);
             scrollbar-width: none;
             -ms-overflow-style: none;
             position: relative;
             z-index: 1;
         }
-        .tratamentos__grid::-webkit-scrollbar { display: none; }
-        
-        .tratamento-card { 
-            flex: 0 0 85%; 
+
+        .tratamentos__grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tratamento-card {
+            flex: 0 0 85%;
             max-width: 300px;
             scroll-snap-align: center;
-            background: var(--color-creme); 
-            border-radius: 16px; 
-            padding: 20px; 
-            border: 1px solid rgba(122, 27, 41, 0.06); 
-            display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px;
-            height: auto; 
+            background: var(--color-creme);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(122, 27, 41, 0.06);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 12px;
+            height: auto;
             min-height: 200px;
         }
-        .tratamento-card iconify-icon { font-size: 1.6rem; color: var(--color-bordo); padding: 8px; background: rgba(122, 27, 41, 0.05); border-radius: 10px; align-self: center; width: 40px; height: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
-        .tratamento-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--color-bordo); line-height: 1.2; margin: 0; }
-        .tratamento-card p { font-size: 0.85rem; color: var(--color-gray-text); line-height: 1.4; margin: 0; }
+
+        .tratamento-card iconify-icon {
+            font-size: 1.6rem;
+            color: var(--color-bordo);
+            padding: 8px;
+            background: rgba(122, 27, 41, 0.05);
+            border-radius: 10px;
+            align-self: center;
+            width: 40px;
+            height: 40px;
+            min-height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tratamento-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--color-bordo);
+            line-height: 1.2;
+            margin: 0;
+        }
+
+        .tratamento-card p {
+            font-size: 0.85rem;
+            color: var(--color-gray-text);
+            line-height: 1.4;
+            margin: 0;
+        }
 
         /* Floating Carousel Navigation Buttons */
         .tratamentos__nav {
@@ -435,6 +951,7 @@
             pointer-events: none;
             z-index: 50;
         }
+
         .tratamentos__btn {
             pointer-events: auto;
             background: rgba(255, 255, 255, 0.85);
@@ -450,24 +967,63 @@
             font-size: 1.2rem;
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s;
         }
+
         .tratamentos__btn:active {
             transform: scale(0.9);
             background: var(--color-bordo);
             color: var(--color-white);
         }
 
-        @media (min-width: 1024px) { 
-            .tratamentos__container .section-title { text-align: center; padding: 0; }
-            .tratamentos__grid { gap: var(--space-md); padding: var(--space-lg) 0; justify-content: center; overflow-x: visible; flex-wrap: wrap; }
-            .tratamentos__nav { display: none; } /* Hide arrows on desktop since grid wraps */
-            .tratamento-card[aria-hidden="true"] { display: none !important; } /* Hide duplicated mobile carousel cards */
-            .tratamento-card { flex: 0 0 auto; width: 320px; min-width: 320px; max-width: none; padding: var(--space-xl); border-radius: 24px; gap: var(--space-md); }
-            .tratamento-card h3 { font-size: 1.3rem; }
-            .tratamento-card p { font-size: 1rem; }
-            .tratamento-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(122, 27, 41, 0.06); border-color: rgba(122, 27, 41, 0.15); }
+        @media (min-width: 1024px) {
+            .tratamentos__container .section-title {
+                text-align: center;
+                padding: 0;
+            }
+
+            .tratamentos__grid {
+                gap: var(--space-md);
+                padding: var(--space-lg) 0;
+                justify-content: center;
+                overflow-x: visible;
+                flex-wrap: wrap;
+            }
+
+            .tratamentos__nav {
+                display: none;
+            }
+
+            /* Hide arrows on desktop since grid wraps */
+            .tratamento-card[aria-hidden="true"] {
+                display: none !important;
+            }
+
+            /* Hide duplicated mobile carousel cards */
+            .tratamento-card {
+                flex: 0 0 auto;
+                width: 320px;
+                min-width: 320px;
+                max-width: none;
+                padding: var(--space-xl);
+                border-radius: 24px;
+                gap: var(--space-md);
+            }
+
+            .tratamento-card h3 {
+                font-size: 1.3rem;
+            }
+
+            .tratamento-card p {
+                font-size: 1rem;
+            }
+
+            .tratamento-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 35px rgba(122, 27, 41, 0.06);
+                border-color: rgba(122, 27, 41, 0.15);
+            }
         }
 
         /* ============================================================
@@ -479,10 +1035,12 @@
             z-index: 10;
             overflow: hidden;
         }
+
         .depoimentos__container {
             max-width: 900px;
             margin: 0 auto;
             padding: 0 var(--space-lg);
+            position: relative;
         }
 
         /* Carousel Track */
@@ -491,11 +1049,13 @@
             overflow: hidden;
             border-radius: 24px;
         }
+
         .depoimentos__track {
             display: flex;
             transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
             will-change: transform;
         }
+
         .depoimentos__slide {
             flex: 0 0 100%;
             min-width: 100%;
@@ -516,6 +1076,7 @@
             position: relative;
             overflow: hidden;
         }
+
         .depoimento-card::before {
             content: '\201C';
             position: absolute;
@@ -533,6 +1094,7 @@
             display: flex;
             gap: 3px;
         }
+
         .depoimento-card__stars iconify-icon {
             font-size: 1.1rem;
             color: #F5A623;
@@ -557,6 +1119,7 @@
             padding-top: var(--space-sm);
             border-top: 1px solid rgba(122, 27, 41, 0.06);
         }
+
         .depoimento-card__avatar {
             width: 42px;
             height: 42px;
@@ -572,12 +1135,14 @@
             flex-shrink: 0;
             box-shadow: 0 4px 12px rgba(122, 27, 41, 0.2);
         }
+
         .depoimento-card__name {
             font-size: 0.95rem;
             font-weight: 700;
             color: var(--color-bordo);
             line-height: 1.2;
         }
+
         .depoimento-card__label {
             font-size: 0.72rem;
             font-weight: 600;
@@ -593,6 +1158,7 @@
             gap: 8px;
             margin-top: var(--space-lg);
         }
+
         .depoimentos__dot {
             width: 8px;
             height: 8px;
@@ -603,6 +1169,7 @@
             transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
             padding: 0;
         }
+
         .depoimentos__dot.is-active {
             background: var(--color-bordo);
             width: 24px;
@@ -622,6 +1189,7 @@
             pointer-events: none;
             z-index: 10;
         }
+
         .depoimentos__btn {
             pointer-events: auto;
             background: rgba(255, 255, 255, 0.85);
@@ -637,9 +1205,10 @@
             font-size: 1.2rem;
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s;
         }
+
         .depoimentos__btn:active {
             transform: scale(0.9);
             background: var(--color-bordo);
@@ -650,15 +1219,18 @@
             .depoimento-card {
                 padding: 2.5rem 2rem;
             }
+
             .depoimento-card__quote {
                 font-size: 1.05rem;
                 line-height: 1.7;
             }
+
             .depoimentos__btn {
                 width: 42px;
                 height: 42px;
                 font-size: 1.2rem;
             }
+
             .depoimentos__nav {
                 left: -12px;
                 right: -12px;
@@ -667,102 +1239,365 @@
 
         @media (min-width: 1024px) {
             .depoimentos__container {
-                max-width: 780px;
+                max-width: 820px;
             }
+
             .depoimento-card {
                 padding: 3rem 2.5rem;
                 border-radius: 28px;
             }
+
             .depoimento-card__quote {
                 font-size: 1.1rem;
             }
+
             .depoimento-card__avatar {
                 width: 48px;
                 height: 48px;
                 font-size: 1.1rem;
             }
+
+            /* On desktop: pull nav out of the carousel overflow context */
             .depoimentos__nav {
-                left: -24px;
-                right: -24px;
+                position: absolute;
+                top: 50%;
+                left: 0;
+                right: 0;
+                transform: translateY(calc(-50% - 24px));
+                /* offset to align with card center, above dots */
+                display: flex;
+                justify-content: space-between;
+                pointer-events: none;
+                z-index: 20;
+                padding: 0 calc(var(--space-lg) - 28px);
             }
+
             .depoimentos__btn {
-                width: 48px;
-                height: 48px;
+                width: 52px;
+                height: 52px;
                 font-size: 1.3rem;
+                background: rgba(255, 255, 255, 0.55);
+                backdrop-filter: blur(12px) saturate(1.4);
+                -webkit-backdrop-filter: blur(12px) saturate(1.4);
+                border: 1px solid rgba(122, 27, 41, 0.12);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255,255,255,0.6);
+                color: var(--color-bordo);
+                transition: background 0.3s, transform 0.25s, box-shadow 0.3s;
+            }
+
+            .depoimentos__btn:hover {
+                background: rgba(255, 255, 255, 0.82);
+                box-shadow: 0 8px 28px rgba(122, 27, 41, 0.14), inset 0 1px 0 rgba(255,255,255,0.8);
+                transform: scale(1.08);
+            }
+
+            .depoimentos__btn:active {
+                transform: scale(0.94);
+                background: rgba(122, 27, 41, 0.08);
+                color: var(--color-bordo);
             }
         }
 
         /* ============================================================
            SOBRE SECTION (Mobile Optimized Scannable)
            ============================================================ */
-        .sobre { background: var(--color-creme); position: relative; z-index: 10; }
-        .sobre__container { max-width: 900px; margin: 0 auto; padding: 0 var(--space-lg); }
-        .sobre__content { background: var(--color-white); padding: var(--space-lg); border-radius: 24px; border: 1px solid rgba(122,27,41,0.06); box-shadow: 0 10px 40px rgba(0,0,0,0.04); }
-        
-        .sobre__block { display: flex; flex-direction: column; gap: var(--space-md); margin-bottom: var(--space-lg); text-align: center; align-items: center; }
-        .sobre__block-icon { font-size: 1.8rem; color: var(--color-bordo-light); background: rgba(122, 27, 41, 0.05); padding: 10px; border-radius: 12px; align-self: center; }
-        .sobre__block p { font-size: 0.95rem; color: var(--color-gray-text); line-height: 1.5; margin: 0; }
-        
-        .sobre__servicos { margin-top: var(--space-xl); padding-top: var(--space-lg); border-top: 1px solid rgba(122,27,41,0.08); text-align: left;}
-        .sobre__servicos h3 { font-size: 1.2rem; color: var(--color-bordo); margin-bottom: var(--space-sm); font-weight: 700; }
-        .sobre__servicos ul { list-style: none; display: flex; flex-direction: column; gap: var(--space-md); }
-        .sobre__servicos li { display: flex; align-items: flex-start; gap: var(--space-sm); font-size: 0.95rem; color: var(--color-gray-text); line-height: 1.4; font-weight: 500; }
-        .sobre__servicos li iconify-icon { color: var(--color-bordo-light); font-size: 1.4rem; flex-shrink: 0; margin-top: -1px; }
+        .sobre {
+            background: var(--color-creme);
+            position: relative;
+            z-index: 10;
+        }
 
-        @media (min-width: 1024px) { 
-            .sobre__content { padding: var(--space-3xl); } 
-            .sobre__block { flex-direction: row; align-items: flex-start; gap: var(--space-lg); margin-bottom: var(--space-xl); }
-            .sobre__block-icon { font-size: 2.8rem; padding: 16px; margin-top: 4px; border-radius: 14px; }
-            .sobre__block p { font-size: 1.1rem; line-height: 1.6; }
+        .sobre__container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        .sobre__content {
+            background: var(--color-white);
+            padding: var(--space-lg);
+            border-radius: 24px;
+            border: 1px solid rgba(122, 27, 41, 0.06);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+        }
+
+        .sobre__block {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+            text-align: center;
+            align-items: center;
+        }
+
+        .sobre__block-icon {
+            font-size: 1.8rem;
+            color: var(--color-bordo-light);
+            background: rgba(122, 27, 41, 0.05);
+            padding: 10px;
+            border-radius: 12px;
+            align-self: center;
+        }
+
+        .sobre__block p {
+            font-size: 0.95rem;
+            color: var(--color-gray-text);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .sobre__servicos {
+            margin-top: var(--space-xl);
+            padding-top: var(--space-lg);
+            border-top: 1px solid rgba(122, 27, 41, 0.08);
+            text-align: left;
+        }
+
+        .sobre__servicos h3 {
+            font-size: 1.2rem;
+            color: var(--color-bordo);
+            margin-bottom: var(--space-sm);
+            font-weight: 700;
+        }
+
+        .sobre__servicos ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .sobre__servicos li {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-sm);
+            font-size: 0.95rem;
+            color: var(--color-gray-text);
+            line-height: 1.4;
+            font-weight: 500;
+        }
+
+        .sobre__servicos li iconify-icon {
+            color: var(--color-bordo-light);
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            margin-top: -1px;
+        }
+
+        @media (min-width: 1024px) {
+            .sobre__content {
+                padding: var(--space-3xl);
+            }
+
+            .sobre__block {
+                flex-direction: row;
+                align-items: flex-start;
+                gap: var(--space-lg);
+                margin-bottom: var(--space-xl);
+            }
+
+            .sobre__block-icon {
+                font-size: 2.8rem;
+                padding: 16px;
+                margin-top: 4px;
+                border-radius: 14px;
+            }
+
+            .sobre__block p {
+                font-size: 1.1rem;
+                line-height: 1.6;
+            }
         }
 
         /* Header Certification Card */
         .cert-card {
-            display: flex; align-items: center; gap: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
             background: #ffffff;
-            padding: 4px 6px; border-radius: 6px;
+            padding: 4px 6px;
+            border-radius: 6px;
             border: 1px solid rgba(39, 174, 96, 0.3);
             box-shadow: 0 4px 12px rgba(39, 174, 96, 0.1);
             transform: scale(0.9);
             transform-origin: right center;
         }
-        .cert-card__icon { width: 22px; height: 22px; background: rgba(39, 174, 96, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #27ae60; flex-shrink: 0; }
-        .cert-card__icon iconify-icon { font-size: 12px; }
-        .cert-card__text { display: flex; flex-direction: column; text-align: left; }
-        .cert-card__title { font-size: 0.55rem; font-weight: 800; color: #333333; line-height: 1.1; display: block; } /* Full text visible on mobile */
-        .cert-card__sub { font-size: 0.5rem; color: #27ae60; font-weight: 700; }
-        
+
+        .cert-card__icon {
+            width: 22px;
+            height: 22px;
+            background: rgba(39, 174, 96, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #27ae60;
+            flex-shrink: 0;
+        }
+
+        .cert-card__icon iconify-icon {
+            font-size: 12px;
+        }
+
+        .cert-card__text {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .cert-card__title {
+            font-size: 0.55rem;
+            font-weight: 800;
+            color: #333333;
+            line-height: 1.1;
+            display: block;
+        }
+
+        /* Full text visible on mobile */
+        .cert-card__sub {
+            font-size: 0.5rem;
+            color: #27ae60;
+            font-weight: 700;
+        }
+
         @media (min-width: 1024px) {
-            .cert-card { padding: 6px 12px; gap: 8px; border-radius: 10px; transform: none; }
-            .cert-card__icon { width: 32px; height: 32px; }
-            .cert-card__icon iconify-icon { font-size: 18px; }
-            .cert-card__title { font-size: 0.7rem; }
-            .cert-card__sub { font-size: 0.6rem; }
+            .cert-card {
+                padding: 6px 12px;
+                gap: 8px;
+                border-radius: 10px;
+                transform: none;
+            }
+
+            .cert-card__icon {
+                width: 32px;
+                height: 32px;
+            }
+
+            .cert-card__icon iconify-icon {
+                font-size: 18px;
+            }
+
+            .cert-card__title {
+                font-size: 0.7rem;
+            }
+
+            .cert-card__sub {
+                font-size: 0.6rem;
+            }
         }
 
 
         /* ============================================================
            CONTACT SECTION
            ============================================================ */
-        .contact { background: var(--color-white); position: relative; z-index: 10; }
-        .contact__container { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-lg); }
-        
-        .contact__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-2xl); }
-        @media (min-width: 900px) { .contact__grid { grid-template-columns: 1fr 1.2fr; gap: var(--space-3xl); align-items: stretch; } }
-        
-        .contact__info { display: flex; flex-direction: column; gap: var(--space-md); background: var(--color-creme); padding: var(--space-lg); border-radius: 24px; border: 1px solid rgba(122,27,41,0.08); }
-        @media (min-width: 768px) { .contact__info { padding: var(--space-2xl); gap: var(--space-lg); } }
-        .contact__card { display: flex; align-items: flex-start; gap: var(--space-md); }
-        .contact__card-icon { width: 50px; height: 50px; background: var(--color-white); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-bordo); flex-shrink: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .contact__card h3 { font-size: 1.1rem; font-weight: 600; color: var(--color-bordo); margin-bottom: 0.2rem; line-height: 1.2; }
-        .contact__card p { font-size: 0.95rem; color: var(--color-gray-text); line-height: 1.5; }
-        
-        .contact__map { width: 100%; height: 350px; border-radius: 24px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.06); border: 1px solid rgba(122,27,41,0.08); display: flex; }
-        @media (min-width: 900px) { .contact__map { height: auto; min-height: 100%; } }
-        .contact__map iframe { width: 100%; height: 100%; border: none; flex: 1; min-height: 350px; }
+        .contact {
+            background: var(--color-white);
+            position: relative;
+            z-index: 10;
+        }
+
+        .contact__container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        .contact__grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-2xl);
+        }
+
+        @media (min-width: 900px) {
+            .contact__grid {
+                grid-template-columns: 1fr 1.2fr;
+                gap: var(--space-3xl);
+                align-items: stretch;
+            }
+        }
+
+        .contact__info {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            background: var(--color-creme);
+            padding: var(--space-lg);
+            border-radius: 24px;
+            border: 1px solid rgba(122, 27, 41, 0.08);
+        }
+
+        @media (min-width: 768px) {
+            .contact__info {
+                padding: var(--space-2xl);
+                gap: var(--space-lg);
+            }
+        }
+
+        .contact__card {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-md);
+        }
+
+        .contact__card-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--color-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-bordo);
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact__card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-bordo);
+            margin-bottom: 0.2rem;
+            line-height: 1.2;
+        }
+
+        .contact__card p {
+            font-size: 0.95rem;
+            color: var(--color-gray-text);
+            line-height: 1.5;
+        }
+
+        .contact__map {
+            width: 100%;
+            height: 350px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(122, 27, 41, 0.08);
+            display: flex;
+        }
+
+        @media (min-width: 900px) {
+            .contact__map {
+                height: auto;
+                min-height: 100%;
+            }
+        }
+
+        .contact__map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            flex: 1;
+            min-height: 350px;
+        }
 
         /* Scroll Spacer */
-        .scroll-spacer { height: 10vh; background: var(--color-white); position: relative; z-index: 10; }
+        .scroll-spacer {
+            height: 10vh;
+            background: var(--color-white);
+            position: relative;
+            z-index: 10;
+        }
 
         /* ============================================================
            FOOTER
@@ -770,29 +1605,141 @@
         .footer {
             text-align: center;
             padding: 32px var(--space-lg) 100px var(--space-lg);
-            background: var(--color-white); border-top: 1px solid rgba(122,27,41,0.05);
-            font-size: 0.9rem; color: var(--color-gray-text); margin: 0;
-            position: relative; z-index: 50;
+            background: var(--color-white);
+            border-top: 1px solid rgba(122, 27, 41, 0.05);
+            font-size: 0.9rem;
+            color: var(--color-gray-text);
+            margin: 0;
+            position: relative;
+            z-index: 50;
         }
-        .footer p { margin: 0; }
-        .footer a { 
-            color: var(--color-bordo); text-decoration: underline; font-weight: 700; 
-            padding: 10px 5px; display: inline-block; 
+
+        .footer p {
+            margin: 0;
         }
-        @media(min-width: 1024px) { .footer { padding-bottom: var(--space-lg); } }
+
+        .footer a {
+            color: var(--color-bordo);
+            text-decoration: underline;
+            font-weight: 700;
+            padding: 10px 5px;
+            display: inline-block;
+        }
+
+        @media(min-width: 1024px) {
+            .footer {
+                padding-bottom: var(--space-lg);
+            }
+        }
 
         /* ============================================================
            FIXED WHATSAPP POPUP
            ============================================================ */
-        .wpp-popup { position: fixed; bottom: 85px; right: var(--space-lg); z-index: 200; display: flex; flex-direction: row; align-items: center; gap: var(--space-sm); pointer-events: none; }
-        .wpp-popup__tooltip { background: var(--color-bordo); color: var(--color-white); padding: 0.6rem 1rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600; box-shadow: 0 8px 30px rgba(0,0,0,0.2); white-space: nowrap; opacity: 0; transform: translateX(10px) scale(0.95); animation: tooltipIn 0.6s 2s var(--ease-out-expo) forwards; pointer-events: none; position: relative; }
-        .wpp-popup__tooltip::after { content: ''; position: absolute; top: 50%; right: -5px; width: 10px; height: 10px; background: var(--color-bordo); transform: translateY(-50%) rotate(45deg); border-radius: 2px; }
-        @keyframes tooltipIn { to { opacity: 1; transform: translateX(0) scale(1); } }
-        .wpp-popup__btn { pointer-events: auto; width: 60px; height: 60px; border-radius: 50%; background: #25D366; color: white; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 6px 24px rgba(37,211,102,0.4); transition: transform 0.35s var(--ease-out-expo), box-shadow 0.35s; animation: wppBounce 0.6s 1.5s var(--ease-out-expo) forwards; opacity: 0; transform: scale(0.5); text-decoration: none; }
-        @keyframes wppBounce { 0% { opacity: 0; transform: scale(0.5); } 60% { opacity: 1; transform: scale(1.12); } 100% { opacity: 1; transform: scale(1); } }
-        .wpp-popup__btn:hover { transform: scale(1.1); box-shadow: 0 8px 32px rgba(37,211,102,0.55); }
-        .wpp-popup__btn svg { width: 30px; height: 30px; }
-        @media (min-width: 1024px) { .wpp-popup { bottom: var(--space-xl); right: var(--space-xl); } .wpp-popup__btn { width: 66px; height: 66px; } }
+        .wpp-popup {
+            position: fixed;
+            bottom: 85px;
+            right: var(--space-lg);
+            z-index: 200;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: var(--space-sm);
+            pointer-events: none;
+        }
+
+        .wpp-popup__tooltip {
+            background: var(--color-bordo);
+            color: var(--color-white);
+            padding: 0.6rem 1rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(10px) scale(0.95);
+            animation: tooltipIn 0.6s 2s var(--ease-out-expo) forwards;
+            pointer-events: none;
+            position: relative;
+        }
+
+        .wpp-popup__tooltip::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -5px;
+            width: 10px;
+            height: 10px;
+            background: var(--color-bordo);
+            transform: translateY(-50%) rotate(45deg);
+            border-radius: 2px;
+        }
+
+        @keyframes tooltipIn {
+            to {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        .wpp-popup__btn {
+            pointer-events: auto;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #25D366;
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
+            transition: transform 0.35s var(--ease-out-expo), box-shadow 0.35s;
+            animation: wppBounce 0.6s 1.5s var(--ease-out-expo) forwards;
+            opacity: 0;
+            transform: scale(0.5);
+            text-decoration: none;
+        }
+
+        @keyframes wppBounce {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            60% {
+                opacity: 1;
+                transform: scale(1.12);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .wpp-popup__btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 32px rgba(37, 211, 102, 0.55);
+        }
+
+        .wpp-popup__btn svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        @media (min-width: 1024px) {
+            .wpp-popup {
+                bottom: var(--space-xl);
+                right: var(--space-xl);
+            }
+
+            .wpp-popup__btn {
+                width: 66px;
+                height: 66px;
+            }
+        }
 
 
 
@@ -802,7 +1749,8 @@
         /* Global Floating WhatsApp Tooth */
         .btn-whatsapp-float {
             position: fixed;
-            bottom: 90px; /* Restored back down near the tab bar */
+            bottom: 90px;
+            /* Restored back down near the tab bar */
             right: 15px;
             width: clamp(50px, 10vw, 65px);
             z-index: 9999;
@@ -814,60 +1762,79 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         .btn-whatsapp-float__bubble {
             position: absolute;
-            bottom: 100%; /* Position ABOVE the tooth */
-            right: -5px; /* Aligned near the right edge to prevent screen cut-off */
+            bottom: 100%;
+            /* Position ABOVE the tooth */
+            right: -5px;
+            /* Aligned near the right edge to prevent screen cut-off */
             left: auto;
             transform: none;
-            margin-bottom: 8px; /* Space between bubble and tooth */
+            margin-bottom: 8px;
+            /* Space between bubble and tooth */
             background: #25D366;
             color: #ffffff;
             padding: 6px 10px;
-            border-radius: 12px 12px 0 12px; /* Bottom right corner points to tooth */
+            border-radius: 12px 12px 0 12px;
+            /* Bottom right corner points to tooth */
             font-size: 0.65rem;
             font-weight: 700;
             white-space: nowrap;
             box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
             pointer-events: none;
         }
-        
+
         /* Little triangle pointing down to the tooth */
         .btn-whatsapp-float__bubble::after {
             content: '';
             position: absolute;
-            bottom: -6px; /* Stick out the bottom */
-            right: 20px; /* Aligned perfectly over the center of the tooth */
+            bottom: -6px;
+            /* Stick out the bottom */
+            right: 20px;
+            /* Aligned perfectly over the center of the tooth */
             left: auto;
             transform: none;
-            border-width: 6px 6px 0 6px; /* Downward triangle */
+            border-width: 6px 6px 0 6px;
+            /* Downward triangle */
             border-style: solid;
             border-color: #25D366 transparent transparent transparent;
         }
+
         .btn-whatsapp-float:hover {
             transform: scale(1.1) rotate(5deg);
         }
+
         .btn-whatsapp-float img {
             width: 100%;
             height: auto;
-            pointer-events: none; /* Prevent interference with link click */
+            pointer-events: none;
+            /* Prevent interference with link click */
         }
-        
+
         @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0); }
-            50% { transform: translateY(-12px) rotate(5deg); }
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0);
+            }
+
+            50% {
+                transform: translateY(-12px) rotate(5deg);
+            }
         }
-        
+
         .contact__watermark {
             display: block;
             position: absolute;
             top: -20px;
             right: -20px;
             width: 150px;
-            opacity: 0.25; /* Noticeable on white bg */
+            opacity: 0.25;
+            /* Noticeable on white bg */
             pointer-events: none;
-            z-index: 1; /* Sits naturally behind text (text container is z-index:10) */
+            z-index: 1;
+            /* Sits naturally behind text (text container is z-index:10) */
             transform: rotate(-10deg);
         }
 
@@ -877,11 +1844,13 @@
                 right: 40px;
                 width: 80px;
             }
+
             .btn-whatsapp-float__bubble {
                 font-size: 0.8rem;
                 padding: 8px 14px;
                 border-radius: 16px;
             }
+
             .contact__watermark {
                 top: 0;
                 left: -2%;
@@ -894,12 +1863,25 @@
         }
 
         /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--color-creme); }
-        ::-webkit-scrollbar-thumb { background: rgba(122, 27, 41, 0.3); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--color-bordo); }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-creme);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(122, 27, 41, 0.3);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-bordo);
+        }
     </style>
 </head>
+
 <body>
 
     <!-- =============== NAVIGATION =============== -->
@@ -909,7 +1891,7 @@
                 <div class="nav__logo">LR</div>
                 <span class="nav__name">Dra. Luzia Rayane</span>
             </a>
-            
+
             <div class="cert-card" id="headerCertCard">
                 <div class="cert-card__icon">
                     <iconify-icon icon="solar:diploma-verified-bold-duotone"></iconify-icon>
@@ -939,7 +1921,8 @@
             <iconify-icon icon="solar:health-bold"></iconify-icon>
             Tratamentos
         </a>
-        <a href="https://wa.me/558596309485" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="nav-bottom__item nav-bottom__item--center">
+        <a href="https://wa.me/558596309485" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
+            class="nav-bottom__item nav-bottom__item--center">
             <iconify-icon icon="mdi:whatsapp"></iconify-icon>
         </a>
         <a href="#sobre" class="nav-bottom__item">
@@ -957,24 +1940,21 @@
     <!-- =============== HERO SECTION =============== -->
     <section class="hero" id="hero">
         <!-- Full Page Background Image -->
-        <img
-            class="hero__bg"
-            id="heroBg"
-            src="assets/images/hero.png"
-            alt="Dra. Luzia Rayane sorrindo em seu consultório"
-            loading="lazy"
-        />
+        <img class="hero__bg" id="heroBg" src="assets/images/hero.png"
+            alt="Dra. Luzia Rayane sorrindo em seu consultório" loading="lazy" />
         <div class="hero__overlay" id="heroBgOverlay"></div>
 
         <!-- Scroll Indicator -->
         <div class="hero__scroll-indicator" id="heroScrollIndicator">
             <span>Deslize</span>
-            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <svg viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
         </div>
 
         <!-- Content Card -->
         <div class="hero__content">
-            
+
             <div class="hero__doctor-name" id="heroDoctorName">
                 <h1>
                     <span>Dra. Luzia</span>
@@ -1003,26 +1983,34 @@
 
             <!-- Specialties -->
             <div class="hero__specialties" id="heroIcons">
-                <span class="hero__specialty-tag"><iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon> Adulto e Infantil</span>
-                <span class="hero__specialty-tag"><iconify-icon icon="solar:magic-stick-3-bold-duotone"></iconify-icon> Clareamento</span>
-                <span class="hero__specialty-tag"><iconify-icon icon="mdi:tooth-outline"></iconify-icon> Restaurações</span>
-                <span class="hero__specialty-tag"><iconify-icon icon="solar:star-fall-bold-duotone"></iconify-icon> Facetas de Resina</span>
-                <span class="hero__specialty-tag"><iconify-icon icon="mdi:tooth-outline"></iconify-icon> Cirurgias</span>
-                <span class="hero__specialty-tag"><iconify-icon icon="solar:danger-triangle-bold-duotone"></iconify-icon> Urgência</span>
+                <span class="hero__specialty-tag"><iconify-icon
+                        icon="solar:users-group-rounded-bold-duotone"></iconify-icon> Adulto e Infantil</span>
+                <span class="hero__specialty-tag"><iconify-icon icon="solar:magic-stick-3-bold-duotone"></iconify-icon>
+                    Clareamento</span>
+                <span class="hero__specialty-tag"><iconify-icon icon="mdi:tooth-outline"></iconify-icon>
+                    Restaurações</span>
+                <span class="hero__specialty-tag"><iconify-icon icon="solar:star-fall-bold-duotone"></iconify-icon>
+                    Facetas de Resina</span>
+                <span class="hero__specialty-tag"><iconify-icon icon="mdi:tooth-outline"></iconify-icon>
+                    Cirurgias</span>
+                <span class="hero__specialty-tag"><iconify-icon
+                        icon="solar:danger-triangle-bold-duotone"></iconify-icon> Urgência</span>
             </div>
 
             <!-- CTA Actions -->
             <div class="hero__actions" id="heroActions">
-                <a href="https://wa.me/5585996309485?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Luzia%20Rayane%20em%20Fortaleza." class="btn btn--primary" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/5585996309485?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Luzia%20Rayane%20em%20Fortaleza."
+                    class="btn btn--primary" target="_blank" rel="noopener noreferrer">
                     Agendar Avaliação
                 </a>
-                <a href="https://www.instagram.com/luziarayane.g/" class="btn btn--instagram" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.instagram.com/luziarayane.g/" class="btn btn--instagram" target="_blank"
+                    rel="noopener noreferrer">
                     <iconify-icon icon="lucide:instagram" width="18" style="margin-right: 4px;"></iconify-icon>
                     Instagram
                 </a>
             </div>
 
-            </div>
+        </div>
 
         </div>
     </section>
@@ -1032,9 +2020,10 @@
         <div class="tratamentos__container">
             <div class="section-title">
                 <h2>Nossos <span>Tratamentos</span></h2>
-                <p>Soluções completas e inovadoras para conquistar um sorriso perfeito e manter a saúde bucal da sua família.</p>
+                <p>Soluções completas e inovadoras para conquistar um sorriso perfeito e manter a saúde bucal da sua
+                    família.</p>
             </div>
-            
+
             <div class="tratamentos__carousel-wrapper">
                 <div class="tratamentos__grid" id="tratamentosGrid">
                     <!-- Original 6 Cards -->
@@ -1068,7 +2057,7 @@
                         <h3>Urgência odontológica</h3>
                         <p>Atendimento imediato para aliviar a sua dor agora mesmo.</p>
                     </div>
-                    
+
                     <!-- Duplicated 6 Cards for Infinite Esteira -->
                     <div class="tratamento-card" aria-hidden="true">
                         <iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon>
@@ -1104,8 +2093,12 @@
 
                 <!-- Carousel Navigation -->
                 <div class="tratamentos__nav">
-                    <button class="tratamentos__btn" id="tratamentosPrev" aria-label="Navegar para a esquerda"><iconify-icon icon="solar:alt-arrow-left-linear"></iconify-icon></button>
-                    <button class="tratamentos__btn" id="tratamentosNext" aria-label="Navegar para a direita"><iconify-icon icon="solar:alt-arrow-right-linear"></iconify-icon></button>
+                    <button class="tratamentos__btn" id="tratamentosPrev"
+                        aria-label="Navegar para a esquerda"><iconify-icon
+                            icon="solar:alt-arrow-left-linear"></iconify-icon></button>
+                    <button class="tratamentos__btn" id="tratamentosNext"
+                        aria-label="Navegar para a direita"><iconify-icon
+                            icon="solar:alt-arrow-right-linear"></iconify-icon></button>
                 </div>
             </div>
         </div>
@@ -1126,14 +2119,17 @@
                     <div class="depoimentos__slide">
                         <div class="depoimento-card">
                             <div class="depoimento-card__stars">
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
                             </div>
                             <p class="depoimento-card__quote">
-                                Posso dizer com tranquilidade que ela curou o meu medo de ir ao dentista! A doutora foi extremamente atenciosa e paciente comigo. Ela analisou todo o meu histórico, zelou pelo meu atendimento e foi muito cuidadosa com a minha segurança durante todo o tempo. Para completar, o ambiente de atendimento é simplesmente impecável! Recomendo!
+                                Posso dizer com tranquilidade que ela curou o meu medo de ir ao dentista! A doutora foi
+                                extremamente atenciosa e paciente comigo. Ela analisou todo o meu histórico, zelou pelo
+                                meu atendimento e foi muito cuidadosa com a minha segurança durante todo o tempo. Para
+                                completar, o ambiente de atendimento é simplesmente impecável! Recomendo!
                             </p>
                             <div class="depoimento-card__author">
                                 <div class="depoimento-card__avatar">GN</div>
@@ -1149,14 +2145,16 @@
                     <div class="depoimentos__slide">
                         <div class="depoimento-card">
                             <div class="depoimento-card__stars">
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
                             </div>
                             <p class="depoimento-card__quote">
-                                Nota 10! O grande diferencial foi o atendimento humanizado e personalizado. Em outras experiências, sentia que recebia um tratamento genérico, mas a doutora analisou meu caso com exclusividade e fez eu me sentir único do começo ao fim.
+                                Nota 10! O grande diferencial foi o atendimento humanizado e personalizado. Em outras
+                                experiências, sentia que recebia um tratamento genérico, mas a doutora analisou meu caso
+                                com exclusividade e fez eu me sentir único do começo ao fim.
                             </p>
                             <div class="depoimento-card__author">
                                 <div class="depoimento-card__avatar">DW</div>
@@ -1172,14 +2170,15 @@
                     <div class="depoimentos__slide">
                         <div class="depoimento-card">
                             <div class="depoimento-card__stars">
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
                             </div>
                             <p class="depoimento-card__quote">
-                                Uma Profissional extremamente capacitada! Dra Luzia Rayane Gomes, é dedicada, atenciosa! Cuidou do meu sorriso com muito carinho e profissionalismo! Super indico!
+                                Uma Profissional extremamente capacitada! Dra Luzia Rayane Gomes, é dedicada, atenciosa!
+                                Cuidou do meu sorriso com muito carinho e profissionalismo! Super indico!
                             </p>
                             <div class="depoimento-card__author">
                                 <div class="depoimento-card__avatar">NJ</div>
@@ -1195,14 +2194,15 @@
                     <div class="depoimentos__slide">
                         <div class="depoimento-card">
                             <div class="depoimento-card__stars">
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
-                                <iconify-icon icon="solar:star-bold" ></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
                             </div>
                             <p class="depoimento-card__quote">
-                                Atendimento impecável, ambiente e utensílios higienizados, atenção aos detalhes excepcional.
+                                Atendimento impecável, ambiente e utensílios higienizados, atenção aos detalhes
+                                excepcional.
                             </p>
                             <div class="depoimento-card__author">
                                 <div class="depoimento-card__avatar">RS</div>
@@ -1214,12 +2214,60 @@
                         </div>
                     </div>
 
+                    <!-- Slide 5 -->
+                    <div class="depoimentos__slide">
+                        <div class="depoimento-card">
+                            <div class="depoimento-card__stars">
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                            </div>
+                            <p class="depoimento-card__quote">
+                                Minha dentista!! Extremamente capacitada e com melhor atendimento possível. Com a Dra. Luzia Rayane, eu me sinto muito a vontade em tirar minhas dúvidas. Profissional que tem um cuidado especial pelos pacientes. Recomendo demais!!
+                            </p>
+                            <div class="depoimento-card__author">
+                                <div class="depoimento-card__avatar">JF</div>
+                                <div>
+                                    <div class="depoimento-card__name">Jonas Fran&#231;a</div>
+                                    <div class="depoimento-card__label">Paciente</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 6 -->
+                    <div class="depoimentos__slide">
+                        <div class="depoimento-card">
+                            <div class="depoimento-card__stars">
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                            </div>
+                            <p class="depoimento-card__quote">
+                                Excelente profissional! Fui atendida com muito cuidado e paciência. Dra. Rayane é extremamente competente e detalhista. Atendimento diferenciado, ambiente super higienizado e muito profissionalismo.
+                            </p>
+                            <div class="depoimento-card__author">
+                                <div class="depoimento-card__avatar">GC</div>
+                                <div>
+                                    <div class="depoimento-card__name">Gizelle Cruz</div>
+                                    <div class="depoimento-card__label">Paciente</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- Carousel Arrows -->
                 <div class="depoimentos__nav">
-                    <button class="depoimentos__btn" id="depoimentosPrev" aria-label="Depoimento anterior"><iconify-icon icon="solar:alt-arrow-left-linear"></iconify-icon></button>
-                    <button class="depoimentos__btn" id="depoimentosNext" aria-label="Próximo depoimento"><iconify-icon icon="solar:alt-arrow-right-linear"></iconify-icon></button>
+                    <button class="depoimentos__btn" id="depoimentosPrev" aria-label="Depoimento anterior"><iconify-icon
+                            icon="solar:alt-arrow-left-linear"></iconify-icon></button>
+                    <button class="depoimentos__btn" id="depoimentosNext" aria-label="Próximo depoimento"><iconify-icon
+                            icon="solar:alt-arrow-right-linear"></iconify-icon></button>
                 </div>
             </div>
 
@@ -1229,6 +2277,8 @@
                 <button class="depoimentos__dot" data-index="1" aria-label="Depoimento 2"></button>
                 <button class="depoimentos__dot" data-index="2" aria-label="Depoimento 3"></button>
                 <button class="depoimentos__dot" data-index="3" aria-label="Depoimento 4"></button>
+                <button class="depoimentos__dot" data-index="4" aria-label="Depoimento 5"></button>
+                <button class="depoimentos__dot" data-index="5" aria-label="Depoimento 6"></button>
             </div>
         </div>
     </section>
@@ -1243,22 +2293,31 @@
             <div class="sobre__content">
                 <div class="sobre__block">
                     <iconify-icon icon="solar:heart-angle-bold-duotone" class="sobre__block-icon"></iconify-icon>
-                    <p>Acredito numa odontologia de cuidado, onde a escuta ativa é o primeiro passo de qualquer tratamento.<br><br>Minha missão é resgatar a sua autoestima, devolvendo a sua confiança para sorrir sem medos.</p>
+                    <p>Acredito numa odontologia de cuidado, onde a escuta ativa é o primeiro passo de qualquer
+                        tratamento.<br><br>Minha missão é resgatar a sua autoestima, devolvendo a sua confiança para
+                        sorrir sem medos.</p>
                 </div>
-                
+
                 <div class="sobre__block">
                     <iconify-icon icon="solar:shield-check-bold-duotone" class="sobre__block-icon"></iconify-icon>
-                    <p>Respeitamos o seu tempo e seus limites. Cada passo é explicado com clareza para a sua paz de espírito.<br><br>Transformamos a visita ao dentista numa experiência acolhedora, segura e livre de dores.</p>
+                    <p>Respeitamos o seu tempo e seus limites. Cada passo é explicado com clareza para a sua paz de
+                        espírito.<br><br>Transformamos a visita ao dentista numa experiência acolhedora, segura e livre
+                        de dores.</p>
                 </div>
-                
+
                 <div class="sobre__servicos">
                     <h3>Serviços Inclusos em Nosso Escopo:</h3>
                     <ul>
-                        <li><iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon> Cuidado acolhedor e completo para todas as idades</li>
-                        <li><iconify-icon icon="mdi:tooth-outline"></iconify-icon> Clareamento avançado e restaurações invisíveis</li>
-                        <li><iconify-icon icon="solar:star-fall-bold-duotone"></iconify-icon> Lentes e facetas sob medida para o seu rosto</li>
-                        <li><iconify-icon icon="mdi:tooth-outline"></iconify-icon> Cirurgias e extrações guiadas pelo seu conforto</li>
-                        <li><iconify-icon icon="solar:medical-kit-bold-duotone"></iconify-icon> Plantão ágil para alívio imediato de urgências</li>
+                        <li><iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon> Cuidado
+                            acolhedor e completo para todas as idades</li>
+                        <li><iconify-icon icon="mdi:tooth-outline"></iconify-icon> Clareamento avançado e restaurações
+                            invisíveis</li>
+                        <li><iconify-icon icon="solar:star-fall-bold-duotone"></iconify-icon> Lentes e facetas sob
+                            medida para o seu rosto</li>
+                        <li><iconify-icon icon="mdi:tooth-outline"></iconify-icon> Cirurgias e extrações guiadas pelo
+                            seu conforto</li>
+                        <li><iconify-icon icon="solar:medical-kit-bold-duotone"></iconify-icon> Plantão ágil para alívio
+                            imediato de urgências</li>
                     </ul>
                 </div>
             </div>
@@ -1269,13 +2328,13 @@
     <section class="contact section-padding" id="contato">
         <!-- Abstract Watermark (Desktop Only) -->
         <img src="assets/images/dente.png" class="contact__watermark" alt="" aria-hidden="true" loading="lazy" />
-        
+
         <div class="contact__container">
             <div class="section-title">
                 <h2>Onde <span>Atendemos</span></h2>
                 <p>Será um prazer receber você para uma avaliação minuciosa e planejar o futuro do seu sorriso.</p>
             </div>
-            
+
             <div class="contact__grid">
                 <!-- Left: Contact Info -->
                 <div class="contact__info">
@@ -1288,7 +2347,7 @@
                             <p>R. Martinho Rodrigues, 129 - Fátima<br>Fortaleza - CE, 60411-280</p>
                         </div>
                     </div>
-                    
+
                     <div class="contact__card">
                         <div class="contact__card-icon">
                             <iconify-icon icon="solar:phone-bold-duotone" width="24"></iconify-icon>
@@ -1298,8 +2357,10 @@
                             <p>(85) 99630-9485</p>
                         </div>
                     </div>
-                    
-                    <a href="https://wa.me/5585996309485?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Luzia%20Rayane%20na%20Marv%20Clinic." target="_blank" rel="noopener noreferrer" class="btn btn--primary" style="width: 100%; margin-top: auto; padding-top: 1.1rem; padding-bottom: 1.1rem;">
+
+                    <a href="https://wa.me/5585996309485?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Luzia%20Rayane%20na%20Marv%20Clinic."
+                        target="_blank" rel="noopener noreferrer" class="btn btn--primary"
+                        style="width: 100%; margin-top: auto; padding-top: 1.1rem; padding-bottom: 1.1rem;">
                         Agendar via WhatsApp
                         <iconify-icon icon="solar:arrow-right-bold" width="18"></iconify-icon>
                     </a>
@@ -1307,11 +2368,9 @@
 
                 <!-- Right: Map -->
                 <div class="contact__map">
-                    <iframe 
-                        src="https://maps.google.com/maps?q=Marv%20Clinic,%20R.%20Martinho%20Rodrigues,%20129%20-%20F%C3%A1tima,%20Fortaleza&t=&z=16&ie=UTF8&iwloc=&output=embed" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade"
+                    <iframe
+                        src="https://maps.google.com/maps?q=Marv%20Clinic,%20R.%20Martinho%20Rodrigues,%20129%20-%20F%C3%A1tima,%20Fortaleza&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
                         title="Localização da Marv Clinic em Fortaleza">
                     </iframe>
                 </div>
@@ -1324,20 +2383,24 @@
 
     <!-- =============== FOOTER =============== -->
     <footer class="footer">
-        <p>Desenvolvido por <a href="https://wa.me/5585986177778" target="_blank" rel="noopener noreferrer">Wilkens Costa</a></p>
+        <p>Desenvolvido por <a href="https://wa.me/5585986177778" target="_blank" rel="noopener noreferrer">Wilkens
+                Costa</a></p>
     </footer>
 
     <!-- =============== FIXED WHATSAPP POPUP =============== -->
     <div class="wpp-popup">
         <div class="wpp-popup__tooltip">
-            <iconify-icon icon="solar:tooth-bold-duotone" width="14" style="vertical-align: -2px; margin-right: 4px;"></iconify-icon>
+            <iconify-icon icon="solar:tooth-bold-duotone" width="14"
+                style="vertical-align: -2px; margin-right: 4px;"></iconify-icon>
             Fale com a Dra. Luzia!
         </div>
-            <a href="https://wa.me/5585996309485" class="wpp-popup__btn" id="wppBtn" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                </svg>
-            </a>
+        <a href="https://wa.me/5585996309485" class="wpp-popup__btn" id="wppBtn" aria-label="WhatsApp" target="_blank"
+            rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+        </a>
     </div>
 
     <!-- =============== GSAP SCRIPT =============== -->
@@ -1413,18 +2476,20 @@
     </script>
 
     <!-- Global Floating WhatsApp Target -->
-    <a href="https://wa.me/5585996309485?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Luzia%20Rayane%20em%20Fortaleza." target="_blank" rel="noopener noreferrer" class="btn-whatsapp-float" aria-label="Falar com Dra. Luzia no WhatsApp">
+    <a href="https://wa.me/5585996309485?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Luzia%20Rayane%20em%20Fortaleza."
+        target="_blank" rel="noopener noreferrer" class="btn-whatsapp-float"
+        aria-label="Falar com Dra. Luzia no WhatsApp">
         <span class="btn-whatsapp-float__bubble">Vamos agendar?</span>
         <img src="assets/images/dente.png" alt="" aria-hidden="true" loading="lazy" />
     </a>
-    
+
     <script>
         // Continuous Esteira Carousel with Manual Arrow Navigation
         document.addEventListener('DOMContentLoaded', () => {
             const grid = document.getElementById('tratamentosGrid');
             const prevBtn = document.getElementById('tratamentosPrev');
             const nextBtn = document.getElementById('tratamentosNext');
-            
+
             if (grid && prevBtn && nextBtn) {
                 let isPaused = false;
                 let resumeTimeout;
@@ -1468,7 +2533,7 @@
                     pause();
                     const cards = Array.from(grid.querySelectorAll('.tratamento-card'));
                     const gridCenter = grid.scrollLeft + (grid.clientWidth / 2);
-                    
+
                     // Find which card is currently closest to the center of the viewport
                     let closestIdx = 0;
                     let closestDist = Infinity;
@@ -1491,7 +2556,7 @@
                     const targetScroll = targetCard.offsetLeft - (grid.clientWidth / 2) + (targetCard.offsetWidth / 2);
 
                     grid.scrollTo({ left: targetScroll, behavior: 'smooth' });
-                    
+
                     // After the smooth scroll finishes, fix infinite loop position
                     setTimeout(() => {
                         if (grid.scrollLeft >= getHalf()) {
@@ -1603,4 +2668,5 @@
         });
     </script>
 </body>
+
 </html>
