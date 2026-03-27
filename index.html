@@ -19,6 +19,17 @@
         content="Dra. Luzia Rayane — Especialista em odontologia estética e funcional. Agende sua consulta e conquiste seu sorriso perfeito." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
+    <!-- Open Graph / Sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Dra. Luzia Rayane — Cirurgiã Dentista em Fortaleza" />
+    <meta property="og:description" content="Transforme seu sorriso com atendimento humanizado. Especialista em estética, clareamento e restaurações. Agende sua avaliação!" />
+    <meta property="og:image" content="assets/images/hero.png" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Dra. Luzia Rayane — Cirurgiã Dentista" />
+    <meta name="twitter:description" content="Transforme seu sorriso com atendimento humanizado. Agende sua avaliação!" />
+    <meta name="twitter:image" content="assets/images/hero.png" />
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
@@ -1879,6 +1890,315 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--color-bordo);
         }
+
+        /* ============================================================
+           STATS BAR (Social Proof — Elegant)
+           ============================================================ */
+        .stats-bar {
+            background: linear-gradient(135deg, var(--color-bordo-dark) 0%, var(--color-bordo) 100%);
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .stats-bar::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 20% 60%, rgba(255,255,255,0.05) 0%, transparent 55%),
+                        radial-gradient(ellipse at 85% 40%, rgba(255,255,255,0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .stats-bar__inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem var(--space-lg);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.75rem 0.5rem;
+        }
+
+        .stats-bar__item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 4px;
+            opacity: 0;
+            transform: translateY(16px);
+        }
+
+        .stats-bar__icon {
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.45);
+            margin-bottom: 2px;
+        }
+
+        .stats-bar__number {
+            font-family: var(--font-serif);
+            font-size: clamp(1.7rem, 5vw, 2.4rem);
+            font-weight: 500;
+            color: var(--color-white);
+            line-height: 1;
+            letter-spacing: -0.01em;
+        }
+
+        .stats-bar__label {
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            line-height: 1.4;
+        }
+
+        .stats-bar__divider {
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .stats-bar__inner {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0;
+            }
+
+            .stats-bar__item {
+                border-right: 1px solid rgba(255,255,255,0.08);
+                padding: 0 1.5rem;
+            }
+
+            .stats-bar__item:first-child {
+                padding-left: 0;
+            }
+
+            .stats-bar__item:last-child {
+                border-right: none;
+                padding-right: 0;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .stats-bar__inner {
+                padding: 2.25rem var(--space-lg);
+            }
+
+            .stats-bar__number {
+                font-size: 2.6rem;
+            }
+
+            .stats-bar__label {
+                font-size: 0.7rem;
+            }
+
+            .stats-bar__item {
+                padding: 0 2.5rem;
+            }
+        }
+
+        /* ============================================================
+           FOOTER UPGRADED
+           ============================================================ */
+        .footer {
+            background: var(--color-white);
+            border-top: 1px solid rgba(122, 27, 41, 0.06);
+            padding: 3rem var(--space-lg) 100px;
+            position: relative;
+            z-index: 50;
+        }
+
+        .footer__grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+
+        .footer__brand {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer__logo-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer__logo-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--color-bordo);
+            color: var(--color-white);
+            font-family: var(--font-serif);
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .footer__brand-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-bordo);
+            letter-spacing: -0.01em;
+        }
+
+        .footer__tagline {
+            font-size: 0.88rem;
+            color: var(--color-gray-text);
+            line-height: 1.5;
+            max-width: 260px;
+        }
+
+        .footer__col-title {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-bordo);
+            margin-bottom: 1rem;
+        }
+
+        .footer__links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .footer__links a {
+            font-size: 0.9rem;
+            color: var(--color-gray-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer__links a:hover {
+            color: var(--color-bordo);
+        }
+
+        .footer__socials {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer__social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--color-gray-text);
+            text-decoration: none;
+            transition: color 0.2s, transform 0.2s;
+            padding: 0.5rem 0.75rem;
+            border-radius: 10px;
+            background: rgba(122, 27, 41, 0.04);
+            border: 1px solid rgba(122, 27, 41, 0.06);
+        }
+
+        .footer__social-link:hover {
+            color: var(--color-bordo);
+            background: rgba(122, 27, 41, 0.08);
+            transform: translateX(3px);
+        }
+
+        .footer__social-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .footer__social-icon--ig {
+            background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white;
+        }
+
+        .footer__social-icon--wa {
+            background: #25D366;
+            color: white;
+        }
+
+        .footer__bottom {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(122, 27, 41, 0.06);
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(74, 74, 74, 0.55);
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .footer__bottom a {
+            color: var(--color-bordo);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .footer__dev-credit {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.35rem 0.9rem;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(122, 27, 41, 0.08);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.8);
+            font-size: 0.75rem;
+            color: rgba(74, 74, 74, 0.7);
+            font-weight: 500;
+            letter-spacing: 0.01em;
+        }
+
+        .footer__dev-credit a {
+            color: var(--color-bordo);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        @media (min-width: 768px) {
+            .footer__grid {
+                grid-template-columns: 1.4fr 1fr 1fr;
+                gap: 3rem;
+            }
+
+            .footer__tagline {
+                max-width: 100%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .footer {
+                padding: 4rem var(--space-lg) var(--space-xl);
+            }
+
+            .footer__bottom {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
     </style>
 </head>
 
@@ -2012,6 +2332,32 @@
 
         </div>
 
+        </div>
+    </section>
+
+    <!-- =============== STATS BAR =============== -->
+    <section class="stats-bar" id="statsBar" aria-label="Nossos números">
+        <div class="stats-bar__inner">
+            <div class="stats-bar__item" data-count="250" data-suffix="+">
+                <iconify-icon class="stats-bar__icon" icon="solar:users-group-rounded-bold-duotone"></iconify-icon>
+                <span class="stats-bar__number" id="stat0">250+</span>
+                <span class="stats-bar__label">Pacientes<br>Atendidos</span>
+            </div>
+            <div class="stats-bar__item" data-count="2" data-suffix="+">
+                <iconify-icon class="stats-bar__icon" icon="solar:diploma-verified-bold-duotone"></iconify-icon>
+                <span class="stats-bar__number" id="stat1">2+</span>
+                <span class="stats-bar__label">Anos de<br>Experiência</span>
+            </div>
+            <div class="stats-bar__item" data-count="100" data-suffix="%">
+                <iconify-icon class="stats-bar__icon" icon="solar:heart-bold-duotone"></iconify-icon>
+                <span class="stats-bar__number" id="stat2">100%</span>
+                <span class="stats-bar__label">Atendimento<br>Humanizado</span>
+            </div>
+            <div class="stats-bar__item">
+                <iconify-icon class="stats-bar__icon" icon="solar:map-point-bold-duotone"></iconify-icon>
+                <span class="stats-bar__number" style="font-size: clamp(1.4rem, 4vw, 2.2rem);">Fortaleza</span>
+                <span class="stats-bar__label">Ceará<br>Brasil</span>
+            </div>
         </div>
     </section>
 
@@ -2383,8 +2729,47 @@
 
     <!-- =============== FOOTER =============== -->
     <footer class="footer">
-        <p>Desenvolvido por <a href="https://wa.me/5585986177778" target="_blank" rel="noopener noreferrer">Wilkens
-                Costa</a></p>
+        <div class="footer__grid">
+            <!-- Coluna 1: Marca -->
+            <div class="footer__brand">
+                <div class="footer__logo-row">
+                    <div class="footer__logo-circle">LR</div>
+                    <span class="footer__brand-name">Dra. Luzia Rayane</span>
+                </div>
+                <p class="footer__tagline">Cirurgi&#227; Dentista em Fortaleza, CE. Transformando sorrisos com cuidado, t&#233;cnica e muito carinho.</p>
+            </div>
+
+            <!-- Coluna 2: Links Rápidos -->
+            <div>
+                <p class="footer__col-title">Links R&#225;pidos</p>
+                <ul class="footer__links">
+                    <li><a href="#tratamentos"><iconify-icon icon="solar:tooth-bold-duotone" width="14"></iconify-icon> Tratamentos</a></li>
+                    <li><a href="#depoimentos"><iconify-icon icon="solar:star-bold-duotone" width="14"></iconify-icon> Depoimentos</a></li>
+                    <li><a href="#sobre"><iconify-icon icon="solar:user-circle-bold-duotone" width="14"></iconify-icon> Sobre a Dra.</a></li>
+                    <li><a href="#contato"><iconify-icon icon="solar:phone-bold-duotone" width="14"></iconify-icon> Contato</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 3: Redes Sociais -->
+            <div>
+                <p class="footer__col-title">Siga nas Redes</p>
+                <div class="footer__socials">
+                    <a href="https://www.instagram.com/luziarayane.g/" target="_blank" rel="noopener noreferrer" class="footer__social-link">
+                        <span class="footer__social-icon footer__social-icon--ig"><iconify-icon icon="lucide:instagram"></iconify-icon></span>
+                        @luziarayane.g
+                    </a>
+                    <a href="https://wa.me/5585996309485" target="_blank" rel="noopener noreferrer" class="footer__social-link">
+                        <span class="footer__social-icon footer__social-icon--wa"><iconify-icon icon="mdi:whatsapp"></iconify-icon></span>
+                        (85) 99630-9485
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer__bottom">
+            <span>&copy; 2026 Dra. Luzia Rayane &mdash; Todos os direitos reservados</span>
+            <span class="footer__dev-credit">Desenvolvido por <a href="https://wa.me/5585986177778" target="_blank" rel="noopener noreferrer">Wilkens Costa</a></span>
+        </div>
     </footer>
 
     <!-- =============== FIXED WHATSAPP POPUP =============== -->
@@ -2471,6 +2856,62 @@
 
             // Mobile/Tablet: no GSAP parallax — handled by CSS sticky overlay
 
+            // ── Stats Bar: fade-in items + animated counters ──
+            const statsItems = document.querySelectorAll('.stats-bar__item');
+            if (statsItems.length) {
+                gsap.to(statsItems, {
+                    opacity: 1, y: 0, duration: 0.7, stagger: 0.15, ease: 'power3.out',
+                    scrollTrigger: { trigger: '#statsBar', start: 'top 85%' }
+                });
+
+                // Counter animation for numeric stats
+                statsItems.forEach((item, i) => {
+                    const count = parseInt(item.dataset.count);
+                    const suffix = item.dataset.suffix || '';
+                    if (!count) return;
+                    const numEl = item.querySelector('.stats-bar__number');
+                    const obj = { val: 0 };
+                    gsap.to(obj, {
+                        val: count, duration: 2, ease: 'power2.out',
+                        onUpdate: () => { numEl.textContent = Math.round(obj.val) + suffix; },
+                        scrollTrigger: { trigger: '#statsBar', start: 'top 85%' }
+                    });
+                });
+            }
+
+            // ── Sobre: blocks fade in staggered ──
+            gsap.from('.sobre .section-title', {
+                opacity: 0, y: 30, duration: 0.8,
+                scrollTrigger: { trigger: '.sobre', start: 'top 80%' }
+            });
+            gsap.from('.sobre__block', {
+                opacity: 0, y: 30, duration: 0.7, stagger: 0.18, ease: 'power3.out',
+                scrollTrigger: { trigger: '.sobre__content', start: 'top 82%' }
+            });
+            gsap.from('.sobre__servicos', {
+                opacity: 0, y: 20, duration: 0.6, ease: 'power2.out',
+                scrollTrigger: { trigger: '.sobre__servicos', start: 'top 88%' }
+            });
+
+            // ── Contato: cards + map slide in ──
+            gsap.from('.contact .section-title', {
+                opacity: 0, y: 30, duration: 0.8,
+                scrollTrigger: { trigger: '.contact', start: 'top 80%' }
+            });
+            gsap.from('.contact__info', {
+                opacity: 0, x: -30, duration: 0.8, ease: 'power3.out',
+                scrollTrigger: { trigger: '.contact__grid', start: 'top 82%' }
+            });
+            gsap.from('.contact__map', {
+                opacity: 0, x: 30, duration: 0.8, ease: 'power3.out',
+                scrollTrigger: { trigger: '.contact__grid', start: 'top 82%' }
+            });
+
+            // ── Tratamentos cards: staggered entrance on desktop ──
+            gsap.from('.tratamento-card:not([aria-hidden])', {
+                opacity: 0, y: 24, duration: 0.6, stagger: 0.1, ease: 'power2.out',
+                scrollTrigger: { trigger: '.tratamentos', start: 'top 80%' }
+            });
 
         });
     </script>
