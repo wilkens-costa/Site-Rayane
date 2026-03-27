@@ -2005,6 +2005,7 @@
             padding: 3rem var(--space-lg) 100px;
             position: relative;
             z-index: 50;
+            text-align: center;
         }
 
         .footer__grid {
@@ -2018,12 +2019,14 @@
         .footer__brand {
             display: flex;
             flex-direction: column;
+            align-items: center;
             gap: 0.75rem;
         }
 
         .footer__logo-row {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
         }
 
@@ -2069,6 +2072,7 @@
             list-style: none;
             display: flex;
             flex-direction: column;
+            align-items: center;
             gap: 0.6rem;
         }
 
@@ -2080,6 +2084,7 @@
             transition: color 0.2s;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
         }
 
@@ -2090,6 +2095,7 @@
         .footer__socials {
             display: flex;
             flex-direction: column;
+            align-items: center;
             gap: 0.5rem;
         }
 
@@ -2178,6 +2184,20 @@
         }
 
         @media (min-width: 768px) {
+            .footer {
+                text-align: left;
+            }
+
+            .footer__brand,
+            .footer__links,
+            .footer__socials {
+                align-items: flex-start;
+            }
+
+            .footer__logo-row {
+                justify-content: flex-start;
+            }
+
             .footer__grid {
                 grid-template-columns: 1.4fr 1fr 1fr;
                 gap: 3rem;
@@ -2728,45 +2748,8 @@
     <div class="scroll-spacer"></div>
 
     <!-- =============== FOOTER =============== -->
-    <footer class="footer">
-        <div class="footer__grid">
-            <!-- Coluna 1: Marca -->
-            <div class="footer__brand">
-                <div class="footer__logo-row">
-                    <div class="footer__logo-circle">LR</div>
-                    <span class="footer__brand-name">Dra. Luzia Rayane</span>
-                </div>
-                <p class="footer__tagline">Cirurgi&#227; Dentista em Fortaleza, CE. Transformando sorrisos com cuidado, t&#233;cnica e muito carinho.</p>
-            </div>
-
-            <!-- Coluna 2: Links Rápidos -->
-            <div>
-                <p class="footer__col-title">Links R&#225;pidos</p>
-                <ul class="footer__links">
-                    <li><a href="#tratamentos"><iconify-icon icon="solar:tooth-bold-duotone" width="14"></iconify-icon> Tratamentos</a></li>
-                    <li><a href="#depoimentos"><iconify-icon icon="solar:star-bold-duotone" width="14"></iconify-icon> Depoimentos</a></li>
-                    <li><a href="#sobre"><iconify-icon icon="solar:user-circle-bold-duotone" width="14"></iconify-icon> Sobre a Dra.</a></li>
-                    <li><a href="#contato"><iconify-icon icon="solar:phone-bold-duotone" width="14"></iconify-icon> Contato</a></li>
-                </ul>
-            </div>
-
-            <!-- Coluna 3: Redes Sociais -->
-            <div>
-                <p class="footer__col-title">Siga nas Redes</p>
-                <div class="footer__socials">
-                    <a href="https://www.instagram.com/luziarayane.g/" target="_blank" rel="noopener noreferrer" class="footer__social-link">
-                        <span class="footer__social-icon footer__social-icon--ig"><iconify-icon icon="lucide:instagram"></iconify-icon></span>
-                        @luziarayane.g
-                    </a>
-                    <a href="https://wa.me/5585996309485" target="_blank" rel="noopener noreferrer" class="footer__social-link">
-                        <span class="footer__social-icon footer__social-icon--wa"><iconify-icon icon="mdi:whatsapp"></iconify-icon></span>
-                        (85) 99630-9485
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer__bottom">
+    <footer class="footer" style="padding-top: 2rem;">
+        <div class="footer__bottom" style="margin-top: 0; padding-top: 0; border-top: none;">
             <span>&copy; 2026 Dra. Luzia Rayane &mdash; Todos os direitos reservados</span>
             <span class="footer__dev-credit">Desenvolvido por <a href="https://wa.me/5585986177778" target="_blank" rel="noopener noreferrer">Wilkens Costa</a></span>
         </div>
