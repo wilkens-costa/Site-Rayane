@@ -406,6 +406,167 @@
         ::-webkit-scrollbar-track { background: var(--color-creme); }
         ::-webkit-scrollbar-thumb { background: rgba(122,27,41,0.3); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--color-bordo); }
+
+        /* ── GALERIA — Multi-photo side by side ── */
+        .galeria {
+            background: var(--color-creme);
+            overflow: hidden;
+        }
+        .galeria__header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .galeria__icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: rgba(122,27,41,0.08);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: var(--color-bordo);
+            margin-bottom: 0.75rem;
+        }
+        .galeria__header h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--color-bordo);
+            margin-bottom: 0.5rem;
+        }
+        .galeria__header p {
+            color: var(--color-gray-text);
+            font-size: 0.95rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Wrapper com setas nas laterais */
+        .galeria__wrapper {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Track com scroll horizontal */
+        .galeria__track {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            padding: 0.5rem 0;
+            scrollbar-width: none;
+        }
+        .galeria__track::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Cada foto */
+        .galeria__item {
+            flex: 0 0 calc(25% - 0.75rem);
+            scroll-snap-align: start;
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 3 / 4;
+            position: relative;
+            background: var(--color-white);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .galeria__item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 36px rgba(122,27,41,0.15);
+        }
+        .galeria__item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+        }
+
+        /* Botões laterais */
+        .galeria__btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            background: var(--color-white);
+            color: var(--color-bordo);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+            font-size: 1.3rem;
+            z-index: 10;
+        }
+        .galeria__btn:hover {
+            background: var(--color-bordo);
+            color: var(--color-white);
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 6px 24px rgba(122,27,41,0.25);
+        }
+        .galeria__btn--prev {
+            left: -24px;
+        }
+        .galeria__btn--next {
+            right: -24px;
+        }
+
+        /* CTA abaixo da galeria */
+        .galeria__cta {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+        .galeria__cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--color-bordo);
+            color: var(--color-white);
+            padding: 1rem 2.2rem;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            box-shadow: 0 8px 24px rgba(122,27,41,0.25);
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .galeria__cta-btn:hover {
+            background: var(--color-bordo-light);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(122,27,41,0.35);
+        }
+
+        /* Mobile: 2 fotos visíveis */
+        @media (max-width: 767px) {
+            .galeria__item {
+                flex: 0 0 calc(50% - 0.5rem);
+                border-radius: 16px;
+            }
+            .galeria__btn {
+                width: 38px;
+                height: 38px;
+                font-size: 1rem;
+            }
+            .galeria__btn--prev { left: 8px; }
+            .galeria__btn--next { right: 8px; }
+        }
+        /* Tablet: 3 fotos */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .galeria__item {
+                flex: 0 0 calc(33.333% - 0.67rem);
+            }
+        }
     </style>
 </head>
 
@@ -520,6 +681,54 @@
                     <h3>Para Toda a Família</h3>
                     <p>Do bebê ao idoso, ofereço cuidado especializado e acolhedor para toda a família. Um ambiente seguro onde crianças e adultos se sentem confortáveis e bem tratados.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERIA DE FOTOS -->
+    <section class="galeria section-padding" id="galeria">
+        <div class="container">
+            <div class="galeria__header">
+                <div class="galeria__icon">
+                    <iconify-icon icon="solar:camera-bold-duotone"></iconify-icon>
+                </div>
+                <h2>Galeria</h2>
+                <p>Um pouco do meu dia a dia profissional e do cuidado com cada paciente.</p>
+            </div>
+            <div class="galeria__wrapper">
+                <button class="galeria__btn galeria__btn--prev" id="galeriaPrev" aria-label="Foto anterior">
+                    <iconify-icon icon="solar:alt-arrow-left-bold"></iconify-icon>
+                </button>
+                <div class="galeria__track" id="galeriaTrack">
+                    <div class="galeria__item">
+                        <img src="assets/images/00%20original.png" alt="Dra. Luzia Rayane — Retrato profissional" loading="lazy" />
+                    </div>
+                    <div class="galeria__item">
+                        <img src="assets/images/01%20original.jpg" alt="Dra. Luzia Rayane — Atendimento humanizado" loading="lazy" />
+                    </div>
+                    <div class="galeria__item">
+                        <img src="assets/images/02%20original.jpg" alt="Dra. Luzia Rayane — No consultório" loading="lazy" />
+                    </div>
+                    <div class="galeria__item">
+                        <img src="assets/images/03%20fundo%20transparente%20png.png" alt="Dra. Luzia Rayane — Procedimento odontológico" loading="lazy" />
+                    </div>
+                    <div class="galeria__item">
+                        <img src="assets/images/04%20original.jpeg" alt="Dra. Luzia Rayane — Cuidado com pacientes" loading="lazy" />
+                    </div>
+                    <div class="galeria__item">
+                        <img src="assets/images/05%20original.jpg" alt="Dra. Luzia Rayane — Ambiente profissional" loading="lazy" />
+                    </div>
+                </div>
+                <button class="galeria__btn galeria__btn--next" id="galeriaNext" aria-label="Próxima foto">
+                    <iconify-icon icon="solar:alt-arrow-right-bold"></iconify-icon>
+                </button>
+            </div>
+            <div class="galeria__cta">
+                <a href="https://wa.me/5585996309485?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Luzia%20Rayane%20em%20Fortaleza."
+                    target="_blank" rel="noopener noreferrer" class="galeria__cta-btn">
+                    <iconify-icon icon="mdi:whatsapp" style="font-size:1.2rem"></iconify-icon>
+                    Quero agendar uma consulta
+                </a>
             </div>
         </div>
     </section>
@@ -750,6 +959,52 @@
             </svg>
         </a>
     </div>
+
+    <!-- GALERIA SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const track = document.getElementById('galeriaTrack');
+            const prevBtn = document.getElementById('galeriaPrev');
+            const nextBtn = document.getElementById('galeriaNext');
+            if (!track || !prevBtn || !nextBtn) return;
+
+            const scrollAmount = () => {
+                const item = track.querySelector('.galeria__item');
+                if (!item) return 300;
+                return item.offsetWidth + 16; // width + gap
+            };
+
+            prevBtn.addEventListener('click', () => {
+                track.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+            });
+            nextBtn.addEventListener('click', () => {
+                track.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+            });
+
+            // Autoplay: scroll a cada 3s
+            let autoplay = setInterval(() => {
+                const maxScroll = track.scrollWidth - track.clientWidth;
+                if (track.scrollLeft >= maxScroll - 10) {
+                    track.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    track.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+                }
+            }, 3500);
+
+            // Pause on hover
+            track.closest('.galeria__wrapper').addEventListener('mouseenter', () => clearInterval(autoplay));
+            track.closest('.galeria__wrapper').addEventListener('mouseleave', () => {
+                autoplay = setInterval(() => {
+                    const maxScroll = track.scrollWidth - track.clientWidth;
+                    if (track.scrollLeft >= maxScroll - 10) {
+                        track.scrollTo({ left: 0, behavior: 'smooth' });
+                    } else {
+                        track.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+                    }
+                }, 3500);
+            });
+        });
+    </script>
 
 </body>
 </html>
