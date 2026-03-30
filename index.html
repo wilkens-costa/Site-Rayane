@@ -148,23 +148,24 @@
         }
 
         .nav__inner {
-            max-width: 1400px;
+            max-width: 1300px;
             margin: 0 auto;
             width: 100%;
             padding: 0 var(--space-lg);
-            /* Allow height to stretch instead of padding */
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
         }
 
         .nav__brand {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
             text-decoration: none;
             color: var(--color-bordo);
             max-width: 50%;
+            margin: 0 auto;
         }
 
         .nav__logo {
@@ -191,7 +192,8 @@
             text-overflow: ellipsis;
         }
 
-        .nav__links-desktop {
+        .nav__links-desktop,
+        .nav__cta-desktop {
             display: none;
         }
 
@@ -278,6 +280,7 @@
             .nav__brand {
                 gap: var(--space-md);
                 width: auto;
+                margin: 0;
             }
 
             .nav-bottom {
@@ -287,10 +290,13 @@
             .nav__links-desktop {
                 display: flex;
                 align-items: center;
-                gap: var(--space-lg);
+                gap: var(--space-md);
                 list-style: none;
-                margin: 0;
+                margin: 0 auto;
                 padding: 0;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
             }
 
             .nav__link-desktop {
@@ -304,6 +310,12 @@
 
             .nav__link-desktop:hover {
                 color: var(--color-bordo);
+            }
+
+            .nav__cta-desktop {
+                display: flex;
+                align-items: center;
+                margin-left: auto;
             }
 
             .nav__cta {
@@ -430,28 +442,9 @@
             animation: heroFadeUp 0.85s cubic-bezier(0.22,1,0.36,1) both;
         }
 
-        /* Badge de localização */
+        /* Badge de localização — agora integrado ao rating */
         .hero__location {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: rgba(255,255,255,0.92);
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 0.4rem 1rem;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            align-self: flex-start;
-            letter-spacing: 0.02em;
-            animation: heroFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s both;
-        }
-
-        .hero__location iconify-icon {
-            font-size: 1rem;
-            color: #ff9999;
+            display: none; /* Escondido pois foi integrado abaixo do rating */
         }
 
         /* Tagline acima do H1 */
@@ -505,7 +498,7 @@
             animation: heroFadeUp 0.85s cubic-bezier(0.22,1,0.36,1) 0.38s both;
         }
 
-        /* Rating badge do Google */
+        /* Rating + Localização unificados em uma única linha */
         .hero__rating {
             display: inline-flex;
             align-items: center;
@@ -515,7 +508,7 @@
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255,255,255,0.2);
             border-radius: 999px;
-            padding: 0.4rem 1rem;
+            padding: 0.45rem 1rem;
             align-self: flex-start;
             animation: heroFadeUp 0.85s cubic-bezier(0.22,1,0.36,1) 0.45s both;
         }
@@ -539,6 +532,20 @@
             height: 14px;
             background: rgba(255,255,255,0.25);
         }
+        /* Badge de localização inline dentro do rating */
+        .hero__rating-location {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.88);
+            white-space: nowrap;
+        }
+        .hero__rating-location iconify-icon {
+            font-size: 0.95rem;
+            color: #ff9999;
+        }
 
         /* Ações (CTAs) */
         .hero__actions {
@@ -547,6 +554,7 @@
             margin-top: 0.5rem;
             flex-wrap: wrap;
             align-items: center;
+            justify-content: flex-start;
             animation: heroFadeUp 0.85s cubic-bezier(0.22,1,0.36,1) 0.5s both;
         }
 
@@ -763,7 +771,7 @@
                 display: none;
             }
             .hero__rating {
-                display: none;
+                display: inline-flex;
             }
         }
 
@@ -799,13 +807,15 @@
             }
 
             .hero__image-box img {
-                width: 112%;
-                max-width: 760px;
-                height: calc(100% + 2rem);
+                width: 138%;
+                max-width: 980px;
+                height: calc(100% + 8rem);
                 max-height: none;
                 object-fit: contain;
                 object-position: bottom right;
                 margin-bottom: -2px;
+                margin-top: -6rem;
+                margin-right: -3rem;
                 position: relative;
                 z-index: 1001;
                 filter: drop-shadow(0 30px 70px rgba(0,0,0,0.45));
@@ -2348,7 +2358,6 @@
         <div class="nav__inner">
             <a href="#" class="nav__brand" aria-label="Dra. Luzia Rayane">
                 <img src="assets/images/LR (1).png" alt="Logo LR" class="nav__logo-img">
-                <span class="nav__name">Dra. Luzia Rayane</span>
             </a>
 
 
@@ -2358,14 +2367,16 @@
                 <li><a href="#tratamentos" class="nav__link-desktop">Tratamentos</a></li>
                 <li><a href="sobre.html" class="nav__link-desktop">Sobre</a></li>
                 <li><a href="#contato" class="nav__link-desktop">Contato</a></li>
-                <li>
-                    <a href="https://wa.me/5585996309485?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Luzia%20Rayane%20em%20Fortaleza."
-                        class="nav__cta" target="_blank" rel="noopener noreferrer">
-                        <iconify-icon icon="mdi:whatsapp"></iconify-icon>
-                        Agendar Consulta
-                    </a>
-                </li>
             </ul>
+
+            <div class="nav__cta-desktop">
+                <a href="https://wa.me/5585996309485?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Luzia%20Rayane%20em%20Fortaleza."
+                    class="nav__cta" target="_blank" rel="noopener noreferrer">
+                    <iconify-icon icon="mdi:whatsapp"></iconify-icon>
+                    Agendar Consulta
+                </a>
+            </div>
+        </div>
     </nav>
 
     <!-- Mobile Bottom Tab Bar -->
@@ -2449,10 +2460,6 @@
 
         <div class="hero__container">
             <div class="hero__content">
-                <div class="hero__location" id="heroLocation">
-                    <iconify-icon icon="solar:map-point-bold"></iconify-icon> Fortaleza, CE
-                </div>
-
                 <p class="hero__tagline">Odontologia Estética &amp; Funcional</p>
 
                 <div id="heroDoctorName">
@@ -2466,7 +2473,7 @@
                     Transformamos o seu sorriso com um atendimento humanizado, focado no seu bem-estar e livre de dores.
                 </p>
 
-                <!-- Rating Google -->
+                <!-- Rating Google + Localização unificados -->
                 <div class="hero__rating">
                     <div class="hero__rating-stars">
                         <iconify-icon icon="solar:star-bold"></iconify-icon>
@@ -2477,6 +2484,10 @@
                     </div>
                     <div class="hero__rating-sep"></div>
                     <span class="hero__rating-text">5.0 no Google</span>
+                    <div class="hero__rating-sep"></div>
+                    <span class="hero__rating-location">
+                        <iconify-icon icon="solar:map-point-bold"></iconify-icon> Fortaleza, CE
+                    </span>
                 </div>
 
                 <div class="hero__actions" id="heroActions">
