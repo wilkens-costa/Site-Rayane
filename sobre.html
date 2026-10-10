@@ -13,21 +13,29 @@
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sobre a Dra. Luzia Rayane — Cirurgiã Dentista em Fortaleza</title>
-    <meta name="description" content="Conheça a Dra. Luzia Rayane, cirurgiã-dentista especialista em odontologia estética e humanizada em Fortaleza, CE. Sua jornada, filosofia e formação." />
+    <title>Sobre a Dra. Luzia Rayane · Cirurgiã-Dentista em Fortaleza | CRO-CE 16735</title>
+    <meta name="description" content="Conheça a Dra. Luzia Rayane, cirurgiã-dentista em Fortaleza com atendimento humanizado. Filosofia de trabalho, formação e onde atende. CRO-CE 16735." />
+    <link rel="canonical" href="https://draluziarayane.vercel.app/sobre.html" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#7A1B29" />
 
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Sobre a Dra. Luzia Rayane — Cirurgiã Dentista" />
-    <meta property="og:description" content="Conheça a profissional por trás do sorriso. Atendimento humanizado, odontologia estética e funcional em Fortaleza." />
-    <meta property="og:image" content="assets/images/hero.png" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="Dra. Luzia Rayane" />
+    <meta property="og:url" content="https://draluziarayane.vercel.app/sobre.html" />
+    <meta property="og:title" content="Sobre a Dra. Luzia Rayane · Cirurgiã-Dentista em Fortaleza" />
+    <meta property="og:description" content="Conheça a profissional por trás do sorriso. Atendimento humanizado no Fátima, em Fortaleza." />
+    <meta property="og:image" content="https://draluziarayane.vercel.app/assets/img/og-dra-luzia-rayane.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Dra. Luzia Rayane, cirurgiã-dentista em Fortaleza, de jaleco branco" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://draluziarayane.vercel.app/assets/img/og-dra-luzia-rayane.jpg" />
 
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
     <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
     <style>
         :root {
@@ -168,7 +176,8 @@
         .sobre-hero::before {
             content: '';
             position: absolute; inset: 0;
-            background-image: url('assets/images/cenário com blur.png');
+            background-image: url('assets/img/consultorio-blur-960.webp');
+            background-image: image-set(url('assets/img/consultorio-blur-960.avif') type('image/avif'), url('assets/img/consultorio-blur-960.webp') type('image/webp'));
             background-size: cover; background-position: center;
             opacity: 0.15; pointer-events: none;
         }
@@ -377,9 +386,10 @@
         .footer__dev-credit a { color: var(--color-bordo); font-weight: 700; text-decoration: none; }
 
         /* ── WPP FLOAT ── */
+        /* No mobile o único CTA flutuante é o botão central da barra inferior */
         .wpp-popup {
             position: fixed; bottom: 85px; right: var(--space-lg);
-            z-index: 200; display: flex; flex-direction: row;
+            z-index: 200; display: none; flex-direction: row;
             align-items: center; gap: var(--space-sm); pointer-events: none;
         }
         .wpp-popup__btn {
@@ -392,7 +402,7 @@
         .wpp-popup__btn:hover { transform: scale(1.1); box-shadow: 0 8px 32px rgba(37,211,102,0.55); }
         .wpp-popup__btn svg { width: 30px; height: 30px; }
         @media (min-width: 1024px) {
-            .wpp-popup { bottom: var(--space-xl); right: var(--space-xl); }
+            .wpp-popup { display: flex; bottom: var(--space-xl); right: var(--space-xl); }
             .wpp-popup__btn { width: 66px; height: 66px; }
         }
 
@@ -478,6 +488,9 @@
         .galeria__item:hover {
             transform: translateY(-6px);
             box-shadow: 0 12px 36px rgba(122,27,41,0.15);
+        }
+        .galeria__item picture {
+            display: contents;
         }
         .galeria__item img {
             width: 100%;
@@ -576,7 +589,7 @@
     <nav class="nav" role="navigation" aria-label="Navegação principal">
         <div class="nav__inner">
             <a href="index.html" class="nav__brand" aria-label="Dra. Luzia Rayane">
-                <img src="assets/images/LR (1).png" alt="Logo LR" class="nav__logo-img">
+                <img src="assets/img/logo-lr-144.png" width="144" height="144" alt="Logo LR" class="nav__logo-img">
             </a>
 
             <div class="cert-card">
@@ -584,7 +597,7 @@
                     <iconify-icon icon="solar:diploma-verified-bold-duotone"></iconify-icon>
                 </div>
                 <div class="cert-card__text">
-                    <span class="cert-card__title">Profissional Certificada</span>
+                    <span class="cert-card__title">Cirurgiã-Dentista</span>
                     <span class="cert-card__sub">CRO CE 16735</span>
                 </div>
             </div>
@@ -615,7 +628,8 @@
             <iconify-icon icon="solar:health-bold"></iconify-icon>
             Tratamentos
         </a>
-        <a href="https://wa.me/5585996309485" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
+        <a href="https://wa.me/5585996309485?text=Ol%C3%A1%2C%20Dra.%20Luzia!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o."
+            target="_blank" rel="noopener noreferrer" aria-label="Agendar consulta pelo WhatsApp (abre em nova aba)"
             class="nav-bottom__item nav-bottom__item--center">
             <iconify-icon icon="mdi:whatsapp"></iconify-icon>
         </a>
@@ -672,14 +686,14 @@
                         <iconify-icon icon="solar:star-shine-bold-duotone"></iconify-icon>
                     </div>
                     <h3>Excelência Técnica</h3>
-                    <p>Atualização constante com cursos e especializações em odontologia estética. Utilizo os materiais e técnicas mais modernas para garantir resultados duradouros e naturais.</p>
+                    <p>Atualização constante com cursos em odontologia estética. Utilizo os materiais e técnicas mais modernas para garantir resultados duradouros e naturais.</p>
                 </div>
                 <div class="filosofia__card">
                     <div class="filosofia__card-icon">
                         <iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon>
                     </div>
                     <h3>Para Toda a Família</h3>
-                    <p>Do bebê ao idoso, ofereço cuidado especializado e acolhedor para toda a família. Um ambiente seguro onde crianças e adultos se sentem confortáveis e bem tratados.</p>
+                    <p>Do bebê ao idoso, ofereço cuidado atento e acolhedor para toda a família. Um ambiente seguro onde crianças e adultos se sentem confortáveis e bem tratados.</p>
                 </div>
             </div>
         </div>
@@ -693,7 +707,7 @@
                     <iconify-icon icon="solar:camera-bold-duotone"></iconify-icon>
                 </div>
                 <h2>Galeria</h2>
-                <p>Um pouco do meu dia a dia profissional e do cuidado com cada paciente.</p>
+                <p>Um pouco do meu dia a dia no consultório.</p>
             </div>
             <div class="galeria__wrapper">
                 <button class="galeria__btn galeria__btn--prev" id="galeriaPrev" aria-label="Foto anterior">
@@ -701,22 +715,32 @@
                 </button>
                 <div class="galeria__track" id="galeriaTrack">
                     <div class="galeria__item">
-                        <img src="assets/images/00%20original.png" alt="Dra. Luzia Rayane — Retrato profissional" loading="lazy" />
+                        <picture>
+                            <source type="image/avif" srcset="assets/img/galeria-consultorio-480.avif 480w, assets/img/galeria-consultorio-960.avif 960w" sizes="(min-width: 768px) 25vw, 50vw" />
+                            <img src="assets/img/galeria-consultorio-960.webp" srcset="assets/img/galeria-consultorio-480.webp 480w, assets/img/galeria-consultorio-960.webp 960w" sizes="(min-width: 768px) 25vw, 50vw"
+                                width="960" height="473" alt="Dra. Luzia Rayane sorrindo no consultório" loading="lazy" decoding="async" />
+                        </picture>
                     </div>
                     <div class="galeria__item">
-                        <img src="assets/images/01%20original.jpg" alt="Dra. Luzia Rayane — Atendimento humanizado" loading="lazy" />
+                        <picture>
+                            <source type="image/avif" srcset="assets/img/galeria-consulta-480.avif 480w, assets/img/galeria-consulta-960.avif 960w" sizes="(min-width: 768px) 25vw, 50vw" />
+                            <img src="assets/img/galeria-consulta-960.webp" srcset="assets/img/galeria-consulta-480.webp 480w, assets/img/galeria-consulta-960.webp 960w" sizes="(min-width: 768px) 25vw, 50vw"
+                                width="960" height="1440" alt="Dra. Luzia Rayane conversando durante uma consulta" loading="lazy" decoding="async" />
+                        </picture>
                     </div>
                     <div class="galeria__item">
-                        <img src="assets/images/02%20original.jpg" alt="Dra. Luzia Rayane — No consultório" loading="lazy" />
+                        <picture>
+                            <source type="image/avif" srcset="assets/img/galeria-retrato-480.avif 480w, assets/img/galeria-retrato-960.avif 960w" sizes="(min-width: 768px) 25vw, 50vw" />
+                            <img src="assets/img/galeria-retrato-960.webp" srcset="assets/img/galeria-retrato-480.webp 480w, assets/img/galeria-retrato-960.webp 960w" sizes="(min-width: 768px) 25vw, 50vw"
+                                width="960" height="1442" alt="Retrato da Dra. Luzia Rayane com fotopolimerizador" loading="lazy" decoding="async" />
+                        </picture>
                     </div>
                     <div class="galeria__item">
-                        <img src="assets/images/03%20fundo%20transparente%20png.png" alt="Dra. Luzia Rayane — Procedimento odontológico" loading="lazy" />
-                    </div>
-                    <div class="galeria__item">
-                        <img src="assets/images/04%20original.jpeg" alt="Dra. Luzia Rayane — Cuidado com pacientes" loading="lazy" />
-                    </div>
-                    <div class="galeria__item">
-                        <img src="assets/images/05%20original.jpg" alt="Dra. Luzia Rayane — Ambiente profissional" loading="lazy" />
+                        <picture>
+                            <source type="image/avif" srcset="assets/img/galeria-cracha-480.avif 480w, assets/img/galeria-cracha-720.avif 720w" sizes="(min-width: 768px) 25vw, 50vw" />
+                            <img src="assets/img/galeria-cracha-720.webp" srcset="assets/img/galeria-cracha-480.webp 480w, assets/img/galeria-cracha-720.webp 720w" sizes="(min-width: 768px) 25vw, 50vw"
+                                width="720" height="1280" alt="Crachá dourado com o monograma LR da Dra. Luzia Rayane" loading="lazy" decoding="async" />
+                        </picture>
                     </div>
                 </div>
                 <button class="galeria__btn galeria__btn--next" id="galeriaNext" aria-label="Próxima foto">
@@ -738,7 +762,7 @@
         <div style="max-width: 700px; margin: 0 auto;">
             <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;">Transforme seu sorriso</p>
             <h2 style="font-family: 'Playfair Display', serif; color: white; font-size: clamp(1.6rem, 3.5vw, 2.4rem); margin-bottom: 1rem;">Agende sua Consulta</h2>
-            <p style="color: rgba(255,255,255,0.8); margin-bottom: 1.5rem;">Só cuidado e atenção dedicados 100% a você.</p>
+            <p style="color: rgba(255,255,255,0.8); margin-bottom: 1.5rem;">Cuidado e atenção dedicados a você, do primeiro contato ao fim do tratamento.</p>
             <a href="https://wa.me/5585996309485?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Luzia%20Rayane%20em%20Fortaleza."
                 target="_blank" rel="noopener noreferrer" class="btn-cta">
                 <iconify-icon icon="mdi:whatsapp" style="font-size: 1.3rem; color: #25D366;"></iconify-icon>
@@ -761,16 +785,16 @@
                     </div>
                     <div>
                         <h3>CRO CE 16735</h3>
-                        <p>Registro ativo no Conselho Regional de Odontologia do Ceará — profissional regularmente habilitada e certificada.</p>
+                        <p>Inscrição ativa no Conselho Regional de Odontologia do Ceará.</p>
                     </div>
                 </div>
                 <div class="credenciais__item">
                     <div class="credenciais__icon">
-                        <iconify-icon icon="solar:graduation-cap-bold-duotone"></iconify-icon>
+                        <iconify-icon icon="solar:square-academic-cap-bold-duotone"></iconify-icon>
                     </div>
                     <div>
                         <h3>Graduação em Odontologia</h3>
-                        <p>Formação completa em Cirurgia Dentária com foco em odontologia clínica, estética e reabilitadora.</p>
+                        <p>Cirurgiã-dentista com atuação em clínica geral e na estética do sorriso.</p>
                     </div>
                 </div>
                 <div class="credenciais__item">
@@ -778,8 +802,8 @@
                         <iconify-icon icon="solar:star-bold-duotone"></iconify-icon>
                     </div>
                     <div>
-                        <h3>Especialização em Estética Dental</h3>
-                        <p>Aperfeiçoamento em técnicas de clareamento, facetas de resina e harmonização do sorriso.</p>
+                        <h3>Atualização em odontologia estética</h3>
+                        <p>Cursos de atualização em clareamento, facetas de resina e planejamento estético do sorriso.</p>
                     </div>
                 </div>
                 <div class="credenciais__item">
@@ -833,11 +857,11 @@
                 </div>
                 <div class="servico-item">
                     <iconify-icon icon="solar:sun-bold-duotone"></iconify-icon>
-                    <span>Harmonização do sorriso</span>
+                    <span>Planejamento estético do sorriso</span>
                 </div>
                 <div class="servico-item">
-                    <iconify-icon icon="solar:shield-check-bold-duotone"></iconify-icon>
-                    <span>Odontopediatria</span>
+                    <iconify-icon icon="solar:clipboard-check-bold-duotone"></iconify-icon>
+                    <span>Avaliação e plano de tratamento</span>
                 </div>
             </div>
         </div>
@@ -926,8 +950,8 @@
     <!-- CTA FINAL -->
     <section class="cta-final">
         <div class="cta-final__inner">
-            <h2>Seu Sorriso Perfeito Começa Hoje</h2>
-            <p>Agende sua avaliação e dê o primeiro passo rumo ao sorriso que você sempre quis. Atendimento rápido, humanizado e sem dor.</p>
+            <h2>Vamos cuidar do seu sorriso?</h2>
+            <p>O primeiro passo é uma avaliação sem pressa, com tudo explicado. Atendimento humanizado no Fátima, em Fortaleza.</p>
             <div>
                 <a href="https://wa.me/5585996309485?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Luzia%20Rayane%20em%20Fortaleza."
                     target="_blank" rel="noopener noreferrer" class="btn-cta">
@@ -937,7 +961,7 @@
             </div>
             <div class="cta-final__badges">
                 <span class="cta-final__badge"><iconify-icon icon="solar:shield-check-bold"></iconify-icon> Atendimento Humanizado</span>
-                <span class="cta-final__badge"><iconify-icon icon="solar:star-bold"></iconify-icon> +250 Pacientes Satisfeitos</span>
+                <span class="cta-final__badge"><iconify-icon icon="solar:star-bold"></iconify-icon> 5,0 no Google</span>
                 <span class="cta-final__badge"><iconify-icon icon="solar:diploma-verified-bold"></iconify-icon> CRO CE 16735</span>
             </div>
         </div>
@@ -953,7 +977,7 @@
 
     <!-- WHATSAPP FLOAT -->
     <div class="wpp-popup">
-        <a href="https://wa.me/5585996309485" class="wpp-popup__btn" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
+        <a href="https://wa.me/5585996309485?text=Ol%C3%A1%2C%20Dra.%20Luzia!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o." class="wpp-popup__btn" aria-label="Agendar consulta pelo WhatsApp (abre em nova aba)" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
             </svg>

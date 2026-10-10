@@ -1,0 +1,5 @@
+# Arquivos do repositório que não devem ser publicados no site
+README.md
+.gitignore
+.vercelignore
+auditoria/
