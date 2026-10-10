@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { waLink } from '../lib/whatsapp';
+---
+
+<BaseLayout page="outra" title="Página não encontrada · Dra. Luzia Rayane" description="A página que você procura não existe. Volte para o início ou fale com a Dra. Luzia Rayane pelo WhatsApp.">
+  <meta slot="head" name="robots" content="noindex" />
+  <section class="erro">
+    <p class="erro__codigo">404</p>
+    <h1 class="erro__titulo">Ops, essa página <span>não existe</span></h1>
+    <p class="erro__texto">O link pode estar errado ou a página mudou de endereço.</p>
+    <div class="erro__acoes">
+      <a href="/" class="btn btn--primary">Voltar para o início</a>
+      <a href={waLink('vimPeloSite')} class="erro__wa" target="_blank" rel="noopener noreferrer" data-cta="404">
+        <Icon name="mdi:whatsapp" /> Falar no WhatsApp
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .erro {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem var(--space-lg);
+    background: var(--color-creme);
+  }
+
+  .erro__codigo {
+    font-family: var(--font-serif);
+    font-size: clamp(4rem, 14vw, 8rem);
+    line-height: 1;
+    color: rgba(122, 27, 41, 0.15);
+    font-weight: 700;
+  }
+
+  .erro__titulo {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.15;
+    margin: 0.5rem 0 0.75rem;
+  }
+
+  .erro__titulo span {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-bordo-light);
+  }
+
+  .erro__texto {
+    color: var(--color-gray-text);
+    margin-bottom: 2rem;
+  }
+
+  .erro__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .erro__wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--color-bordo);
+    font-weight: 600;
+    text-decoration: none;
+    padding: 1rem;
+  }
+</style>

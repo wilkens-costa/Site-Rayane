@@ -1,0 +1,52 @@
+---
+import Icon from '../Icon.astro';
+import { waLink } from '../../lib/whatsapp';
+---
+
+<section class="cta-final">
+    <div class="cta-final__inner">
+        <h2>Vamos cuidar do seu sorriso?</h2>
+        <p>O primeiro passo é uma avaliação sem pressa, com tudo explicado. Atendimento humanizado no Fátima, em Fortaleza.</p>
+        <div>
+            <a href={waLink('agendar')} data-cta="cta-final"
+                target="_blank" rel="noopener noreferrer" class="btn-cta">
+                <Icon name="mdi:whatsapp" />
+                Agendar pelo WhatsApp
+            </a>
+        </div>
+        <div class="cta-final__badges">
+            <span class="cta-final__badge"><Icon name="solar:shield-check-bold" /> Atendimento Humanizado</span>
+            <span class="cta-final__badge"><Icon name="solar:star-bold" /> 5,0 no Google</span>
+            <span class="cta-final__badge"><Icon name="solar:diploma-verified-bold" /> CRO CE 16735</span>
+        </div>
+    </div>
+</section>
+
+<style is:global>
+/* ── CTA FINAL ── */
+.cta-final {
+    background: linear-gradient(135deg, var(--color-bordo-dark) 0%, var(--color-bordo) 100%);
+    text-align: center; padding: 4rem var(--space-lg);
+    position: relative; overflow: hidden;
+}
+.cta-final::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(255,255,255,0.07) 0%, transparent 60%);
+    pointer-events: none;
+}
+.cta-final__inner { position: relative; z-index: 2; max-width: 600px; margin: 0 auto; }
+.cta-final h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: white; margin-bottom: 0.75rem; line-height: 1.2;
+}
+.cta-final p { color: rgba(255,255,255,0.85); font-size: 1rem; margin-bottom: 2rem; line-height: 1.5; }
+
+.cta-final__badges { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
+.cta-final__badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.8rem; color: rgba(255,255,255,0.7); font-weight: 500;
+}
+.cta-final__badge .icon { color: rgba(255,255,255,0.5); }
+</style>

@@ -1,0 +1,228 @@
+---
+import Icon from '../Icon.astro';
+import { waLink } from '../../lib/whatsapp';
+---
+
+<section class="tratamentos section-padding" id="tratamentos">
+    <div class="tratamentos__container">
+        <div class="section-title">
+            <h2>Nossos <span>Tratamentos</span></h2>
+            <p>Do check-up à estética do sorriso, cuidado para você e para a sua família.</p>
+        </div>
+
+        <div class="tratamentos__carousel-wrapper">
+            <div class="tratamentos__grid">
+                <div class="tratamento-card" data-reveal>
+                    <Icon name="solar:users-group-rounded-bold-duotone" />
+                    <h3>Atendimento adulto e infantil</h3>
+                    <p>Cuidado acolhedor e seguro para a saúde bucal de toda a sua família.</p>
+                </div>
+                <div class="tratamento-card" data-reveal>
+                    <Icon name="solar:magic-stick-3-bold-duotone" />
+                    <h3>Clareamento</h3>
+                    <p>De consultório ou caseiro supervisionado, indicado na avaliação e com acompanhamento da sensibilidade.</p>
+                </div>
+                <div class="tratamento-card" data-reveal>
+                    <Icon name="mdi:tooth-outline" />
+                    <h3>Restaurações</h3>
+                    <p>Troque restaurações escuras ou quebradas por resina da cor do seu dente.</p>
+                </div>
+                <div class="tratamento-card" data-reveal>
+                    <Icon name="solar:star-fall-bold-duotone" />
+                    <h3>Facetas de resina</h3>
+                    <p>Ajustam cor, forma e pequenos espaços entre os dentes, com resultado natural.</p>
+                </div>
+                <div class="tratamento-card" data-reveal>
+                    <Icon name="mdi:tooth-outline" />
+                    <h3>Cirurgia</h3>
+                    <p>Extrações e pequenas cirurgias com planejamento cuidadoso e foco no seu conforto.</p>
+                </div>
+                <div class="tratamento-card" data-reveal>
+                    <Icon name="solar:medical-kit-bold-duotone" />
+                    <h3>Urgência odontológica</h3>
+                    <p>Dor, dente quebrado ou inchaço? Chame no WhatsApp para ver o primeiro horário disponível.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA após tratamentos -->
+    <div class="tratamentos__cta">
+        <p>Não sabe qual tratamento é ideal para você?</p>
+        <a href={waLink('duvidaTratamentos')} data-cta="tratamentos" target="_blank" rel="noopener noreferrer" class="cta-pill cta-pill--sm">
+            <Icon name="mdi:whatsapp" />
+            Fale com a Dra. Rayane agora
+        </a>
+    </div>
+</section>
+
+<style is:global>
+.tratamento-card:nth-child(2) { --reveal-delay: 0.1s; }
+.tratamento-card:nth-child(3) { --reveal-delay: 0.2s; }
+.tratamento-card:nth-child(4) { --reveal-delay: 0.3s; }
+.tratamento-card:nth-child(5) { --reveal-delay: 0.4s; }
+.tratamento-card:nth-child(6) { --reveal-delay: 0.5s; }
+
+.tratamentos__cta {
+    text-align: center;
+    padding: 1.5rem var(--space-lg) 3rem;
+    background: var(--color-white);
+}
+
+.tratamentos__cta p {
+    color: var(--color-gray-text);
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+/* ============================================================
+   TRATAMENTOS SECTION (Mobile First Carousel)
+   ============================================================ */
+.tratamentos {
+    background: var(--color-white);
+    position: relative;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.tratamentos__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.tratamentos__container .section-title {
+    padding: 0 var(--space-lg);
+    text-align: left;
+}
+
+.tratamentos__carousel-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* Mobile: lista (ícone à esquerda, texto à direita) */
+.tratamentos__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: var(--space-md) var(--space-lg);
+    position: relative;
+    z-index: 1;
+}
+
+.tratamento-card {
+    background: var(--color-creme);
+    border-radius: 16px;
+    padding: 16px;
+    border: 1px solid rgba(122, 27, 41, 0.06);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 14px;
+    row-gap: 4px;
+    align-items: start;
+    text-align: left;
+    height: auto;
+}
+
+.tratamento-card .icon {
+    grid-row: 1 / span 2;
+}
+
+/* Tablet: grade de 3 colunas com cards verticais */
+@media (min-width: 640px) and (max-width: 1023px) {
+    .tratamentos__grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .tratamento-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+        padding: 20px 16px;
+    }
+}
+
+.tratamento-card .icon {
+    font-size: 1.6rem;
+    color: var(--color-bordo);
+    padding: 8px;
+    background: rgba(122, 27, 41, 0.05);
+    border-radius: 10px;
+    align-self: center;
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tratamento-card h3 {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--color-bordo);
+    line-height: 1.25;
+    margin: 0;
+}
+
+.tratamento-card p {
+    font-size: 0.82rem;
+    color: var(--color-gray-text);
+    line-height: 1.45;
+    margin: 0;
+}
+
+@media (min-width: 1024px) {
+    .tratamentos__container .section-title {
+        text-align: center;
+        padding: 0;
+    }
+
+    .tratamentos__grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-md);
+        padding: var(--space-lg) 0;
+        justify-content: center;
+    }
+
+    .tratamento-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        flex: 0 0 auto;
+        width: 320px;
+        min-width: 320px;
+        max-width: none;
+        padding: var(--space-xl);
+        border-radius: 24px;
+        gap: var(--space-md);
+    }
+
+    .tratamento-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .tratamento-card p {
+        font-size: 1rem;
+    }
+
+    .tratamento-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(122, 27, 41, 0.06);
+        border-color: rgba(122, 27, 41, 0.15);
+    }
+}
+
+@media (min-width: 768px) {
+    #tratamentos {
+        padding-top: 2.5rem;
+    }
+}
+</style>

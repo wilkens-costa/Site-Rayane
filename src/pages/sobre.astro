@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SobreHero from '../components/sobre/SobreHero.astro';
+import Filosofia from '../components/sobre/Filosofia.astro';
+import Galeria from '../components/sobre/Galeria.astro';
+import CtaIntermediario from '../components/sobre/CtaIntermediario.astro';
+import Credenciais from '../components/sobre/Credenciais.astro';
+import Servicos from '../components/sobre/Servicos.astro';
+import DepoimentosSobre from '../components/sobre/DepoimentosSobre.astro';
+import CtaFinal from '../components/sobre/CtaFinal.astro';
+import WhatsAppFlutuante from '../components/sobre/WhatsAppFlutuante.astro';
+import '../styles/sobre.css';
+---
+
+<BaseLayout
+  page="sobre"
+  ogType="profile"
+  title="Sobre a Dra. Luzia Rayane · Cirurgiã-Dentista em Fortaleza | CRO-CE 16735"
+  description="Conheça a Dra. Luzia Rayane, cirurgiã-dentista em Fortaleza com atendimento humanizado. Filosofia de trabalho, formação e onde atende. CRO-CE 16735."
+  ogTitle="Sobre a Dra. Luzia Rayane · Cirurgiã-Dentista em Fortaleza"
+  ogDescription="Conheça a profissional por trás do sorriso. Atendimento humanizado no Fátima, em Fortaleza."
+>
+  <SobreHero />
+  <Filosofia />
+  <Galeria />
+  <CtaIntermediario />
+  <Credenciais />
+  <Servicos />
+  <DepoimentosSobre />
+  <CtaFinal />
+
+  <WhatsAppFlutuante slot="after-footer" />
+</BaseLayout>

@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import Tratamentos from '../components/home/Tratamentos.astro';
+import Depoimentos from '../components/home/Depoimentos.astro';
+import Faq from '../components/home/Faq.astro';
+import CtaBanner from '../components/home/CtaBanner.astro';
+import Contato from '../components/home/Contato.astro';
+import DenteFlutuante from '../components/home/DenteFlutuante.astro';
+import '../styles/home.css';
+---
+
+<BaseLayout
+  page="home"
+  title="Dra. Luzia Rayane · Cirurgiã-Dentista em Fortaleza | CRO-CE 16735"
+  description="Cirurgiã-dentista em Fortaleza (Fátima), com atendimento humanizado. Clareamento, facetas de resina, restaurações e atendimento infantil. CRO-CE 16735. Agende pelo WhatsApp."
+  ogTitle="Dra. Luzia Rayane · Cirurgiã-Dentista em Fortaleza"
+  ogDescription="Atendimento humanizado no Fátima, em Fortaleza. Clareamento, facetas de resina, restaurações e atendimento infantil. Agende pelo WhatsApp."
+>
+  <Hero />
+  <Tratamentos />
+  <Depoimentos />
+  <Faq />
+  <CtaBanner />
+  <Contato />
+
+  <DenteFlutuante slot="after-footer" />
+</BaseLayout>

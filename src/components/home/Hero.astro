@@ -1,0 +1,693 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import Icon from '../Icon.astro';
+import { waLink } from '../../lib/whatsapp';
+import fotoDra from '../../assets/img/dra-luzia-hero.webp';
+import fundoConsultorio from '../../assets/img/consultorio-blur.webp';
+
+// Fundo desfocado do consultório: AVIF com WebP de reserva, gerados no build
+const [fundoAvif, fundoWebp] = await Promise.all([
+  getImage({ src: fundoConsultorio, width: 1600, format: 'avif', quality: 45 }),
+  getImage({ src: fundoConsultorio, width: 1600, format: 'webp', quality: 55 }),
+]);
+const fundo = `image-set(url('${fundoAvif.src}') type('image/avif'), url('${fundoWebp.src}') type('image/webp'))`;
+---
+
+<section class="hero" id="hero" style={`--hero-bg: ${fundo}`}>
+    <div class="hero__bg-pattern" aria-hidden="true">
+        <!-- Row 1 -->
+        <Icon name="mdi:tooth-outline" style="top: 10%; left: 5%; font-size: 4rem; --rot: 5deg; --dur: 8s; --del: 0s;" />
+        <Icon name="solar:star-fall-bold-duotone" style="top: 10%; left: 25%; font-size: 3rem; --rot: -5deg; --dur: 6s; --del: -2s;" />
+        <Icon name="mdi:tooth" style="top: 10%; left: 45%; font-size: 4rem; --rot: 0deg; --dur: 9s; --del: -1s;" />
+        <Icon name="mdi:toothbrush" style="top: 10%; left: 65%; font-size: 5rem; --rot: -10deg; --dur: 7s; --del: -3s;" />
+        <Icon name="solar:star-fall-bold-duotone" style="top: 10%; left: 85%; font-size: 3rem; --rot: 10deg; --dur: 8.5s; --del: -4s;" />
+
+        <!-- Row 2 -->
+        <Icon name="solar:star-fall-bold-duotone" style="top: 35%; left: 10%; font-size: 4rem; --rot: 15deg; --dur: 7.5s; --del: -1.5s;" />
+        <Icon name="mdi:tooth-outline" style="top: 35%; left: 30%; font-size: 5rem; --rot: -10deg; --dur: 9.5s; --del: -3.5s;" />
+        <Icon name="mdi:toothbrush" style="top: 35%; left: 50%; font-size: 4rem; --rot: 5deg; --dur: 6.5s; --del: 0s;" />
+        <Icon name="mdi:tooth" style="top: 35%; left: 70%; font-size: 3.5rem; --rot: -5deg; --dur: 8s; --del: -2.5s;" />
+        <Icon name="mdi:tooth-outline" style="top: 35%; left: 90%; font-size: 4.5rem; --rot: 8deg; --dur: 10s; --del: -1s;" />
+
+        <!-- Row 3 -->
+        <Icon name="mdi:tooth" style="top: 60%; left: 5%; font-size: 5rem; --rot: -8deg; --dur: 8.2s; --del: -2s;" />
+        <Icon name="mdi:toothbrush" style="top: 60%; left: 25%; font-size: 3.5rem; --rot: 12deg; --dur: 6.8s; --del: -0.5s;" />
+        <Icon name="solar:star-fall-bold-duotone" style="top: 60%; left: 45%; font-size: 4.5rem; --rot: -15deg; --dur: 9.2s; --del: -4s;" />
+        <Icon name="mdi:tooth-outline" style="top: 60%; left: 65%; font-size: 5rem; --rot: 5deg; --dur: 7.8s; --del: -1.8s;" />
+        <Icon name="solar:star-fall-bold-duotone" style="top: 60%; left: 85%; font-size: 3.5rem; --rot: -5deg; --dur: 8.8s; --del: -3.2s;" />
+
+        <!-- Row 4 -->
+        <Icon name="mdi:toothbrush" style="top: 85%; left: 10%; font-size: 4rem; --rot: 10deg; --dur: 7.1s; --del: -1.1s;" />
+        <Icon name="solar:star-fall-bold-duotone" style="top: 85%; left: 30%; font-size: 4.5rem; --rot: -12deg; --dur: 9.7s; --del: -3.8s;" />
+        <Icon name="mdi:tooth" style="top: 85%; left: 50%; font-size: 3.5rem; --rot: 8deg; --dur: 6.3s; --del: -2.3s;" />
+        <Icon name="mdi:tooth-outline" style="top: 85%; left: 70%; font-size: 4.5rem; --rot: -5deg; --dur: 8.4s; --del: -0.8s;" />
+        <Icon name="mdi:toothbrush" style="top: 85%; left: 90%; font-size: 4rem; --rot: 15deg; --dur: 10.2s; --del: -4.2s;" />
+    </div>
+
+    <div class="hero__container">
+        <div class="hero__content">
+            <p class="hero__tagline">Cirurgiã-Dentista · Fortaleza</p>
+
+            <div>
+                <h1>
+                    <span>Dra. Luzia</span>
+                    <span>Rayane</span>
+                </h1>
+            </div>
+
+            <p class="hero__subtitle">
+                Atendimento humanizado e sem pressa, focado no seu bem-estar e no seu conforto em cada etapa do tratamento.
+            </p>
+
+            <!-- Rating Google + Localização unificados -->
+            <div class="hero__rating">
+                <div class="hero__rating-stars">
+                    <Icon name="solar:star-bold" />
+                    <Icon name="solar:star-bold" />
+                    <Icon name="solar:star-bold" />
+                    <Icon name="solar:star-bold" />
+                    <Icon name="solar:star-bold" />
+                </div>
+                <div class="hero__rating-sep"></div>
+                <span class="hero__rating-text">5,0 no Google</span>
+                <div class="hero__rating-sep"></div>
+                <span class="hero__rating-location">
+                    <Icon name="solar:map-point-bold" /> Fortaleza, CE
+                </span>
+            </div>
+
+            <div class="hero__actions">
+                <a href={waLink('agendar')} data-cta="hero"
+                    class="btn--hero-primary" target="_blank" rel="noopener noreferrer">
+                    <Icon name="ic:baseline-whatsapp" />
+                    Agendar Avaliação
+                </a>
+                <a href="#tratamentos" class="btn--hero-secondary">
+                    Ver Tratamentos
+                    <Icon name="solar:arrow-right-linear" />
+                </a>
+            </div>
+
+            <div class="hero__stats">
+                <div class="hero__stat-card">
+                    <Icon name="solar:star-bold-duotone" />
+                    <strong>5,0</strong>
+                    <span>No Google</span>
+                </div>
+                <div class="hero__stat-card">
+                    <Icon name="solar:users-group-rounded-bold-duotone" />
+                    <strong>Família</strong>
+                    <span>Adultos e crianças</span>
+                </div>
+                <div class="hero__stat-card">
+                    <Icon name="solar:map-point-bold-duotone" />
+                    <strong>Fátima</strong>
+                    <span>Marv Clinic</span>
+                </div>
+                <div class="hero__stat-card">
+                    <Icon name="solar:diploma-verified-bold-duotone" />
+                    <strong>CRO</strong>
+                    <span>CE 16735</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero__image-box">
+            <Picture
+                src={fotoDra}
+                formats={['avif', 'webp']}
+                fallbackFormat="webp"
+                widths={[480, 800, 1200, 1600]}
+                sizes="(min-width: 1024px) 50vw, 420px"
+                quality={68}
+                alt="Dra. Luzia Rayane, cirurgiã-dentista, sorrindo de jaleco branco"
+                loading="eager"
+                fetchpriority="high"
+            />
+        </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="hero__scroll" aria-hidden="true">
+        <Icon name="solar:alt-arrow-down-bold" />
+    </div>
+</section>
+
+<style is:global>
+/* ============================================================
+   HERO (Mobile First) — UPGRADED
+   ============================================================ */
+.hero {
+    position: relative;
+    background: var(--color-bordo);
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+    min-height: calc(100svh - var(--nav-height));
+}
+
+/* Imagem de fundo do consultório */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--hero-bg);
+    background-size: cover;
+    background-position: center center;
+    z-index: 0;
+    opacity: 0.82;
+    pointer-events: none;
+}
+
+/* Gradient overlay: escuro à esquerda (texto legível) → transparente à direita (foto visível) */
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        105deg,
+        rgba(93, 18, 29, 0.90) 0%,
+        rgba(93, 18, 29, 0.78) 30%,
+        rgba(93, 18, 29, 0.40) 58%,
+        rgba(93, 18, 29, 0.05) 80%,
+        transparent 100%
+    );
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Ícones flutuantes de fundo */
+.hero__bg-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.10;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hero__bg-pattern .icon {
+    position: absolute;
+    color: var(--color-white);
+    transform: rotate(var(--rot, 0deg));
+    animation: float-bg var(--dur, 8s) ease-in-out var(--del, 0s) infinite alternate;
+}
+
+@keyframes float-bg {
+    0%   { transform: translateY(0) rotate(var(--rot, 0deg)); }
+    100% { transform: translateY(-25px) rotate(calc(var(--rot, 0deg) + 10deg)); }
+}
+
+/* Animações de entrada */
+@keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+@keyframes heroBounce {
+    0%, 100% { transform: translateY(0) translateX(-50%); }
+    50%       { transform: translateY(8px) translateX(-50%); }
+}
+@keyframes heroPulseStat {
+    0%, 100% { box-shadow: 0 4px 20px rgba(255,255,255,0.08); }
+    50%       { box-shadow: 0 4px 28px rgba(255,255,255,0.18); }
+}
+
+/* Container principal */
+.hero__container {
+    position: relative;
+    z-index: 2;
+    max-width: 1300px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: var(--space-xl) var(--space-lg) 0;
+    min-height: inherit;
+}
+
+/* Coluna de conteúdo */
+.hero__content {
+    padding-bottom: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    animation: heroFadeUp 0.85s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+/* Badge de localização — agora integrado ao rating */
+.hero__location {
+    display: none; /* Escondido pois foi integrado abaixo do rating */
+}
+
+/* Tagline acima do H1 */
+.hero__tagline {
+    font-family: var(--font-sans);
+    font-size: clamp(0.78rem, 1.8vw, 0.9rem);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 200, 200, 0.9);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: heroFadeUp 0.75s cubic-bezier(0.22,1,0.36,1) 0.2s both;
+}
+.hero__tagline::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 2px;
+    background: rgba(255,180,180,0.7);
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+/* H1 */
+.hero__content h1 {
+    color: var(--color-white);
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-family: var(--font-serif);
+    line-height: 1.04;
+    margin: 0;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 30px rgba(0,0,0,0.25);
+    animation: heroFadeUp 0.85s cubic-bezier(0.22,1,0.36,1) 0.28s both;
+}
+
+.hero__content h1 span {
+    display: block;
+}
+
+/* Subtítulo */
+.hero__subtitle {
+    color: rgba(255, 255, 255, 0.88);
+    font-size: clamp(0.92rem, 2vw, 1.05rem);
+    line-height: 1.55;
+    max-width: 400px;
+    margin: 0;
+    font-weight: 400;
+    animation: heroFadeUp 0.85s cubic-bezier(0.22,1,0.36,1) 0.38s both;
+}
+
+/* Rating + Localização unificados em uma única linha */
+.hero__rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.10);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 999px;
+    padding: 0.45rem 1rem;
+    align-self: flex-start;
+    animation: heroFadeUp 0.85s cubic-bezier(0.22,1,0.36,1) 0.45s both;
+}
+.hero__rating-stars {
+    display: flex;
+    gap: 2px;
+}
+.hero__rating-stars .icon {
+    font-size: 0.9rem;
+    color: #F5C518;
+    filter: drop-shadow(0 0 4px rgba(245,197,24,0.5));
+}
+.hero__rating-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.92);
+    white-space: nowrap;
+}
+.hero__rating-sep {
+    width: 1px;
+    height: 14px;
+    background: rgba(255,255,255,0.25);
+}
+/* Badge de localização inline dentro do rating */
+.hero__rating-location {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.88);
+    white-space: nowrap;
+}
+.hero__rating-location .icon {
+    font-size: 0.95rem;
+    color: #ff9999;
+}
+
+/* Ações (CTAs) */
+.hero__actions {
+    display: flex;
+    gap: 0.85rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    animation: heroFadeUp 0.85s cubic-bezier(0.22,1,0.36,1) 0.5s both;
+}
+
+/* CTA Primário */
+.btn--hero-primary {
+    background: var(--color-white);
+    color: var(--color-bordo) !important;
+    border-radius: 999px;
+    padding: 0.95rem 1.8rem;
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: 0.95rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25), 0 0 0 0 rgba(255,255,255,0.4);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    border: none;
+    animation: heroPrimaryPulse 2.8s ease-in-out 1.5s infinite;
+}
+@keyframes heroPrimaryPulse {
+    0%, 100% { box-shadow: 0 8px 30px rgba(0,0,0,0.25), 0 0 0 0 rgba(255,255,255,0.3); }
+    50%       { box-shadow: 0 10px 36px rgba(0,0,0,0.3), 0 0 0 8px rgba(255,255,255,0.0); }
+}
+.btn--hero-primary:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+    background: var(--color-creme);
+}
+
+/* CTA Secundário */
+.btn--hero-secondary {
+    background: rgba(255,255,255,0.10);
+    color: var(--color-white) !important;
+    border-radius: 999px;
+    padding: 0.95rem 1.6rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.92rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid rgba(255,255,255,0.30);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.btn--hero-secondary:hover {
+    background: rgba(255,255,255,0.18);
+    transform: translateY(-3px);
+    border-color: rgba(255,255,255,0.50);
+}
+
+/* Stats */
+.hero__stats {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.2rem;
+    flex-wrap: wrap;
+    animation: heroFadeUp 0.85s cubic-bezier(0.22,1,0.36,1) 0.62s both;
+}
+
+/* Cards glassmorphism */
+.hero__stat-card {
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 14px;
+    padding: 0.75rem 0.7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 78px;
+    flex: 1;
+    transition: transform 0.3s, background 0.3s;
+    animation: heroPulseStat 4s ease-in-out infinite;
+    cursor: default;
+}
+.hero__stat-card:nth-child(2) { animation-delay: 1.3s; }
+.hero__stat-card:nth-child(3) { animation-delay: 2.6s; }
+
+.hero__stat-card:hover {
+    background: rgba(255,255,255,0.17);
+    transform: translateY(-5px);
+}
+
+.hero__stat-card .icon {
+    font-size: 1.2rem;
+    color: rgba(255,200,200,0.9);
+    margin-bottom: 4px;
+}
+
+.hero__stat-card strong {
+    color: var(--color-white);
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.hero__stat-card span {
+    color: rgba(255,255,255,0.75);
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-top: 3px;
+    letter-spacing: 0.02em;
+}
+
+/* Scroll indicator */
+.hero__scroll {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    animation: heroFadeIn 1s ease 1.4s both;
+    pointer-events: none;
+}
+.hero__scroll .icon {
+    font-size: 1.6rem;
+    animation: heroBounce 1.8s ease-in-out infinite;
+}
+
+/* Caixa da imagem da doutora */
+.hero__image-box {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: 0;
+    overflow: visible;
+}
+
+.hero__image-box img {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    object-position: bottom center;
+    z-index: 2;
+    position: relative;
+    filter: drop-shadow(0 20px 55px rgba(0,0,0,0.40));
+    animation: heroFadeIn 0.6s ease both;
+}
+
+.hero__image-box picture {
+    display: contents;
+}
+
+/* Mobile: layout otimizado para conversão */
+@media (max-width: 1023px) {
+    .hero {
+        min-height: auto;
+    }
+    .hero__container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        padding: var(--space-lg) var(--space-md) 0;
+        gap: 0;
+    }
+    .hero__content {
+        padding-bottom: var(--space-md);
+        gap: 0.65rem;
+        text-align: left;
+    }
+    .hero__content h1 {
+        font-size: clamp(2.4rem, 11vw, 3.2rem);
+        line-height: 1.1;
+        white-space: nowrap;
+        letter-spacing: -0.04em; /* Ajuda a encaixar melhor a fonte grande */
+    }
+    .hero__content h1 span {
+        display: inline;
+    }
+    .hero__tagline {
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+    }
+    .hero__subtitle {
+        font-size: 0.82rem;
+        max-width: 100%;
+        line-height: 1.5;
+    }
+
+    /* Rating + localização compacto */
+    .hero__rating {
+        display: inline-flex;
+        padding: 0.35rem 0.75rem;
+        gap: 6px;
+        font-size: 0.75rem;
+    }
+    .hero__rating-stars .icon {
+        font-size: 0.78rem;
+    }
+    .hero__rating-text {
+        font-size: 0.72rem;
+    }
+    .hero__rating-sep {
+        height: 12px;
+    }
+    .hero__rating-location {
+        font-size: 0.7rem;
+        gap: 3px;
+    }
+    .hero__rating-location .icon {
+        font-size: 0.82rem;
+    }
+
+    /* Botões lado a lado, compactos */
+    .hero__actions {
+        gap: 0.5rem;
+        margin-top: 0.3rem;
+        flex-wrap: nowrap;
+        width: 100%;
+    }
+    .btn--hero-primary {
+        flex: 1;
+        padding: 0.72rem 0.5rem;
+        font-size: 0.75rem;
+        gap: 4px;
+        white-space: nowrap;
+    }
+    .btn--hero-secondary {
+        flex: 1;
+        padding: 0.72rem 0.5rem;
+        font-size: 0.75rem;
+        gap: 4px;
+        white-space: nowrap;
+    }
+
+    /* Stats compactos em linha */
+    .hero__stats {
+        margin-top: 0.6rem;
+        gap: 0.45rem;
+    }
+    .hero__stat-card {
+        min-width: 0;
+        padding: 0.45rem 0.35rem;
+        border-radius: 10px;
+    }
+    .hero__stat-card .icon {
+        font-size: 1rem;
+        margin-bottom: 2px;
+    }
+    .hero__stat-card strong {
+        font-size: 1.1rem;
+    }
+    .hero__stat-card span {
+        font-size: 0.58rem;
+    }
+
+    /* Foto da Dra. visível e proeminente */
+    .hero__image-box {
+        margin-top: 0.5rem;
+        max-height: 380px;
+        overflow: hidden;
+        align-items: flex-start;
+        justify-content: center;
+        border-radius: 0;
+    }
+    .hero__image-box img {
+        max-width: 85%;
+        width: 85%;
+        object-position: top center;
+        max-height: 380px;
+        object-fit: cover;
+        border-radius: 0;
+    }
+    .hero__scroll {
+        display: none;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+    .hero {
+        align-items: stretch;
+    }
+
+    .hero__container {
+        grid-template-columns: 1.1fr 0.9fr;
+        padding-top: 0;
+        gap: 2rem;
+        align-items: stretch;
+    }
+
+    .hero__content {
+        justify-content: center;
+        padding-bottom: 3rem;
+        padding-left: 2rem;
+        padding-top: 2rem;
+    }
+
+    .hero__image-box {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        margin-top: 0;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        overflow: visible;
+    }
+
+    .hero__image-box img {
+        width: 130%;
+        max-width: none;
+        height: calc(100% + 8%);
+        max-height: none;
+        object-fit: contain;
+        object-position: bottom right;
+        margin-bottom: -2px;
+        margin-top: -8%;
+        margin-right: -5%;
+        position: relative;
+        z-index: 1001;
+        filter: drop-shadow(0 30px 70px rgba(0,0,0,0.45));
+    }
+
+    .hero__stat-card {
+        flex: none;
+        min-width: 110px;
+    }
+}
+</style>

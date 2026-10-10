@@ -1,0 +1,33 @@
+---
+import Icon from '../Icon.astro';
+import { waLink } from '../../lib/whatsapp';
+---
+
+<div class="wpp-popup">
+    <a href={waLink('vimPeloSite')} data-cta="flutuante" class="wpp-popup__btn" aria-label="Agendar consulta pelo WhatsApp (abre em nova aba)" target="_blank" rel="noopener noreferrer">
+        <Icon name="mdi:whatsapp" size={30} />
+    </a>
+</div>
+
+<style is:global>
+/* ── WPP FLOAT ── */
+/* No mobile o único CTA flutuante é o botão central da barra inferior */
+.wpp-popup {
+    position: fixed; bottom: 85px; right: var(--space-lg);
+    z-index: 200; display: none; flex-direction: row;
+    align-items: center; gap: var(--space-sm); pointer-events: none;
+}
+.wpp-popup__btn {
+    pointer-events: auto; width: 60px; height: 60px; border-radius: 50%;
+    background: #25D366; color: white; border: none;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+    transition: transform 0.3s, box-shadow 0.3s; text-decoration: none;
+}
+.wpp-popup__btn:hover { transform: scale(1.1); box-shadow: 0 8px 32px rgba(37,211,102,0.55); }
+.wpp-popup__btn svg { width: 30px; height: 30px; }
+@media (min-width: 1024px) {
+    .wpp-popup { display: flex; bottom: var(--space-xl); right: var(--space-xl); }
+    .wpp-popup__btn { width: 66px; height: 66px; }
+}
+</style>

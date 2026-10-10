@@ -1,0 +1,15 @@
+---
+import { site } from '../data/site';
+
+const ano = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="footer__bottom">
+    <span class="footer__dev-credit">
+      Desenvolvido por
+      <a href={`https://wa.me/${site.dev.whatsapp}`} target="_blank" rel="noopener noreferrer">{site.dev.nome}</a>
+    </span>
+    <span class="footer__copy">&copy; {ano} {site.nome} &mdash; Todos os direitos reservados</span>
+  </div>
+</footer>

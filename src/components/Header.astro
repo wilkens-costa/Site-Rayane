@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import logo from '../assets/img/logo-lr.png';
+import { waLink } from '../lib/whatsapp';
+
+interface Props {
+  page: 'home' | 'sobre' | 'outra';
+}
+
+const { page } = Astro.props;
+const links = [
+  { href: '/#hero', label: 'Início', ativo: false },
+  { href: '/#tratamentos', label: 'Tratamentos', ativo: false },
+  { href: '/sobre', label: 'Sobre', ativo: page === 'sobre' },
+  { href: '/#contato', label: 'Contato', ativo: false },
+];
+---
+
+<nav class="nav" aria-label="Navegação principal">
+  <div class="nav__inner">
+    <a href="/" class="nav__brand" aria-label="Dra. Luzia Rayane, página inicial">
+      <Image src={logo} alt="Logo LR" class="nav__logo-img" width={48} height={48} densities={[1, 2, 3]} loading="eager" />
+    </a>
+
+    {
+      page === 'sobre' && (
+        <div class="cert-card">
+          <div class="cert-card__icon">
+            <Icon name="solar:diploma-verified-bold-duotone" />
+          </div>
+          <div class="cert-card__text">
+            <span class="cert-card__title">Cirurgiã-Dentista</span>
+            <span class="cert-card__sub">CRO CE 16735</span>
+          </div>
+        </div>
+      )
+    }
+
+    <ul class="nav__links-desktop">
+      {
+        links.map((l) => (
+          <li>
+            <a href={l.href} class="nav__link-desktop" aria-current={l.ativo ? 'page' : undefined}>
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="nav__cta-desktop">
+      <a
+        href={waLink(page === 'sobre' ? 'agendarCurta' : 'agendar')}
+        class="nav__cta"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-cta="cabecalho"
+      >
+        <Icon name="mdi:whatsapp" />
+        Agendar Consulta
+      </a>
+    </div>
+  </div>
+</nav>
+
+<style is:global>
+  .nav__link-desktop[aria-current='page'] {
+    color: var(--color-bordo);
+  }
+</style>

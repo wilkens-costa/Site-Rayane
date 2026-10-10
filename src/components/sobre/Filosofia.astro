@@ -1,0 +1,69 @@
+---
+import Icon from '../Icon.astro';
+---
+
+<section class="filosofia section-padding">
+    <div class="container">
+        <div class="section-title">
+            <h2>Minha <span>Filosofia</span></h2>
+            <p>Uma odontologia centrada em você — onde o cuidado começa muito antes do procedimento.</p>
+        </div>
+        <div class="filosofia__grid">
+            <div class="filosofia__card">
+                <div class="filosofia__card-icon">
+                    <Icon name="solar:heart-angle-bold-duotone" />
+                </div>
+                <h3>Atendimento Humanizado</h3>
+                <p>Acredito que a escuta ativa é o primeiro passo de qualquer tratamento. Minha missão é resgatar a sua autoestima, devolvendo a você a confiança para sorrir sem medos.</p>
+            </div>
+            <div class="filosofia__card">
+                <div class="filosofia__card-icon">
+                    <Icon name="solar:shield-check-bold-duotone" />
+                </div>
+                <h3>Segurança e Transparência</h3>
+                <p>Respeitamos o seu tempo e seus limites. Cada passo é explicado com clareza para a sua paz de espírito. Transformamos a visita ao dentista numa experiência acolhedora.</p>
+            </div>
+            <div class="filosofia__card">
+                <div class="filosofia__card-icon">
+                    <Icon name="solar:star-shine-bold-duotone" />
+                </div>
+                <h3>Excelência Técnica</h3>
+                <p>Atualização constante com cursos em odontologia estética. Utilizo os materiais e técnicas mais modernas para garantir resultados duradouros e naturais.</p>
+            </div>
+            <div class="filosofia__card">
+                <div class="filosofia__card-icon">
+                    <Icon name="solar:users-group-rounded-bold-duotone" />
+                </div>
+                <h3>Para Toda a Família</h3>
+                <p>Do bebê ao idoso, ofereço cuidado atento e acolhedor para toda a família. Um ambiente seguro onde crianças e adultos se sentem confortáveis e bem tratados.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style is:global>
+/* ── PHILOSOPHY BLOCKS ── */
+.filosofia { background: var(--color-white); }
+.filosofia__grid {
+    display: grid; grid-template-columns: 1fr;
+    gap: 2rem; margin-top: 2.5rem;
+}
+@media (min-width: 768px) { .filosofia__grid { grid-template-columns: 1fr 1fr; } }
+
+.filosofia__card {
+    background: var(--color-creme);
+    border-radius: 20px; padding: 2rem;
+    border: 1px solid rgba(122,27,41,0.06);
+    display: flex; flex-direction: column; gap: 1rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.filosofia__card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(122,27,41,0.08); }
+.filosofia__card-icon {
+    width: 52px; height: 52px;
+    background: rgba(122,27,41,0.08); border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; color: var(--color-bordo);
+}
+.filosofia__card h3 { font-size: 1.15rem; font-weight: 700; color: var(--color-bordo); }
+.filosofia__card p { font-size: 0.95rem; color: var(--color-gray-text); line-height: 1.6; }
+</style>

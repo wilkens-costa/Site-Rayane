@@ -1,0 +1,85 @@
+/* Estilos compartilhados entre as seções da home */
+/* ============================================================
+   SECTIONS GLOBALS
+   ============================================================ */
+.section-padding {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+}
+
+.section-title h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    color: var(--color-bordo);
+    margin-bottom: var(--space-xs);
+    line-height: 1.05;
+}
+
+.section-title h2 span {
+    font-style: italic;
+    color: var(--color-bordo-light);
+    font-weight: 400;
+}
+
+.section-title p {
+    color: var(--color-gray-text);
+    font-size: 0.95rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+@media (min-width: 1024px) {
+    .section-padding {
+        padding: 6rem 0;
+    }
+
+    .section-title {
+        margin-bottom: var(--space-3xl);
+    }
+
+    .section-title h2 {
+        font-size: 3.5rem;
+        margin-bottom: var(--space-sm);
+    }
+
+    .section-title p {
+        font-size: 1.05rem;
+        line-height: 1.6;
+    }
+}
+
+/* Botão de agendamento em pílula (tratamentos, depoimentos e FAQ) */
+.cta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--color-bordo);
+    color: var(--color-white);
+    padding: 1rem 2rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(122, 27, 41, 0.25);
+    transition: all 0.3s;
+}
+
+.cta-pill .icon {
+    font-size: 1.3rem;
+    color: #4ade80;
+}
+
+.cta-pill--sm {
+    padding: 0.9rem 1.8rem;
+    font-size: 0.95rem;
+}
+
+.cta-pill--sm .icon {
+    font-size: 1.2rem;
+}

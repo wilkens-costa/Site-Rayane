@@ -1,35 +1,42 @@
 # Dra. Luzia Rayane — site institucional
 
-Site institucional da **Dra. Luzia Rayane**, cirurgiã-dentista em Fortaleza, CE (CRO-CE 16735).
+Site da **Dra. Luzia Rayane**, cirurgiã-dentista em Fortaleza, CE (CRO-CE 16735).
 
 Produção: https://draluziarayane.vercel.app
+
+## Rodando localmente
+
+```bash
+npm install
+npm run dev       # servidor de desenvolvimento
+npm run build     # checagem de tipos + build de produção em dist/
+npm run preview   # serve o build localmente
+```
 
 ## Estrutura
 
 ```
-├── index.html          Página principal
-├── sobre.html          Página "Sobre a Dra."
-├── assets/img/         Imagens otimizadas (AVIF/WebP em várias larguras)
-├── favicon.svg
-├── robots.txt
-├── sitemap.xml
-└── .vercelignore       Arquivos do repositório que não vão para o site
+src/
+├── assets/img/        Fotos-mestre; o Astro gera AVIF/WebP em várias larguras no build
+├── components/
+│   ├── Icon.astro     Ícones SVG embutidos no build (Solar, MDI)
+│   ├── Header / BottomNav / Footer
+│   ├── home/          Seções da página inicial
+│   └── sobre/         Seções da página Sobre
+├── data/              Dados únicos: telefone, endereço, CRO, FAQ
+├── lib/whatsapp.ts    Links do WhatsApp com mensagem por contexto
+├── layouts/           Layout base (head, SEO, Open Graph, GA4)
+├── pages/             index, sobre, 404
+├── scripts/           Animação de entrada, eventos do GA4, menu ativo
+└── styles/            global.css + CSS compartilhado por página
+public/                favicon, robots.txt, imagem de compartilhamento
 ```
+
+- Telefone, endereço e CRO ficam só em `src/data/site.ts`.
+- Todo link de WhatsApp usa `waLink()` e tem `data-cta`, que vira o evento `whatsapp_click` no GA4.
 
 ## Deploy
 
-Site estático na Vercel (projeto `draluziarayane`), com deploy automático a cada push no `main`.
-Branches diferentes de `main` geram um preview.
-
-## Imagens
-
-Os originais em alta resolução não ficam no repositório. As versões usadas no site são geradas
-em `assets/img/` com nomes em kebab-case, nos formatos AVIF e WebP, em larguras próximas
-ao tamanho exibido.
-
-## Tech stack
-
-- HTML5 + CSS3 (vanilla, sem build)
-- [GSAP](https://gsap.com/) — animações da home
-- [Iconify](https://iconify.design/) — ícones (Solar e MDI)
-- [Google Fonts](https://fonts.google.com/) — Inter + Playfair Display
+Vercel (projeto `draluziarayane`), configurado em `vercel.json`: build do Astro, saída em `dist/`,
+URLs sem `.html` (`/sobre.html` redireciona para `/sobre`) e cache longo para `/_astro/*`.
+Push no `main` publica em produção; outras branches geram preview.

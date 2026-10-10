@@ -1,18 +1,22 @@
-# OS
-.DS_Store
-Thumbs.db
-Desktop.ini
+# Build
+dist/
+.astro/
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Node (caso adicione no futuro)
+# Dependências
 node_modules/
+
+# Ambiente
 .env
 .env.local
 
 # Vercel
 .vercel/
+
+# SO / editores
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo

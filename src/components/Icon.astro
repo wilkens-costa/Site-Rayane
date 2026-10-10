@@ -1,0 +1,51 @@
+---
+/**
+ * Ícone SVG embutido no HTML em tempo de build (sem JS e sem requisição à API do Iconify).
+ * Mantém o comportamento do antigo <iconify-icon>: tamanho 1em, herda font-size e color.
+ */
+import { getIconData, iconToSVG, replaceIDs } from '@iconify/utils';
+import type { IconifyJSON } from '@iconify/types';
+import solar from '@iconify-json/solar/icons.json';
+import mdi from '@iconify-json/mdi/icons.json';
+import ic from '@iconify-json/ic/icons.json';
+
+interface Props {
+  /** Nome no formato "conjunto:icone", ex.: "solar:star-bold" */
+  name: string;
+  class?: string;
+  /** Tamanho fixo em px (equivale ao antigo atributo width do iconify-icon) */
+  size?: number;
+  /** Texto para leitores de tela; sem ele o ícone é decorativo */
+  label?: string;
+  /** Usado só pelos ícones de fundo da hero (variáveis de animação) */
+  style?: string;
+}
+
+const sets: Record<string, IconifyJSON> = {
+  solar: solar as IconifyJSON,
+  mdi: mdi as IconifyJSON,
+  ic: ic as IconifyJSON,
+};
+
+const { name, class: className, size, label, style } = Astro.props;
+const [prefix, iconName] = name.split(':');
+const data = prefix && iconName ? getIconData(sets[prefix] ?? { prefix: '', icons: {} }, iconName) : null;
+if (!data) throw new Error(`Ícone não encontrado: ${name}`);
+
+const { attributes, body } = iconToSVG(data);
+const dimension = size ? `${size}px` : '1em';
+---
+
+<span
+  class:list={['icon', className]}
+  style={style}
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+><svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox={attributes.viewBox}
+    width={dimension}
+    height={dimension}
+    set:html={replaceIDs(body)}
+  /></span>

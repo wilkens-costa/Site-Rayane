@@ -1,0 +1,266 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from '../Icon.astro';
+import { waLink } from '../../lib/whatsapp';
+import consultorio from '../../assets/img/galeria-consultorio.webp';
+import consulta from '../../assets/img/galeria-consulta.webp';
+import retrato from '../../assets/img/galeria-retrato.webp';
+import cracha from '../../assets/img/galeria-cracha.jpg';
+
+const fotos = [
+  { src: consultorio, alt: 'Dra. Luzia Rayane sorrindo no consultório' },
+  { src: consulta, alt: 'Dra. Luzia Rayane conversando durante uma consulta' },
+  { src: retrato, alt: 'Retrato da Dra. Luzia Rayane com fotopolimerizador' },
+  { src: cracha, alt: 'Crachá dourado com o monograma LR da Dra. Luzia Rayane' },
+];
+---
+
+<section class="galeria section-padding" id="galeria">
+    <div class="container">
+        <div class="galeria__header">
+            <div class="galeria__icon">
+                <Icon name="solar:camera-bold-duotone" />
+            </div>
+            <h2>Galeria</h2>
+            <p>Um pouco do meu dia a dia no consultório.</p>
+        </div>
+        <div class="galeria__wrapper">
+            <button class="galeria__btn galeria__btn--prev" id="galeriaPrev" aria-label="Foto anterior">
+                <Icon name="solar:alt-arrow-left-bold" />
+            </button>
+            <div class="galeria__track" id="galeriaTrack">
+                {
+                    fotos.map((foto) => (
+                        <div class="galeria__item">
+                            <Picture
+                                src={foto.src}
+                                formats={['avif', 'webp']}
+                                fallbackFormat="webp"
+                                widths={[480, 720, 960]}
+                                sizes="(min-width: 768px) 25vw, 50vw"
+                                quality={70}
+                                alt={foto.alt}
+                                loading="lazy"
+                                decoding="async"
+                            />
+                        </div>
+                    ))
+                }
+            </div>
+            <button class="galeria__btn galeria__btn--next" id="galeriaNext" aria-label="Próxima foto">
+                <Icon name="solar:alt-arrow-right-bold" />
+            </button>
+        </div>
+        <div class="galeria__cta">
+            <a href={waLink('agendar')} data-cta="galeria"
+                target="_blank" rel="noopener noreferrer" class="galeria__cta-btn">
+                <Icon name="mdi:whatsapp" class="galeria__cta-icon" />
+                Quero agendar uma consulta
+            </a>
+        </div>
+    </div>
+</section>
+
+<style is:global>
+.galeria__cta-icon {
+    font-size: 1.2rem;
+}
+
+/* ── GALERIA — Multi-photo side by side ── */
+.galeria {
+    background: var(--color-creme);
+    overflow: hidden;
+}
+.galeria__header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.galeria__icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(122,27,41,0.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    color: var(--color-bordo);
+    margin-bottom: 0.75rem;
+}
+.galeria__header h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--color-bordo);
+    margin-bottom: 0.5rem;
+}
+.galeria__header p {
+    color: var(--color-gray-text);
+    font-size: 0.95rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Wrapper com setas nas laterais */
+.galeria__wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Track com scroll horizontal */
+.galeria__track {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.5rem 0;
+    scrollbar-width: none;
+}
+.galeria__track::-webkit-scrollbar {
+    display: none;
+}
+
+/* Cada foto */
+.galeria__item {
+    flex: 0 0 calc(25% - 0.75rem);
+    scroll-snap-align: start;
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    position: relative;
+    background: var(--color-white);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.galeria__item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 36px rgba(122,27,41,0.15);
+}
+.galeria__item picture {
+    display: contents;
+}
+.galeria__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+}
+
+/* Botões laterais */
+.galeria__btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: var(--color-white);
+    color: var(--color-bordo);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    font-size: 1.3rem;
+    z-index: 10;
+}
+.galeria__btn:hover {
+    background: var(--color-bordo);
+    color: var(--color-white);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 24px rgba(122,27,41,0.25);
+}
+.galeria__btn--prev {
+    left: -24px;
+}
+.galeria__btn--next {
+    right: -24px;
+}
+
+/* CTA abaixo da galeria */
+.galeria__cta {
+    text-align: center;
+    margin-top: 2.5rem;
+}
+.galeria__cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-bordo);
+    color: var(--color-white);
+    padding: 1rem 2.2rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(122,27,41,0.25);
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+}
+.galeria__cta-btn:hover {
+    background: var(--color-bordo-light);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(122,27,41,0.35);
+}
+
+/* Mobile: 2 fotos visíveis */
+@media (max-width: 767px) {
+    .galeria__item {
+        flex: 0 0 calc(50% - 0.5rem);
+        border-radius: 16px;
+    }
+    .galeria__btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+    }
+    .galeria__btn--prev { left: 8px; }
+    .galeria__btn--next { right: 8px; }
+}
+/* Tablet: 3 fotos */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .galeria__item {
+        flex: 0 0 calc(33.333% - 0.67rem);
+    }
+}
+</style>
+
+<script>
+  const track = document.getElementById('galeriaTrack');
+  const prevBtn = document.getElementById('galeriaPrev');
+  const nextBtn = document.getElementById('galeriaNext');
+
+  if (track && prevBtn && nextBtn) {
+    const reduzirMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const passo = () => {
+      const item = track.querySelector<HTMLElement>('.galeria__item');
+      return item ? item.offsetWidth + 16 : 300; // largura + gap
+    };
+    const avancar = () => {
+      const fim = track.scrollWidth - track.clientWidth;
+      if (track.scrollLeft >= fim - 10) track.scrollTo({ left: 0, behavior: 'smooth' });
+      else track.scrollBy({ left: passo(), behavior: 'smooth' });
+    };
+
+    prevBtn.addEventListener('click', () => track.scrollBy({ left: -passo(), behavior: 'smooth' }));
+    nextBtn.addEventListener('click', () => track.scrollBy({ left: passo(), behavior: 'smooth' }));
+
+    // Autoplay a cada 3,5 s, pausado com o mouse sobre a galeria ou com "reduzir movimento"
+    let timer: number | undefined;
+    const iniciar = () => {
+      window.clearInterval(timer);
+      if (!reduzirMovimento) timer = window.setInterval(avancar, 3500);
+    };
+    const parar = () => window.clearInterval(timer);
+    const wrapper = track.closest('.galeria__wrapper');
+    wrapper?.addEventListener('mouseenter', parar);
+    wrapper?.addEventListener('mouseleave', iniciar);
+    iniciar();
+  }
+</script>
