@@ -1,7 +1,8 @@
 ---
 /**
  * A plaquinha dourada do jaleco (CTA final): metal escovado, filete interno e só o LR gravado.
- * - Padrão (home): placa grande; a partir de 1024 px a foto do slot "foto" sai da placa.
+ * - Padrão (home): placa grande; a partir de 1024 px o slot "lateral" ganha coluna própria
+ *   (na home, a gravação da plaquinha real: LR, nome cursivo e CRO).
  * - `mini` (Sobre): escala de objeto, LR | fio | botão e telefone.
  * O CSS também cobre a seção .cta e o link .cta__tel, comuns às duas páginas.
  */
@@ -20,20 +21,20 @@ const { mini = false } = Astro.props;
     <Monograma class="placa__mono" />
     <slot />
   </div>
-  <slot name="foto" />
+  <slot name="lateral" />
 </div>
 
 <style is:global>
   /* =========================================================================
      16. CTA FINAL — a plaquinha dourada do jaleco, em tamanho de placa.
-     Só um LR pequeno gravado (o cartão completo fica no rodapé) e, no
-     desktop, a Dra. de beca saindo da placa, ao lado do botão. Outra foto,
-     outra pose: a hero não se repete.
+     No celular, um LR pequeno gravado acima do título. No desktop, a coluna
+     da direita reproduz a gravação da plaquinha real (LR, nome cursivo, CRO),
+     separada do texto por um fio, como na peça física.
      ========================================================================= */
   .cta { background: var(--rose); padding: 72px 0 80px; }
   .placa { position: relative; isolation: isolate; color: var(--vinho); padding: 44px 28px 42px; --foco: var(--vinho); }
   /* o metal: gradiente champagne + textura escovada + brilho a 118°.
-     Fica numa camada própria para a foto poder vazar a borda sem cortar o brilho */
+     Fica numa camada própria, atrás do conteúdo */
   .placa__metal {
     position: absolute; inset: 0; z-index: 0; overflow: hidden;
     border-radius: var(--r-placa);
@@ -65,7 +66,7 @@ const { mini = false } = Astro.props;
   .placa__acoes .btn__wa { box-shadow: 0 0 0 1px rgba(122, 27, 41, .1); }
   .cta__tel { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--vinho); text-decoration: none; font-size: 16px; }
   .cta__tel strong { font-weight: 600; background: linear-gradient(var(--bordo), var(--bordo)) 0 100% / 100% 1px no-repeat; padding-bottom: 2px; }
-  .placa__foto { display: none; }
+  .placa__gravacao { display: none; }
   @media (min-width: 768px) {
     .cta { padding: 104px 0; }
     .placa { padding: 60px 56px 58px; }
@@ -73,18 +74,26 @@ const { mini = false } = Astro.props;
     .placa__acoes .btn { flex: 0 0 auto; }
   }
   @media (min-width: 1024px) {
-    .cta { padding: 176px 0 128px; }
-    /* a foto tem coluna própria: o texto nunca passa por baixo dela, em nenhuma largura */
-    .placa { display: grid; grid-template-columns: minmax(0, 1fr) clamp(440px, 42vw, 560px); align-items: center; padding: 0; }
+    .cta { padding: 136px 0; }
+    /* texto à esquerda; a gravação da plaquinha tem coluna própria à direita */
+    .placa { display: grid; grid-template-columns: minmax(0, 1fr) clamp(380px, 36vw, 480px); align-items: center; padding: 0; }
     .placa__conteudo { grid-column: 1; grid-row: 1; padding: 80px 32px 84px clamp(56px, 7vw, 104px); }
     .placa__mono { height: 44px; margin-bottom: 30px; }
     .placa h2 { font-size: clamp(52px, 4.4vw, 66px); }
-    /* a Dra. sai da placa: apoiada na base; a margem negativa deixa o capelo passar da borda de cima */
-    .placa__foto {
-      display: block; position: relative; z-index: 3; grid-column: 2; grid-row: 1; align-self: end;
-      margin: -96px 40px 0 0; aspect-ratio: 900 / 1150; pointer-events: none;
+    /* a gravação da plaquinha real: LR, nome cursivo e CRO, separados do texto por um fio */
+    .placa__gravacao {
+      display: grid; justify-items: center; align-content: center; gap: 18px;
+      grid-column: 2; grid-row: 1; align-self: stretch;
+      position: relative; z-index: 2;
+      margin: 56px 0; padding: 0 clamp(36px, 4vw, 64px);
+      border-left: 1px solid rgba(42, 31, 33, .32);
+      color: #2B1A1C; text-align: center;
     }
-    .placa__foto img { width: 100%; height: 100%; object-fit: contain; object-position: bottom; filter: drop-shadow(0 18px 24px rgba(68, 16, 30, .22)); }
+    .placa__gravacao .mono { height: 104px; }
+    .placa__gravacao .assinatura { width: min(100%, 300px); }
+    .placa__gravacao-cro { font: 600 12px/1.4 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: #3A1B21; }
+    /* com a gravação ao lado, o LR pequeno acima do título sairia repetido */
+    .placa:has(.placa__gravacao) .placa__mono { display: none; }
   }
 
   /* =========================================================================

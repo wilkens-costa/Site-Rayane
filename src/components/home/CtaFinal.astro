@@ -1,13 +1,13 @@
 ---
 /**
- * CTA final da home: a plaquinha dourada em tamanho de placa. A partir de 1024 px a Dra. de beca,
- * com o cachorrinho, sai da placa (outra foto e outra pose: a hero não se repete).
+ * CTA final da home: a plaquinha dourada em tamanho de placa. A partir de 1024 px a coluna
+ * da direita reproduz a gravação da plaquinha real (LR, nome cursivo, CRO), separada por um fio.
  */
-import { Picture } from 'astro:assets';
 import Placa from '../Placa.astro';
 import BotaoAgendar from '../BotaoAgendar.astro';
+import Monograma from '../Monograma.astro';
+import NomeCursivo from '../NomeCursivo.astro';
 import { site } from '../../data/site';
-import formatura from '../../assets/img/formatura-placa.webp';
 ---
 
 <section class="cta" id="contato" aria-labelledby="cta-titulo">
@@ -19,17 +19,11 @@ import formatura from '../../assets/img/formatura-placa.webp';
         <BotaoAgendar variante="bordo" cta="final" id="cta-final" principal />
         <a class="cta__tel" href={site.telefoneLink}><span>ou ligue</span><strong>{site.telefoneExibicao}</strong></a>
       </div>
-      <figure class="placa__foto" slot="foto">
-        <Picture
-          src={formatura}
-          formats={['avif', 'webp']}
-          fallbackFormat="webp"
-          widths={[560, 900]}
-          sizes="460px"
-          quality={82}
-          alt="Dra. Luzia Rayane na formatura, de beca e capelo, sorrindo com o cachorrinho no colo"
-        />
-      </figure>
+      <div class="placa__gravacao" slot="lateral" aria-hidden="true">
+        <Monograma />
+        <NomeCursivo />
+        <span class="placa__gravacao-cro">Cirurgiã-dentista | {site.cro}</span>
+      </div>
     </Placa>
   </div>
 </section>
