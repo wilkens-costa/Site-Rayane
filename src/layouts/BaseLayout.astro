@@ -33,6 +33,7 @@ const {
   barraCta = 'barra',
   barraMensagem = 'vimPeloSite',
 } = Astro.props;
+const indexavel = pagina !== 'outra';
 const canonical = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '/'), site.url).href;
 const ogImage = new URL(site.ogImage, site.url).href;
 ---
@@ -56,14 +57,14 @@ const ogImage = new URL(site.ogImage, site.url).href;
 
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {indexavel && <link rel="canonical" href={canonical} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="theme-color" content="#44101E" />
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={site.nome} />
-    <meta property="og:url" content={canonical} />
+    {indexavel && <meta property="og:url" content={canonical} />}
     <meta property="og:title" content={ogTitle} />
     <meta property="og:description" content={ogDescription} />
     <meta property="og:image" content={ogImage} />
@@ -80,7 +81,6 @@ const ogImage = new URL(site.ogImage, site.url).href;
   </head>
 
   <body>
-    <SpriteSvg />
     <a class="pular" href="#conteudo">Pular para o conteúdo</a>
     <Header pagina={pagina} />
 
@@ -90,6 +90,8 @@ const ogImage = new URL(site.ogImage, site.url).href;
 
     <Footer pagina={pagina} />
     <BarraCta cta={barraCta} mensagem={barraMensagem} />
+    <!-- Sprite da marca no fim: não atrasa a descoberta da foto principal -->
+    <SpriteSvg />
 
     <script>
       import '../scripts/reveal';

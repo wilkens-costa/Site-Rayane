@@ -14,19 +14,29 @@ import { waLink } from '../../lib/whatsapp';
 import fotoDra from '../../assets/img/dra-luzia-hero.webp';
 import consultorio from '../../assets/img/consultorio-blur.webp';
 
-// Fundo desfocado do consultório (800 px no celular, 1600 px no desktop), AVIF com WebP de reserva
+// Fundo desfocado do consultório (800 px no celular, 1600 px no desktop).
+// `simples` (só WebP) é a base; `conjunto` (AVIF + WebP via image-set) entra onde houver suporte.
 const fundo = async (width: number) => {
   const [avif, webp] = await Promise.all([
     getImage({ src: consultorio, width, format: 'avif', quality: 50 }),
     getImage({ src: consultorio, width, format: 'webp', quality: 60 }),
   ]);
-  return `image-set(url('${avif.src}') type('image/avif'), url('${webp.src}') type('image/webp'))`;
+  return {
+    simples: `url('${webp.src}')`,
+    conjunto: `image-set(url('${avif.src}') type('image/avif'), url('${webp.src}') type('image/webp'))`,
+  };
 };
 const [fundoCel, fundoDesk] = await Promise.all([fundo(800), fundo(1600)]);
+const varsFundo = [
+  `--hero-fundo-cel: ${fundoCel.simples}`,
+  `--hero-fundo-cel-set: ${fundoCel.conjunto}`,
+  `--hero-fundo-desk: ${fundoDesk.simples}`,
+  `--hero-fundo-desk-set: ${fundoDesk.conjunto}`,
+].join('; ');
 ---
 
 <section class="hero" aria-labelledby="hero-titulo">
-  <div class="hero__fundo" aria-hidden="true" style={`--hero-fundo-cel: ${fundoCel}; --hero-fundo-desk: ${fundoDesk}`}></div>
+  <div class="hero__fundo" aria-hidden="true" style={varsFundo}></div>
   <div class="hero__palco wrap">
     <figure class="hero__foto">
       <Picture
@@ -34,7 +44,7 @@ const [fundoCel, fundoDesk] = await Promise.all([fundo(800), fundo(1600)]);
         formats={['avif', 'webp']}
         fallbackFormat="webp"
         widths={[960, 1200, 1600]}
-        sizes="(min-width: 980px) 50vw, 116vw"
+        sizes="(min-width: 980px) 50vw, min(116vw, 600px)"
         alt="Dra. Luzia Rayane sorrindo, de jaleco branco bordado com seu nome"
         loading="eager"
         fetchpriority="high"
@@ -188,7 +198,7 @@ const [fundoCel, fundoDesk] = await Promise.all([fundo(800), fundo(1600)]);
       background:
         linear-gradient(98deg, rgba(54, 12, 24, .97) 0%, rgba(73, 16, 35, .93) 28%, rgba(73, 16, 35, .66) 45%, rgba(73, 16, 35, .2) 62%, rgba(73, 16, 35, 0) 78%),
         linear-gradient(0deg, rgba(68, 16, 30, .55) 0%, rgba(68, 16, 30, 0) 22%),
-        linear-gradient(180deg, rgba(40, 8, 17, .66) 0%, rgba(40, 8, 17, .3) 9%, rgba(40, 8, 17, 0) 22%);
+        linear-gradient(180deg, rgba(40, 8, 17, .8) 0%, rgba(40, 8, 17, .45) 10%, rgba(40, 8, 17, 0) 24%);
     }
     .hero__palco { display: flex; align-items: center; min-height: 0; }
     .hero__foto {
@@ -229,6 +239,14 @@ const [fundoCel, fundoDesk] = await Promise.all([fundo(800), fundo(1600)]);
     .hero__acoes { margin-top: 24px; }
     .atalhos { margin-top: 18px; padding-top: 12px; gap: 0; }
     .hero__foto { height: calc(100% - var(--header-h) - 10px); }
+  }
+
+  /* AVIF via image-set() só onde houver suporte a type(); a base acima usa WebP simples */
+  @supports (background-image: image-set(url('x.webp') type('image/webp'))) {
+    .hero__fundo { background-image: var(--hero-fundo-cel-set); }
+    @media (min-width: 980px), (min-width: 700px) and (max-height: 560px) and (orientation: landscape) {
+      .hero__fundo { background-image: var(--hero-fundo-desk-set); }
+    }
   }
 
   /* Movimento da hero: só transform (sem opacidade) para não atrasar o LCP */

@@ -15,7 +15,7 @@ npm run preview   # serve o build localmente
 
 ## Estrutura
 
-Sistema visual "Bordô Atelier" (referência: `auditoria/propostas/final/SISTEMA.md`).
+Sistema visual "Bordô Atelier" (referência: `docs/SISTEMA.md`).
 
 ```
 src/

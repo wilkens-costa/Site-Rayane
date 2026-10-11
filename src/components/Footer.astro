@@ -3,7 +3,7 @@
 import Monograma from './Monograma.astro';
 import NomeCursivo from './NomeCursivo.astro';
 import { site } from '../data/site';
-import { waLink } from '../lib/whatsapp';
+import { waLink, waLinkDev } from '../lib/whatsapp';
 
 interface Props {
   pagina: 'home' | 'sobre' | 'outra';
@@ -83,7 +83,7 @@ const ano = new Date().getFullYear();
         > · <span class="nw">© {ano}</span>
       </p>
       <p class="rodape__credito">
-        <a href={`https://wa.me/${site.dev.whatsapp}`} target="_blank" rel="noopener noreferrer" data-cta="credito-site"
+        <a href={waLinkDev()} target="_blank" rel="noopener noreferrer" data-cta="credito-site"
           >Site por {site.dev.nome}</a
         >
       </p>

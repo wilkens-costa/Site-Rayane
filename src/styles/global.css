@@ -1,6 +1,6 @@
 /* =========================================================================
    Sistema "Bordô Atelier" — tokens, base, tipografia, botões e links.
-   Fonte: auditoria/propostas/final/SISTEMA.md (blocos 1 a 4 da home final).
+   Fonte: docs/SISTEMA.md (blocos 1 a 4 da home final).
    O CSS de cada seção fica no próprio componente (<style is:global>, classes BEM).
    ========================================================================= */
 
@@ -32,8 +32,6 @@
   --sans: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
 
   /* Espaço (escala de 4/8) */
-  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 24px;
-  --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px;
 
   /* Raios */
   --r-placa: 14px;   /* plaquinha, caixas com fio interno */
@@ -185,7 +183,7 @@ body, body *, body *::before, body *::after { font-variant-numeric: lining-nums 
 
 /* Link com seta (secundário) */
 .link-seta {
-  display: inline-flex; align-items: center; gap: 10px; min-height: 44px;
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px; min-width: 44px;
   font: 500 16px/1.25 var(--sans); text-decoration: none;
   color: var(--bordo);
 }

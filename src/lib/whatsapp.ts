@@ -4,7 +4,7 @@ const ola = 'Olá, Dra. Luzia! Vim pelo site';
 
 /**
  * Mensagens pré-preenchidas do WhatsApp. Cada caminho até o WhatsApp tem a sua,
- * para a Dra. saber de onde a pessoa veio e o que ela quer (ver SISTEMA.md, seção 7).
+ * para a Dra. saber de onde a pessoa veio e o que ela quer (ver docs/SISTEMA.md, seção 7).
  */
 export const mensagens = {
   /** Cabeçalho, menu, hero, CTA final, barra do celular, rodapé, FAQ "Como faço para agendar?", 404 */
@@ -34,6 +34,11 @@ export const mensagens = {
 } as const;
 
 export type Mensagem = keyof typeof mensagens;
+
+/** Link do WhatsApp do desenvolvedor do site (crédito no rodapé; não conta como agendamento). */
+export function waLinkDev(): string {
+  return `https://wa.me/${site.dev.whatsapp}`;
+}
 
 /** Link do WhatsApp da Dra. com a mensagem do contexto. */
 export function waLink(mensagem: Mensagem = 'vimPeloSite'): string {

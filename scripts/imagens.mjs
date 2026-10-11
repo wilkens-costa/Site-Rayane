@@ -1,6 +1,6 @@
 // Gera as imagens-mestre tratadas (duotone, recortes, tratamento quente) em src/assets/img/
 // e a imagem de compartilhamento em public/og/. O Astro gera AVIF/WebP em várias larguras
-// a partir delas no build. Parâmetros: auditoria/propostas/final/SISTEMA.md, seção 6.
+// a partir delas no build. Parâmetros: docs/SISTEMA.md, seção 6.
 // Uso (na raiz do projeto): node scripts/imagens.mjs
 // Só precisa rodar de novo se uma foto de origem mudar.
 import path from 'node:path';
@@ -13,7 +13,7 @@ const origem = (n) => path.join(raiz, n);
 const MESTRE = { quality: 90, smartSubsample: true };
 
 // Origens que não ficam em src/assets/img (marca do cartão e formatura)
-const ASSETS = 'auditoria/propostas/assets';
+const ASSETS = 'assets-fonte';
 
 const VINHO_900 = [0x2a, 0x09, 0x12];
 const CHAMP = [0xb8, 0x98, 0x60];
@@ -104,7 +104,7 @@ const abre = { quente: { sat: 0.92, alpha: 0.1 } };
 await recorte(consulta, { left: 120, top: 40, width: 1080, height: 1350 }, 'sobre-abre.webp', abre);
 await recorte(consulta, { left: 90, top: 250, width: 1110, height: 740 }, 'sobre-abre-mob.webp', abre);
 // SOBRE — galeria: crachá e detalhe do consultório com o tratamento quente
-await recorte('src/assets/img/galeria-cracha.jpg', { left: 0, top: 0, width: 720, height: 1280 }, 'sobre-cracha.webp', { quente: true });
+await recorte('src/assets/img/galeria-cracha.jpg', { left: 0, top: 260, width: 720, height: 760 }, 'sobre-cracha.webp', { quente: true });
 await recorte('src/assets/img/galeria-consultorio.webp', { left: 1090, top: 0, width: 467, height: 360 }, 'sobre-sala.webp', {
   quente: true,
   nitidez: 0.6,
