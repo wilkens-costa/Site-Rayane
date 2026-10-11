@@ -1,27 +1,20 @@
-// Animação de entrada das seções (substitui o GSAP/ScrollTrigger).
-// Os elementos com [data-reveal] só ficam ocultos via CSS quando o <html> tem a classe .js,
-// então o conteúdo continua visível se este script falhar.
-const elements = document.querySelectorAll<HTMLElement>('[data-reveal]');
+// Revelação suave ao rolar. Os elementos com [data-revela] só ficam ocultos via CSS quando o
+// <html> tem a classe .js e o movimento é permitido, então o conteúdo continua visível sem JS.
+// A classe .is-visivel fica no elemento (a plaquinha usa para o brilho atravessar uma vez).
+const alvos = document.querySelectorAll<HTMLElement>('[data-revela]');
 
 if ('IntersectionObserver' in window) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        const el = entry.target as HTMLElement;
-        el.classList.add('is-visible');
-        observer.unobserve(el);
-        // Ao fim da entrada, devolve o elemento ao CSS normal (ex.: efeitos de hover)
-        window.setTimeout(() => {
-          el.removeAttribute('data-reveal');
-          el.classList.remove('is-visible');
-        }, 1600);
+  const io = new IntersectionObserver(
+    (entradas) => {
+      for (const e of entradas) {
+        if (!e.isIntersecting) continue;
+        e.target.classList.add('is-visivel');
+        io.unobserve(e.target);
       }
     },
-    // equivale ao "start: top 80%" do ScrollTrigger
-    { rootMargin: '0px 0px -20% 0px' },
+    { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
   );
-  elements.forEach((el) => observer.observe(el));
+  alvos.forEach((el) => io.observe(el));
 } else {
-  elements.forEach((el) => el.classList.add('is-visible'));
+  alvos.forEach((el) => el.classList.add('is-visivel'));
 }

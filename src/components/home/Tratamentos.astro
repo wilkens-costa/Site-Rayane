@@ -1,228 +1,137 @@
 ---
-import Icon from '../Icon.astro';
+/**
+ * Tratamentos: título grande + lista editorial 01–07. Cada linha é um link para o WhatsApp
+ * com a mensagem do tratamento (o link do h3 se estica sobre a linha inteira).
+ * "Perguntar" com o glifo do WhatsApp em bordô: sempre visível no toque, no hover com mouse.
+ */
+import Icone from '../Icone.astro';
+import { tratamentos, ctaTratamento } from '../../data/tratamentos';
 import { waLink } from '../../lib/whatsapp';
 ---
 
-<section class="tratamentos section-padding" id="tratamentos">
-    <div class="tratamentos__container">
-        <div class="section-title">
-            <h2>Nossos <span>Tratamentos</span></h2>
-            <p>Do check-up à estética do sorriso, cuidado para você e para a sua família.</p>
-        </div>
+<section class="trat" id="tratamentos" aria-labelledby="trat-titulo">
+  <div class="wrap">
+    <h2 class="trat__titulo" id="trat-titulo" data-revela>Da prevenção ao <em>clareamento</em>.</h2>
+    <div class="trat__grid">
+      <div class="trat__intro" data-revela>
+        <p class="corpo">
+          Tudo começa por uma avaliação. Indico só o que faz sentido para o seu caso, explico o porquê e você decide, no seu ritmo, o
+          que fazer e quando.
+        </p>
+        <p class="trat__ajuda">
+          Não sabe por onde começar?
+          <a class="link-seta" href={waLink('duvidaTratamento')} target="_blank" rel="noopener noreferrer" data-cta="trat-duvida"
+            ><span>Conte o que você sente</span><Icone nome="seta" /></a
+          >
+        </p>
+      </div>
 
-        <div class="tratamentos__carousel-wrapper">
-            <div class="tratamentos__grid">
-                <div class="tratamento-card" data-reveal>
-                    <Icon name="solar:users-group-rounded-bold-duotone" />
-                    <h3>Atendimento adulto e infantil</h3>
-                    <p>Cuidado acolhedor e seguro para a saúde bucal de toda a sua família.</p>
-                </div>
-                <div class="tratamento-card" data-reveal>
-                    <Icon name="solar:magic-stick-3-bold-duotone" />
-                    <h3>Clareamento</h3>
-                    <p>De consultório ou caseiro supervisionado, indicado na avaliação e com acompanhamento da sensibilidade.</p>
-                </div>
-                <div class="tratamento-card" data-reveal>
-                    <Icon name="mdi:tooth-outline" />
-                    <h3>Restaurações</h3>
-                    <p>Troque restaurações escuras ou quebradas por resina da cor do seu dente.</p>
-                </div>
-                <div class="tratamento-card" data-reveal>
-                    <Icon name="solar:star-fall-bold-duotone" />
-                    <h3>Facetas de resina</h3>
-                    <p>Ajustam cor, forma e pequenos espaços entre os dentes, com resultado natural.</p>
-                </div>
-                <div class="tratamento-card" data-reveal>
-                    <Icon name="mdi:tooth-outline" />
-                    <h3>Cirurgia</h3>
-                    <p>Extrações e pequenas cirurgias com planejamento cuidadoso e foco no seu conforto.</p>
-                </div>
-                <div class="tratamento-card" data-reveal>
-                    <Icon name="solar:medical-kit-bold-duotone" />
-                    <h3>Urgência odontológica</h3>
-                    <p>Dor, dente quebrado ou inchaço? Chame no WhatsApp para ver o primeiro horário disponível.</p>
-                </div>
-            </div>
-        </div>
+      <ol class="trat__lista" role="list" data-lista-wa>
+        {
+          tratamentos.map((t) => (
+            <li class="trat__item" data-revela>
+              <span class="trat__num" aria-hidden="true">
+                {t.num}
+              </span>
+              <h3>
+                <a href={waLink(t.mensagem)} target="_blank" rel="noopener noreferrer" data-cta={ctaTratamento(t)}>
+                  <span class="trat__nome">{t.nome}</span><span class="sr-only">{t.urgente ? ': falar agora no WhatsApp' : ': perguntar no WhatsApp'}</span>
+                </a>
+              </h3>
+              <p>{t.descricao}</p>
+              <span class:list={['trat__ask', { 'trat__ask--urgente': t.urgente }]} aria-hidden="true">
+                <Icone nome="wa" />
+                {t.urgente ? 'Falar agora' : 'Perguntar'}
+              </span>
+            </li>
+          ))
+        }
+      </ol>
     </div>
-
-    <!-- CTA após tratamentos -->
-    <div class="tratamentos__cta">
-        <p>Não sabe qual tratamento é ideal para você?</p>
-        <a href={waLink('duvidaTratamentos')} data-cta="tratamentos" target="_blank" rel="noopener noreferrer" class="cta-pill cta-pill--sm">
-            <Icon name="mdi:whatsapp" />
-            Fale com a Dra. Rayane agora
-        </a>
-    </div>
+  </div>
 </section>
 
 <style is:global>
-.tratamento-card:nth-child(2) { --reveal-delay: 0.1s; }
-.tratamento-card:nth-child(3) { --reveal-delay: 0.2s; }
-.tratamento-card:nth-child(4) { --reveal-delay: 0.3s; }
-.tratamento-card:nth-child(5) { --reveal-delay: 0.4s; }
-.tratamento-card:nth-child(6) { --reveal-delay: 0.5s; }
-
-.tratamentos__cta {
-    text-align: center;
-    padding: 1.5rem var(--space-lg) 3rem;
-    background: var(--color-white);
-}
-
-.tratamentos__cta p {
-    color: var(--color-gray-text);
-    font-size: 0.9rem;
-    margin-bottom: 0.75rem;
-}
-
-/* ============================================================
-   TRATAMENTOS SECTION (Mobile First Carousel)
-   ============================================================ */
-.tratamentos {
-    background: var(--color-white);
+  /* =========================================================================
+     12. TRATAMENTOS — título grande + lista editorial 01–07.
+     Cada item abre o WhatsApp com mensagem própria; o glifo + "Perguntar"
+     (da C) deixam isso óbvio, sempre visíveis no celular.
+     ========================================================================= */
+  .trat { background: var(--creme); padding: 88px 0 72px; overflow-x: clip; }
+  .trat__titulo {
+    font-size: clamp(42px, 4vw + 22px, 84px); /* sempre abaixo do H1 da hero */
+    line-height: .98; letter-spacing: -.032em;
+    color: var(--tinta); text-wrap: balance;
+  }
+  .trat__titulo em { color: var(--bordo-claro); }
+  .trat__grid { margin-top: 32px; display: grid; gap: 36px; }
+  .trat__ajuda { margin-top: 22px; display: grid; gap: 2px; color: var(--tinta); font: italic 400 19px/1.4 var(--serif); }
+  .trat__lista { border-top: 1px solid var(--fio); }
+  .trat__item {
     position: relative;
-    z-index: 10;
-    overflow: hidden;
-}
-
-.tratamentos__container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0;
-}
-
-.tratamentos__container .section-title {
-    padding: 0 var(--space-lg);
-    text-align: left;
-}
-
-.tratamentos__carousel-wrapper {
-    position: relative;
-    width: 100%;
-}
-
-/* Mobile: lista (ícone à esquerda, texto à direita) */
-.tratamentos__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-    padding: var(--space-md) var(--space-lg);
-    position: relative;
-    z-index: 1;
-}
-
-.tratamento-card {
-    background: var(--color-creme);
-    border-radius: 16px;
-    padding: 16px;
-    border: 1px solid rgba(122, 27, 41, 0.06);
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto auto;
-    column-gap: 14px;
-    row-gap: 4px;
-    align-items: start;
-    text-align: left;
-    height: auto;
-}
-
-.tratamento-card .icon {
-    grid-row: 1 / span 2;
-}
-
-/* Tablet: grade de 3 colunas com cards verticais */
-@media (min-width: 640px) and (max-width: 1023px) {
-    .tratamentos__grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 16px;
-    }
-
-    .tratamento-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 10px;
-        padding: 20px 16px;
-    }
-}
-
-.tratamento-card .icon {
-    font-size: 1.6rem;
-    color: var(--color-bordo);
-    padding: 8px;
-    background: rgba(122, 27, 41, 0.05);
-    border-radius: 10px;
-    align-self: center;
-    width: 40px;
-    height: 40px;
-    min-height: 40px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.tratamento-card h3 {
-    font-size: 0.98rem;
-    font-weight: 700;
-    color: var(--color-bordo);
-    line-height: 1.25;
-    margin: 0;
-}
-
-.tratamento-card p {
-    font-size: 0.82rem;
-    color: var(--color-gray-text);
-    line-height: 1.45;
-    margin: 0;
-}
-
-@media (min-width: 1024px) {
-    .tratamentos__container .section-title {
-        text-align: center;
-        padding: 0;
-    }
-
-    .tratamentos__grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--space-md);
-        padding: var(--space-lg) 0;
-        justify-content: center;
-    }
-
-    .tratamento-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        flex: 0 0 auto;
-        width: 320px;
-        min-width: 320px;
-        max-width: none;
-        padding: var(--space-xl);
-        border-radius: 24px;
-        gap: var(--space-md);
-    }
-
-    .tratamento-card h3 {
-        font-size: 1.3rem;
-    }
-
-    .tratamento-card p {
-        font-size: 1rem;
-    }
-
-    .tratamento-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(122, 27, 41, 0.06);
-        border-color: rgba(122, 27, 41, 0.15);
-    }
-}
-
-@media (min-width: 768px) {
-    #tratamentos {
-        padding-top: 2.5rem;
-    }
-}
+    display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; column-gap: 12px;
+    padding: 20px 0 22px;
+    border-bottom: 1px solid var(--fio);
+  }
+  .trat__num { grid-row: 1 / span 2; font: italic 400 18px/1.4 var(--serif); color: var(--ouro); padding-top: 2px; transition: color .4s; }
+  .trat__item h3 { grid-column: 2; align-self: center; font-size: 22px; line-height: 1.2; color: var(--tinta); transition: color .4s var(--ease); }
+  .trat__item h3 a { text-decoration: none; color: inherit; }
+  /* o link do h3 se estica sobre a linha inteira. Nenhum ancestral do <a> pode
+     ter transform (viraria o bloco de contenção do ::after e encolheria a área
+     clicável): o deslize do hover fica no span interno .trat__nome */
+  .trat__item h3 a::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+  .trat__nome { display: inline-block; transition: transform .5s var(--ease); }
+  .trat__item h3 a:focus-visible { outline: none; }
+  .trat__item:has(a:focus-visible) { outline: 2px solid var(--foco); outline-offset: 2px; border-radius: 2px; }
+  .trat__item p { grid-column: 2 / -1; margin-top: 8px; color: var(--tinta-2); font-size: 16px; line-height: 1.55; max-width: 32em; }
+  /* "Perguntar" (da C): glifo do WhatsApp na cor da marca — o verde fica só no CTA principal */
+  .trat__ask {
+    grid-column: 3; grid-row: 1; align-self: center;
+    display: inline-flex; align-items: center; gap: 7px;
+    font: 500 14px/1 var(--sans);
+    color: var(--bordo);
+    transition: color .4s var(--ease), opacity .4s var(--ease);
+  }
+  .trat__ask svg { width: 20px; height: 20px; fill: var(--bordo); flex: none; transition: transform .5s var(--ease); }
+  .trat__ask--urgente { font-weight: 600; }
+  /* telas estreitas: glifo sobre o rótulo, para o nome do tratamento respirar */
+  @media (max-width: 479.98px) {
+    .trat__ask { flex-direction: column; gap: 6px; font-size: 13px; min-width: 64px; text-align: center; }
+    .trat__ask svg { width: 22px; height: 22px; }
+  }
+  .trat__item::after {
+    content: ''; position: absolute; left: 0; bottom: -1px; height: 1px; width: 0;
+    background: var(--bordo); transition: width .7s var(--ease);
+  }
+  @media (hover: hover) {
+    .trat__item:hover::after { width: 100%; }
+    .trat__item:hover .trat__num, .trat__item:hover h3 { color: var(--bordo); }
+    /* com mouse, o "Perguntar" aparece no hover/foco (no toque fica sempre visível) */
+    .trat__ask { opacity: 0; }
+    .trat__item:hover .trat__ask, .trat__item:focus-within .trat__ask { opacity: 1; }
+  }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .trat__item:hover .trat__nome { transform: translateX(4px); }
+    .trat__item:hover .trat__ask svg, .trat__item:has(a:focus-visible) .trat__ask svg { transform: rotate(-10deg) scale(1.12); }
+  }
+  @media (min-width: 768px) {
+    .trat { padding: 120px 0 96px; }
+    .trat__grid { margin-top: 48px; }
+    .trat__item { grid-template-columns: 56px minmax(0, 1fr) auto; column-gap: 24px; padding: 26px 0 28px; }
+    .trat__num { font-size: 22px; }
+    .trat__item h3 { font-size: 25px; }
+  }
+  /* Em todas as larguras a linha é empilhada (numeral | nome sobre a descrição | perguntar):
+     em colunas, os nomes longos quebravam e as linhas ficavam com alturas irregulares */
+  @media (min-width: 1024px) {
+    .trat { padding: 160px 0 120px; }
+    .trat__grid { --sangria: calc((100vw - min(var(--max), 100vw - 2 * var(--gutter))) / 2); margin-top: 72px; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(48px, 6vw, 96px); align-items: start; }
+    .trat__intro { position: sticky; top: 128px; padding-top: 30px; }
+    .trat__ajuda { margin-top: 32px; }
+    /* A lista sangra até a borda direita da tela: os fios saem do grid */
+    .trat__lista { margin-right: calc(-1 * var(--sangria)); }
+    .trat__item { padding-right: var(--sangria); }
+    .trat__item h3 { font-size: 28px; }
+    .trat__item p { max-width: 36em; }
+  }
 </style>

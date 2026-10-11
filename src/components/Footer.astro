@@ -1,15 +1,130 @@
 ---
+/** Rodapé: o cartão de visita completo (LR, nome cursivo, CRO), endereço, contato e navegação. */
+import Monograma from './Monograma.astro';
+import NomeCursivo from './NomeCursivo.astro';
 import { site } from '../data/site';
+import { waLink } from '../lib/whatsapp';
 
+interface Props {
+  pagina: 'home' | 'sobre' | 'outra';
+}
+
+const { pagina } = Astro.props;
+const naHome = pagina === 'home';
+const ancora = (id: string) => (naHome ? `#${id}` : `/#${id}`);
+const links = [
+  { href: naHome ? '#sobre' : '/sobre', label: 'Sobre', atual: pagina === 'sobre' },
+  { href: ancora('tratamentos'), label: 'Tratamentos', atual: false },
+  { href: ancora('primeira-consulta'), label: 'Primeira consulta', atual: false },
+  { href: ancora('depoimentos'), label: 'Depoimentos', atual: false },
+];
+const { endereco } = site;
 const ano = new Date().getFullYear();
 ---
 
-<footer class="footer">
-  <div class="footer__bottom">
-    <span class="footer__dev-credit">
-      Desenvolvido por
-      <a href={`https://wa.me/${site.dev.whatsapp}`} target="_blank" rel="noopener noreferrer">{site.dev.nome}</a>
-    </span>
-    <span class="footer__copy">&copy; {ano} {site.nome} &mdash; Todos os direitos reservados</span>
+<footer class="rodape">
+  <div class="wrap">
+    <div class="rodape__grid">
+      <div class="rodape__marca">
+        <Monograma />
+        <NomeCursivo rotulo={site.nome} />
+        <span class="rodape__cro">Cirurgiã-dentista | {site.cro}</span>
+      </div>
+      <div>
+        <h2 class="rodape__t">Onde atendo</h2>
+        <address>
+          {site.clinica}<br />
+          {endereco.rua}<br />
+          {endereco.bairro}, {endereco.cidade} – {endereco.uf}<br />
+          {endereco.cep}<br />
+          <a href={ancora('onde-atendo')}>Como chegar →</a>
+        </address>
+      </div>
+      <div>
+        <h2 class="rodape__t">Contato</h2>
+        <ul class="rodape__contato" role="list">
+          <li>
+            <a href={waLink('vimPeloSite')} target="_blank" rel="noopener noreferrer" data-cta="rodape">WhatsApp</a><span
+              class="sep"
+              aria-hidden="true">·</span
+            ><a href={site.telefoneLink}>Ligar</a>
+          </li>
+          <li><span class="nw">{site.telefoneExibicao}</span></li>
+          {
+            site.instagram && (
+              <li>
+                <a href={`https://instagram.com/${site.instagram}`} target="_blank" rel="noopener noreferrer">
+                  Instagram @{site.instagram}
+                </a>
+              </li>
+            )
+          }
+        </ul>
+      </div>
+      <nav class="rodape__nav" aria-label="Rodapé">
+        <h2 class="rodape__t">Navegar</h2>
+        <ul role="list">
+          {
+            links.map((l) => (
+              <li>
+                <a href={l.href} aria-current={l.atual ? 'page' : undefined}>
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+    <div class="rodape__legal">
+      <p>
+        <span class="nw">{site.nome}</span> · <span class="nw">Cirurgiã-dentista</span> · <span class="nw">Clínica geral</span> · <span
+          class="nw">{site.cro}</span
+        > · <span class="nw">© {ano}</span>
+      </p>
+      <p class="rodape__credito">
+        <a href={`https://wa.me/${site.dev.whatsapp}`} target="_blank" rel="noopener noreferrer" data-cta="credito-site"
+          >Site por {site.dev.nome}</a
+        >
+      </p>
+    </div>
   </div>
 </footer>
+
+<style is:global>
+  /* =========================================================================
+     7. RODAPÉ — o cartão de visita (LR, nome cursivo, CRO)
+     ========================================================================= */
+  .rodape { background: var(--vinho); color: rgba(255, 255, 255, .82); padding: 64px 0 calc(40px + env(safe-area-inset-bottom)); font-size: 16px; --foco: var(--champ-claro); }
+  /* folga para a barra do celular só quando ela existe (com JS) */
+  @media (max-width: 979.98px) { .js .rodape { padding-bottom: calc(110px + env(safe-area-inset-bottom)); } }
+  .rodape__grid { display: grid; gap: 40px; }
+  .rodape__nav { display: none; }
+  .rodape__marca { display: grid; gap: 14px; justify-items: start; }
+  .rodape__marca .mono { height: 64px; color: var(--champ-claro); }
+  .rodape__marca .assinatura { width: 220px; color: #fff; }
+  .rodape__cro { font: 500 12px/1.4 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--champ-claro); }
+  .rodape__t { font: italic 400 18px/1.2 var(--serif); color: var(--champ-claro); margin: 0 0 10px; }
+  .rodape a { text-decoration: none; }
+  .rodape ul a, .rodape address a { display: inline-flex; align-items: center; min-height: 44px; }
+  .rodape__contato li { display: flex; flex-wrap: wrap; align-items: center; column-gap: 8px; }
+  .rodape__contato .sep { color: var(--champ); }
+  .rodape a:hover { color: #fff; text-decoration: underline; text-decoration-color: var(--champ); text-underline-offset: 4px; }
+  .rodape address { line-height: 1.7; }
+  .rodape__legal {
+    margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--fio-champ);
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 24px;
+    font-size: 14px; color: rgba(255, 255, 255, .72);
+  }
+  .rodape__credito a { display: inline-flex; align-items: center; min-height: 44px; color: rgba(255, 255, 255, .72); }
+  @media (min-width: 768px) {
+    .rodape__grid { grid-template-columns: 1fr 1fr; }
+    .rodape__marca { grid-column: 1 / -1; }
+  }
+  @media (min-width: 1024px) {
+    .rodape__nav { display: block; }
+    .rodape { padding: 88px 0 40px; font-size: 15.5px; }
+    .rodape__grid { grid-template-columns: 1.6fr 1fr 1fr 0.8fr; }
+    .rodape__marca { grid-column: auto; }
+  }
+</style>

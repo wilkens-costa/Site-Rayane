@@ -1,0 +1,42 @@
+---
+/**
+ * Botão de agendamento (pílula com o glifo do WhatsApp num círculo branco).
+ * O rótulo padrão é "Agendar avaliação"; o sufixo vai só para leitores de tela.
+ * `principal`: a barra do celular some enquanto este botão está inteiro na tela.
+ * A quebra de linha depois do rótulo de leitor de tela é proposital: o Chrome cria um item
+ * flexível vazio para ela (+12 px de gap), e o botão fica com o mesmo respiro do protótipo.
+ */
+import Icone from './Icone.astro';
+import { waLink, type Mensagem } from '../lib/whatsapp';
+
+interface Props {
+  variante: 'claro' | 'bordo';
+  cta: string;
+  mensagem?: Mensagem;
+  id?: string;
+  principal?: boolean;
+  srSufixo?: string;
+  class?: string;
+}
+
+const {
+  variante,
+  cta,
+  mensagem = 'vimPeloSite',
+  id,
+  principal = false,
+  srSufixo = ' pelo WhatsApp (abre em nova janela)',
+  class: className,
+} = Astro.props;
+---
+
+<a
+  class:list={['btn', `btn--${variante}`, className]}
+  id={id}
+  data-cta={cta}
+  data-cta-principal={principal ? '' : undefined}
+  href={waLink(mensagem)}
+  target="_blank"
+  rel="noopener noreferrer"
+  ><span class="btn__wa" aria-hidden="true"><Icone nome="wa" /></span><slot>Agendar avaliação</slot><span class="sr-only">{srSufixo}</span>
+</a>

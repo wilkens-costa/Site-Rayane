@@ -1,266 +1,124 @@
 ---
+/**
+ * Galeria estática (sem carrossel, sem autoplay). O crachá abre a seção e sangra até a borda;
+ * ao lado, o detalhe do consultório (com a voz de um paciente como legenda) e o bastidor
+ * em tritom da paleta. Todas com o mesmo tratamento quente (scripts/imagens.mjs).
+ */
 import { Picture } from 'astro:assets';
-import Icon from '../Icon.astro';
-import { waLink } from '../../lib/whatsapp';
-import consultorio from '../../assets/img/galeria-consultorio.webp';
-import consulta from '../../assets/img/galeria-consulta.webp';
-import retrato from '../../assets/img/galeria-retrato.webp';
-import cracha from '../../assets/img/galeria-cracha.jpg';
+import { site } from '../../data/site';
+import { depoimentos } from '../../data/depoimentos';
+import cracha from '../../assets/img/sobre-cracha.webp';
+import sala from '../../assets/img/sobre-sala.webp';
+import bastidor from '../../assets/img/sobre-bastidor.webp';
 
-const fotos = [
-  { src: consultorio, alt: 'Dra. Luzia Rayane sorrindo no consultório' },
-  { src: consulta, alt: 'Dra. Luzia Rayane conversando durante uma consulta' },
-  { src: retrato, alt: 'Retrato da Dra. Luzia Rayane com fotopolimerizador' },
-  { src: cracha, alt: 'Crachá dourado com o monograma LR da Dra. Luzia Rayane' },
-];
+const voz = depoimentos.rafael;
 ---
 
-<section class="galeria section-padding" id="galeria">
-    <div class="container">
-        <div class="galeria__header">
-            <div class="galeria__icon">
-                <Icon name="solar:camera-bold-duotone" />
-            </div>
-            <h2>Galeria</h2>
-            <p>Um pouco do meu dia a dia no consultório.</p>
-        </div>
-        <div class="galeria__wrapper">
-            <button class="galeria__btn galeria__btn--prev" id="galeriaPrev" aria-label="Foto anterior">
-                <Icon name="solar:alt-arrow-left-bold" />
-            </button>
-            <div class="galeria__track" id="galeriaTrack">
-                {
-                    fotos.map((foto) => (
-                        <div class="galeria__item">
-                            <Picture
-                                src={foto.src}
-                                formats={['avif', 'webp']}
-                                fallbackFormat="webp"
-                                widths={[480, 720, 960]}
-                                sizes="(min-width: 768px) 25vw, 50vw"
-                                quality={70}
-                                alt={foto.alt}
-                                loading="lazy"
-                                decoding="async"
-                            />
-                        </div>
-                    ))
-                }
-            </div>
-            <button class="galeria__btn galeria__btn--next" id="galeriaNext" aria-label="Próxima foto">
-                <Icon name="solar:alt-arrow-right-bold" />
-            </button>
-        </div>
-        <div class="galeria__cta">
-            <a href={waLink('agendar')} data-cta="galeria"
-                target="_blank" rel="noopener noreferrer" class="galeria__cta-btn">
-                <Icon name="mdi:whatsapp" class="galeria__cta-icon" />
-                Quero agendar uma consulta
-            </a>
-        </div>
+<section class="galeria" id="galeria" aria-labelledby="galeria-titulo">
+  <div class="wrap galeria__grid">
+    <figure class="galeria__cracha" data-revela>
+      <div class="galeria__quadro">
+        <Picture
+          src={cracha}
+          formats={['avif', 'webp']}
+          fallbackFormat="webp"
+          widths={[480, 720]}
+          sizes="(min-width: 768px) 45vw, 100vw"
+          quality={78}
+          alt="Crachá dourado com o monograma LR e o nome da Dra. Luzia Rayane, preso ao blazer"
+        />
+      </div>
+      <figcaption>A plaquinha de todo dia.</figcaption>
+    </figure>
+    <div class="galeria__lado">
+      <h2 class="galeria__titulo" id="galeria-titulo" data-revela>Detalhes de todo dia.</h2>
+      <div class="galeria__par">
+        <figure class="galeria__sala" data-revela>
+          <div class="galeria__quadro">
+            <Picture
+              src={sala}
+              formats={['avif', 'webp']}
+              fallbackFormat="webp"
+              quality={86}
+              alt={`Detalhe do consultório na ${site.clinica}: prateleira iluminada com uma escultura de dente e um certificado emoldurado`}
+            />
+          </div>
+          <figcaption class="galeria__voz">
+            <q>{voz.trecho}</q><span><span class="citacao__nome">{voz.nome}</span><span class="citacao__fonte">via Google</span></span>
+          </figcaption>
+        </figure>
+        <figure class="galeria__bastidor" data-revela data-revela-atraso="1">
+          <div class="galeria__quadro">
+            <Picture
+              src={bastidor}
+              formats={['avif', 'webp']}
+              fallbackFormat="webp"
+              widths={[520, 800, 1140]}
+              sizes="(min-width: 1024px) 260px, (min-width: 768px) 22vw, 45vw"
+              quality={80}
+              alt="Retrato artístico da Dra. Luzia Rayane, em tons de vinho e dourado, com uma luz acesa ao lado do rosto"
+            />
+          </div>
+          <figcaption>Nos bastidores.</figcaption>
+        </figure>
+      </div>
     </div>
+  </div>
 </section>
 
 <style is:global>
-.galeria__cta-icon {
-    font-size: 1.2rem;
-}
-
-/* ── GALERIA — Multi-photo side by side ── */
-.galeria {
-    background: var(--color-creme);
-    overflow: hidden;
-}
-.galeria__header {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-.galeria__icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
-    background: rgba(122,27,41,0.08);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6rem;
-    color: var(--color-bordo);
-    margin-bottom: 0.75rem;
-}
-.galeria__header h2 {
-    font-family: var(--font-serif);
-    font-size: clamp(2rem, 4vw, 3rem);
-    color: var(--color-bordo);
-    margin-bottom: 0.5rem;
-}
-.galeria__header p {
-    color: var(--color-gray-text);
-    font-size: 0.95rem;
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-/* Wrapper com setas nas laterais */
-.galeria__wrapper {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* Track com scroll horizontal */
-.galeria__track {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding: 0.5rem 0;
-    scrollbar-width: none;
-}
-.galeria__track::-webkit-scrollbar {
-    display: none;
-}
-
-/* Cada foto */
-.galeria__item {
-    flex: 0 0 calc(25% - 0.75rem);
-    scroll-snap-align: start;
-    border-radius: 20px;
-    overflow: hidden;
-    aspect-ratio: 3 / 4;
-    position: relative;
-    background: var(--color-white);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-.galeria__item:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 36px rgba(122,27,41,0.15);
-}
-.galeria__item picture {
-    display: contents;
-}
-.galeria__item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-    display: block;
-}
-
-/* Botões laterais */
-.galeria__btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: none;
-    background: var(--color-white);
-    color: var(--color-bordo);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-    font-size: 1.3rem;
-    z-index: 10;
-}
-.galeria__btn:hover {
-    background: var(--color-bordo);
-    color: var(--color-white);
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 6px 24px rgba(122,27,41,0.25);
-}
-.galeria__btn--prev {
-    left: -24px;
-}
-.galeria__btn--next {
-    right: -24px;
-}
-
-/* CTA abaixo da galeria */
-.galeria__cta {
-    text-align: center;
-    margin-top: 2.5rem;
-}
-.galeria__cta-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--color-bordo);
-    color: var(--color-white);
-    padding: 1rem 2.2rem;
-    border-radius: 999px;
-    font-weight: 700;
-    font-size: 0.95rem;
-    text-decoration: none;
-    box-shadow: 0 8px 24px rgba(122,27,41,0.25);
-    transition: all 0.3s;
-    border: none;
-    cursor: pointer;
-}
-.galeria__cta-btn:hover {
-    background: var(--color-bordo-light);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(122,27,41,0.35);
-}
-
-/* Mobile: 2 fotos visíveis */
-@media (max-width: 767px) {
-    .galeria__item {
-        flex: 0 0 calc(50% - 0.5rem);
-        border-radius: 16px;
-    }
-    .galeria__btn {
-        width: 38px;
-        height: 38px;
-        font-size: 1rem;
-    }
-    .galeria__btn--prev { left: 8px; }
-    .galeria__btn--next { right: 8px; }
-}
-/* Tablet: 3 fotos */
-@media (min-width: 768px) and (max-width: 1023px) {
-    .galeria__item {
-        flex: 0 0 calc(33.333% - 0.67rem);
-    }
-}
-</style>
-
-<script>
-  const track = document.getElementById('galeriaTrack');
-  const prevBtn = document.getElementById('galeriaPrev');
-  const nextBtn = document.getElementById('galeriaNext');
-
-  if (track && prevBtn && nextBtn) {
-    const reduzirMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const passo = () => {
-      const item = track.querySelector<HTMLElement>('.galeria__item');
-      return item ? item.offsetWidth + 16 : 300; // largura + gap
-    };
-    const avancar = () => {
-      const fim = track.scrollWidth - track.clientWidth;
-      if (track.scrollLeft >= fim - 10) track.scrollTo({ left: 0, behavior: 'smooth' });
-      else track.scrollBy({ left: passo(), behavior: 'smooth' });
-    };
-
-    prevBtn.addEventListener('click', () => track.scrollBy({ left: -passo(), behavior: 'smooth' }));
-    nextBtn.addEventListener('click', () => track.scrollBy({ left: passo(), behavior: 'smooth' }));
-
-    // Autoplay a cada 3,5 s, pausado com o mouse sobre a galeria ou com "reduzir movimento"
-    let timer: number | undefined;
-    const iniciar = () => {
-      window.clearInterval(timer);
-      if (!reduzirMovimento) timer = window.setInterval(avancar, 3500);
-    };
-    const parar = () => window.clearInterval(timer);
-    const wrapper = track.closest('.galeria__wrapper');
-    wrapper?.addEventListener('mouseenter', parar);
-    wrapper?.addEventListener('mouseleave', iniciar);
-    iniciar();
+  /* =========================================================================
+     11. GALERIA — estática (sem carrossel, sem autoplay). A foto abre a
+     seção: o crachá sangra até a borda (no celular, de ponta a ponta; do
+     tablet em diante, até a borda esquerda). O título é uma legenda curta.
+     Todas com o mesmo tratamento quente; o bastidor em tritom da paleta.
+     ========================================================================= */
+  .galeria { background: var(--creme); padding: 0 0 88px; overflow-x: clip; }
+  .galeria__grid { display: grid; }
+  .galeria__cracha { margin-inline: calc((100% - 100vw) / 2); }
+  .galeria__quadro { position: relative; overflow: hidden; background: #CFC6C2; aspect-ratio: 4 / 3.4; }
+  .galeria__quadro img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .galeria__cracha img { object-position: 56% 50%; }
+  .galeria figcaption { margin-top: 12px; font: italic 400 17px/1.35 var(--serif); color: var(--tinta-2); text-wrap: balance; }
+  .galeria__cracha figcaption { padding-inline: max(var(--gutter), env(safe-area-inset-left)); }
+  .galeria__titulo { margin-top: 44px; font-size: clamp(32px, 8.6vw, 44px); line-height: 1.06; letter-spacing: -.02em; color: var(--tinta); text-wrap: balance; max-width: 12em; }
+  .galeria__par { margin-top: 28px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+  /* fotos menores em moldura de placa (raio 14 + filete) */
+  .galeria__par .galeria__quadro { border-radius: var(--r-placa); }
+  .galeria__par .galeria__quadro::after {
+    content: ''; position: absolute; inset: 8px; pointer-events: none; z-index: 1;
+    border: 1px solid rgba(255, 255, 255, .5); border-radius: 8px;
   }
-</script>
+  .galeria__sala .galeria__quadro { aspect-ratio: 467 / 400; }
+  .galeria__sala img { object-position: 50% 40%; }
+  .galeria__bastidor { margin-top: 56px; }
+  .galeria__bastidor .galeria__quadro { aspect-ratio: 4 / 5; background: var(--vinho-900); }
+  .galeria__bastidor .galeria__quadro::after { border-color: rgba(232, 216, 160, .45); }
+  .galeria__bastidor img { object-position: 55% 30%; }
+  /* a voz de um paciente, como legenda do consultório */
+  .galeria__voz { display: grid; gap: 8px; }
+  .galeria__voz q { font: italic 400 19px/1.35 var(--serif); color: var(--tinta); quotes: '“' '”'; }
+  .galeria__voz span { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+  @media (min-width: 768px) {
+    .galeria { padding: 128px 0 128px; }
+    .galeria__grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: clamp(32px, 5vw, 80px); align-items: stretch; }
+    /* sangra até a borda esquerda da janela (o excesso da barra de rolagem é cortado pelo overflow-x: clip) */
+    .galeria__cracha { margin: 0 0 0 calc((min(var(--max), 100vw - 2 * var(--gutter)) - 100vw) / 2); display: flex; flex-direction: column; }
+    .galeria__cracha .galeria__quadro { flex: 1; aspect-ratio: auto; min-height: 420px; }
+    .galeria__cracha figcaption { padding-inline: 0; margin-left: calc((100vw - min(var(--max), 100vw - 2 * var(--gutter))) / 2); }
+    .galeria__titulo { margin-top: 0; font-size: clamp(34px, 3.6vw, 44px); }
+    .galeria__par { margin-top: 36px; gap: 20px; }
+    .galeria__bastidor { margin-top: 72px; }
+  }
+  @media (min-width: 1024px) {
+    .galeria { padding: 152px 0 160px; }
+    .galeria__par { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: 28px; margin-top: 44px; }
+    .galeria__sala { max-width: 360px; }
+    .galeria__bastidor { margin-top: 128px; }
+    .galeria__voz q { font-size: 21px; }
+  }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .galeria__quadro img { transition: transform 1.2s var(--ease); }
+    .galeria__quadro:hover img { transform: scale(1.025); }
+  }
+</style>

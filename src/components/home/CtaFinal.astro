@@ -1,0 +1,35 @@
+---
+/**
+ * CTA final da home: a plaquinha dourada em tamanho de placa. A partir de 1024 px a Dra. de beca,
+ * com o cachorrinho, sai da placa (outra foto e outra pose: a hero não se repete).
+ */
+import { Picture } from 'astro:assets';
+import Placa from '../Placa.astro';
+import BotaoAgendar from '../BotaoAgendar.astro';
+import { site } from '../../data/site';
+import formatura from '../../assets/img/formatura-placa.webp';
+---
+
+<section class="cta" id="contato" aria-labelledby="cta-titulo">
+  <div class="wrap">
+    <Placa>
+      <h2 id="cta-titulo">Vamos marcar sua <em>avaliação</em>?</h2>
+      <p class="placa__texto">Me chame no WhatsApp, conte o que você precisa e marcamos quando for bom para você.</p>
+      <div class="placa__acoes">
+        <BotaoAgendar variante="bordo" cta="final" id="cta-final" principal />
+        <a class="cta__tel" href={site.telefoneLink}><span>ou ligue</span><strong>{site.telefoneExibicao}</strong></a>
+      </div>
+      <figure class="placa__foto" slot="foto">
+        <Picture
+          src={formatura}
+          formats={['avif', 'webp']}
+          fallbackFormat="webp"
+          widths={[560, 900]}
+          sizes="460px"
+          quality={82}
+          alt="Dra. Luzia Rayane na formatura, de beca e capelo, sorrindo com o cachorrinho no colo"
+        />
+      </figure>
+    </Placa>
+  </div>
+</section>

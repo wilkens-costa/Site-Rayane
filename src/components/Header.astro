@@ -1,71 +1,264 @@
 ---
-import { Image } from 'astro:assets';
-import Icon from './Icon.astro';
-import logo from '../assets/img/logo-lr.png';
+/**
+ * Cabeçalho: lockup da marca (LR + nome + CRO), navegação a partir de 1200 px e menu
+ * em <details> no celular (funciona sem JS). Transparente sobre a abertura; com JS,
+ * a partir de 980 px fica fixo e vira creme sólido ao rolar.
+ */
+import Monograma from './Monograma.astro';
+import BotaoAgendar from './BotaoAgendar.astro';
+import Icone from './Icone.astro';
+import { site } from '../data/site';
 import { waLink } from '../lib/whatsapp';
 
 interface Props {
-  page: 'home' | 'sobre' | 'outra';
+  pagina: 'home' | 'sobre' | 'outra';
 }
 
-const { page } = Astro.props;
+const { pagina } = Astro.props;
+const naHome = pagina === 'home';
+// Na home os links são âncoras da própria página; nas outras, levam à home
+const ancora = (id: string) => (naHome ? `#${id}` : `/#${id}`);
 const links = [
-  { href: '/#hero', label: 'Início', ativo: false },
-  { href: '/#tratamentos', label: 'Tratamentos', ativo: false },
-  { href: '/sobre', label: 'Sobre', ativo: page === 'sobre' },
-  { href: '/#contato', label: 'Contato', ativo: false },
+  { href: naHome ? '#sobre' : '/sobre', label: 'Sobre', atual: pagina === 'sobre' },
+  { href: ancora('tratamentos'), label: 'Tratamentos', atual: false },
+  { href: ancora('primeira-consulta'), label: 'Primeira consulta', atual: false },
+  { href: ancora('depoimentos'), label: 'Depoimentos', atual: false },
+  { href: ancora('onde-atendo'), label: 'Onde atendo', atual: false },
 ];
+const { endereco } = site;
 ---
 
-<nav class="nav" aria-label="Navegação principal">
-  <div class="nav__inner">
-    <a href="/" class="nav__brand" aria-label="Dra. Luzia Rayane, página inicial">
-      <Image src={logo} alt="Logo LR" class="nav__logo-img" width={48} height={48} densities={[1, 2, 3]} loading="eager" />
+<header class="header" id="topo">
+  <div class="wrap header__in">
+    <a
+      class="lockup"
+      href={naHome ? '#topo' : '/'}
+      aria-label={`${site.nome}, cirurgiã-dentista, ${site.cro}. ${naHome ? 'Voltar ao início' : 'Página inicial'}`}
+    >
+      <Monograma />
+      <span class="lockup__fio" aria-hidden="true"></span>
+      <span class="lockup__txt" aria-hidden="true">
+        <span class="lockup__nome">{site.nome}</span>
+        <span class="lockup__cro"><span class="so-desk">Cirurgiã-dentista · </span>{site.cro}</span>
+      </span>
     </a>
 
-    {
-      page === 'sobre' && (
-        <div class="cert-card">
-          <div class="cert-card__icon">
-            <Icon name="solar:diploma-verified-bold-duotone" />
-          </div>
-          <div class="cert-card__text">
-            <span class="cert-card__title">Cirurgiã-Dentista</span>
-            <span class="cert-card__sub">CRO CE 16735</span>
-          </div>
-        </div>
-      )
-    }
+    <nav class="nav" aria-label="Principal">
+      <ul>
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href} aria-current={l.atual ? 'page' : undefined}>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <a class="header__cta" data-cta="header" href={waLink('vimPeloSite')} target="_blank" rel="noopener noreferrer"
+      >Agendar avaliação<span class="sr-only"> pelo WhatsApp (abre em nova janela)</span></a
+    >
 
-    <ul class="nav__links-desktop">
-      {
-        links.map((l) => (
-          <li>
-            <a href={l.href} class="nav__link-desktop" aria-current={l.ativo ? 'page' : undefined}>
-              {l.label}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-
-    <div class="nav__cta-desktop">
-      <a
-        href={waLink(page === 'sobre' ? 'agendarCurta' : 'agendar')}
-        class="nav__cta"
-        target="_blank"
-        rel="noopener noreferrer"
-        data-cta="cabecalho"
+    <details class="menu">
+      <summary
+        ><span class="menu__abrir">Menu</span><span class="menu__fechar">Fechar</span><span class="menu__icone" aria-hidden="true"
+        ></span></summary
       >
-        <Icon name="mdi:whatsapp" />
-        Agendar Consulta
-      </a>
-    </div>
+      <div class="menu__painel">
+        <nav aria-label="Menu">
+          <ol role="list">
+            {
+              links.map((l) => (
+                <li>
+                  <a href={l.href} aria-current={l.atual ? 'page' : undefined}>
+                    {l.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ol>
+        </nav>
+        <div class="menu__rodape">
+          <BotaoAgendar variante="bordo" cta="menu" />
+          <p class="menu__urgencia">
+            Com dor ou dente quebrado?
+            <a class="link-seta" data-cta="menu-urgencia" href={waLink('urgencia')} target="_blank" rel="noopener noreferrer"
+              ><span>Fale agora</span><Icone nome="seta" /></a
+            >
+          </p>
+          <p>
+            {site.clinica} · {endereco.rua} – {endereco.bairro}, {endereco.cidade} · <span class="nw">{site.cro}</span>
+          </p>
+        </div>
+      </div>
+    </details>
   </div>
-</nav>
+</header>
+
+<script>
+  // Cabeçalho sólido depois de rolar (o CSS só aplica a partir de 980 px)
+  const header = document.querySelector<HTMLElement>('.header');
+  if (header) {
+    let agendado = false;
+    const aoRolar = () => {
+      header.classList.toggle('is-solido', window.scrollY > 40);
+      agendado = false;
+    };
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (agendado) return;
+        agendado = true;
+        requestAnimationFrame(aoRolar);
+      },
+      { passive: true },
+    );
+    aoRolar();
+  }
+
+  // Menu do celular: o resto da página fica inerte enquanto ele está aberto
+  const menu = document.querySelector<HTMLDetailsElement>('.menu');
+  if (menu) {
+    const fora = [document.querySelector('main'), document.querySelector('.rodape'), document.getElementById('barra')];
+    menu.addEventListener('toggle', () => {
+      fora.forEach((el) => {
+        if (el instanceof HTMLElement) el.inert = menu.open;
+      });
+    });
+    menu.addEventListener('click', (e) => {
+      if (e.target instanceof Element && e.target.closest('.menu__painel a')) menu.open = false;
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menu.open) {
+        menu.open = false;
+        menu.querySelector('summary')?.focus();
+      }
+    });
+    // A partir de 1200 px o menu vira navegação: fecha para não deixar a página inerte
+    const largo = window.matchMedia('(min-width: 1200px)');
+    largo.addEventListener('change', (m) => {
+      if (m.matches && menu.open) menu.open = false;
+    });
+  }
+</script>
 
 <style is:global>
-  .nav__link-desktop[aria-current='page'] {
-    color: var(--color-bordo);
+  /* =========================================================================
+     5. CABEÇALHO — transparente sobre a hero, creme e fixo ao rolar (desktop)
+     ========================================================================= */
+  .header {
+    position: absolute; inset: 0 0 auto; z-index: 40;
+    height: var(--header-h);
+    color: #fff;
+    --foco: var(--champ-claro);
+    transition: background-color .35s var(--ease), color .35s var(--ease), box-shadow .35s var(--ease);
   }
+  .header__in { height: 100%; display: flex; align-items: center; gap: 24px; }
+  .lockup { display: flex; align-items: center; gap: 12px; text-decoration: none; margin-right: auto; min-height: 44px; }
+  .lockup .mono { height: 44px; color: var(--champ-claro); transition: color .35s; }
+  .lockup__fio { width: 1px; height: 30px; background: var(--fio-champ); flex: none; }
+  .lockup__txt { display: grid; gap: 5px; }
+  .lockup__nome { font: 500 17px/1 var(--serif); letter-spacing: .005em; white-space: nowrap; }
+  .lockup__cro { font: 500 12px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; opacity: .9; white-space: nowrap; }
+  .nav { display: none; }
+  .header__cta { display: none; }
+
+  /* Menu do celular (funciona sem JS: <details>) */
+  .menu summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: center; gap: 10px;
+    min-height: 44px; min-width: 44px; padding: 0 2px 0 8px;
+    font: 500 14px/1 var(--sans); letter-spacing: .04em;
+    text-shadow: 0 1px 12px rgba(40, 8, 17, .55);
+  }
+  .menu summary::-webkit-details-marker { display: none; }
+  .menu__icone { width: 22px; height: 9px; position: relative; }
+  .menu__icone::before, .menu__icone::after { content: ''; position: absolute; left: 0; right: 0; height: 1.5px; background: currentColor; transition: transform .35s var(--ease); }
+  .menu__icone::before { top: 0; }
+  .menu__icone::after { bottom: 0; left: 6px; }
+  .menu[open] .menu__icone::before { transform: translateY(3.75px) rotate(45deg); }
+  .menu[open] .menu__icone::after { transform: translateY(-3.75px) rotate(-45deg); left: 0; }
+  .menu__fechar { display: none; }
+  .menu[open] .menu__abrir { display: none; }
+  .menu[open] .menu__fechar { display: inline; }
+  .menu[open] summary { text-shadow: none; }
+  .menu__painel {
+    position: fixed; inset: var(--header-h) 0 0; z-index: -1;
+    background: var(--creme); color: var(--tinta);
+    padding: 28px var(--gutter) 40px;
+    display: flex; flex-direction: column;
+    overflow-y: auto;
+    --foco: var(--bordo);
+  }
+  .menu__painel ol { counter-reset: m; border-top: 1px solid var(--fio); }
+  .menu__painel li { border-bottom: 1px solid var(--fio); }
+  .menu__painel li a {
+    display: flex; align-items: baseline; gap: 16px; padding: 16px 0;
+    font: 400 28px/1.1 var(--serif); text-decoration: none; color: var(--tinta);
+  }
+  .menu__painel li a::before { counter-increment: m; content: '0' counter(m); font: italic 400 16px/1 var(--serif); color: var(--ouro); width: 26px; }
+  .menu__rodape { margin-top: auto; padding-top: 32px; display: grid; gap: 18px; }
+  .menu__rodape .btn { width: 100%; }
+  .menu__urgencia { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; font-size: 16px; color: var(--tinta-2); }
+  .menu__urgencia .link-seta { min-height: 44px; font-weight: 600; }
+  .menu__rodape p { font-size: 14px; color: var(--tinta-2); letter-spacing: .01em; }
+  /* Telas muito estreitas (320–374, ex.: iPhone com "Zoom de tela"): a palavra "Menu"
+     vira só rótulo de leitor de tela, para o cabeçalho caber sem rolagem lateral */
+  @media (max-width: 374.98px) {
+    .header__in { gap: 8px; }
+    .menu__abrir, .menu__fechar { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .menu summary { justify-content: center; padding: 0; }
+  }
+  .header:has(.menu[open]) { background: var(--creme); color: var(--tinta); box-shadow: 0 1px 0 var(--fio); --foco: var(--bordo); }
+  .header:has(.menu[open]) .lockup .mono { color: var(--bordo); }
+  .header:has(.menu[open]) .lockup__fio { background: rgba(138, 106, 47, .45); }
+  .header:has(.menu[open]) .lockup__cro { color: var(--tinta-2); opacity: 1; }
+  body:has(.menu[open]) { overflow: hidden; }
+
+  @media (min-width: 980px) {
+    /* Fixo só com JS: sem JS ele nunca fica sólido, então rola junto com a hero */
+    .js .header { position: fixed; }
+    .lockup { gap: 14px; }
+    .lockup .mono { height: 48px; }
+    .lockup__fio { height: 36px; }
+    .lockup__nome { font-size: 19px; }
+    .lockup__cro { letter-spacing: .14em; }
+    .nav ul { display: flex; gap: clamp(18px, 2.2vw, 34px); }
+    .nav a {
+      display: inline-flex; align-items: center; min-height: 44px;
+      font: 500 14.5px/1 var(--sans); text-decoration: none; opacity: .88; white-space: nowrap;
+      background: linear-gradient(var(--champ), var(--champ)) 50% calc(100% - 8px) / 0 1px no-repeat;
+      transition: opacity .3s, background-size .4s var(--ease);
+    }
+    .nav a:hover { opacity: 1; background-size: 100% 1px; }
+    .header__cta {
+      display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px;
+      border: 1px solid rgba(232, 216, 160, .55); border-radius: var(--r-pilula);
+      font: 600 14px/1 var(--sans); text-decoration: none; margin-left: 8px; white-space: nowrap;
+      transition: background-color .3s, color .3s, border-color .3s;
+    }
+    .header__cta:hover { background: var(--creme); color: var(--bordo); border-color: var(--creme); }
+    .header.is-solido { background: var(--creme); color: var(--tinta); box-shadow: 0 1px 0 var(--fio); --foco: var(--bordo); }
+    .header.is-solido .lockup .mono { color: var(--bordo); }
+    .header.is-solido .lockup__fio { background: rgba(138, 106, 47, .45); }
+    .header.is-solido .lockup__cro { color: var(--tinta-2); opacity: 1; }
+    .header.is-solido .header__cta { background: var(--bordo); border-color: var(--bordo); color: #fff; }
+    .header.is-solido .header__cta:hover { background: var(--bordo-claro); border-color: var(--bordo-claro); }
+    .header.is-solido .menu summary { text-shadow: none; }
+    .menu summary { margin-left: 4px; }
+  }
+  @media (min-width: 1200px) {
+    .nav { display: block; }
+    .menu { display: none; }
+  }
+
+  /* =========================================================================
+     5b. CABEÇALHO — item ativo (páginas internas). Acréscimo ao bloco 5:
+     na home nenhum item fica ativo; aqui "Sobre" leva aria-current="page".
+     ========================================================================= */
+  @media (min-width: 980px) {
+    .nav a[aria-current="page"] { opacity: 1; background-size: 100% 1px; }
+  }
+  .menu__painel li a[aria-current="page"] { color: var(--bordo); font-style: italic; }
 </style>

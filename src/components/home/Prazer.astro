@@ -1,0 +1,69 @@
+---
+/**
+ * "Prazer, sou a Luzia": carta de apresentação tipográfica (rosé). No desktop o título
+ * fica parado à esquerda enquanto a carta rola. A primeira voz de paciente chega cedo.
+ */
+import Icone from '../Icone.astro';
+import { depoimentos } from '../../data/depoimentos';
+
+const voz = depoimentos.jonasDuvidas;
+---
+
+<section class="sobre" id="sobre" aria-labelledby="sobre-titulo">
+  <div class="wrap sobre__grid">
+    <div class="sobre__cab">
+      <p class="eyebrow" data-revela>Quem cuida de você</p>
+      <h2 class="sobre__titulo" id="sobre-titulo" data-revela>Prazer,<br /> sou a&nbsp;<em>Luzia</em>.</h2>
+    </div>
+    <div class="sobre__texto">
+      <p class="sobre__lede" data-revela>Antes de olhar seus dentes, eu quero ouvir você.</p>
+      <p class="corpo" data-revela>
+        Quero entender o que te incomoda, o que você espera e o que te deixa com receio no dentista. Só então explico, com calma,
+        cada opção. Atendo adultos e crianças, respeitando o seu tempo e os seus limites.
+      </p>
+      <a class="historia" href="/sobre" data-revela>
+        <span class="historia__k">Da formatura ao consultório</span>
+        <span class="link-seta"><span>Conhecer minha história</span><Icone nome="seta" /></span>
+      </a>
+      <figure class="voz" data-revela>
+        <blockquote><p>“{voz.trecho}”</p></blockquote>
+        <figcaption><span class="citacao__nome">{voz.nome}</span><span class="citacao__fonte">via Google</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  /* =========================================================================
+     10. PRAZER, SOU A LUZIA — carta de apresentação (rosé, tipográfica).
+     A foto dela vem logo a seguir, na faixa "A escuta".
+     ========================================================================= */
+  .sobre { background: var(--rose); padding: 72px 0 80px; }
+  .sobre__grid { display: grid; gap: 0; }
+  .sobre__texto { margin-top: 28px; }
+  .sobre__titulo { margin-top: 20px; font-size: clamp(40px, 10.8vw, 60px); line-height: 1; letter-spacing: -.026em; color: var(--tinta); }
+  .sobre__titulo em { color: var(--bordo-claro); }
+  .sobre__lede { font: 400 23px/1.38 var(--serif); color: var(--bordo); max-width: 21em; text-wrap: balance; }
+  .sobre__texto .corpo { margin-top: 18px; }
+  /* "Conhecer minha história": link tipográfico (a foto da formatura agora sai da plaquinha, no fim) */
+  .historia { margin-top: 22px; display: grid; gap: 0; text-decoration: none; color: inherit; width: fit-content; }
+  .historia__k { font: italic 400 17px/1.35 var(--serif); color: var(--tinta-2); }
+  /* Primeira voz de paciente, cedo na página (prova social antes dos 2.000 px no celular).
+     A base de .voz está no global.css */
+  @media (min-width: 768px) {
+    .sobre { padding: 96px 0 104px; }
+    .sobre__lede { font-size: 27px; }
+  }
+  @media (min-width: 1024px) {
+    .sobre { padding: 128px 0 136px; }
+    /* título à esquerda (fica parado enquanto o texto rola), carta à direita */
+    .sobre__grid { grid-template-columns: minmax(0, 5fr) minmax(0, 1fr) minmax(0, 6fr); align-items: start; }
+    .sobre__cab { grid-column: 1; position: sticky; top: 128px; }
+    .sobre__texto { grid-column: 3; margin-top: 46px; }
+    .sobre__titulo { font-size: clamp(64px, 5.6vw, 84px); }
+    .sobre__lede { font-size: 30px; }
+    .sobre__texto .corpo { margin-top: 22px; }
+    .historia { margin-top: 26px; }
+    .sobre .voz { margin-top: 44px; max-width: 470px; }
+  }
+</style>

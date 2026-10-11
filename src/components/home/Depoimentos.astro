@@ -1,529 +1,87 @@
 ---
-import Icon from '../Icon.astro';
-import { waLink } from '../../lib/whatsapp';
+/** Depoimentos: a citação grande faz o papel de título; duas vozes menores ao lado. */
+import Estrelas from '../Estrelas.astro';
+import Icone from '../Icone.astro';
+import { site } from '../../data/site';
+import { depoimentos } from '../../data/depoimentos';
+
+const grande = depoimentos.gizelle;
+const menores = [depoimentos.gustavo, depoimentos.david];
 ---
 
-<section class="depoimentos section-padding" id="depoimentos">
-    <div class="depoimentos__container">
-        <div class="section-title" data-reveal>
-            <h2>O que dizem <span>nossos pacientes</span></h2>
-            <p>A confiança de quem já viveu a experiência de um atendimento humanizado e transformador.</p>
-        </div>
-
-        <div class="depoimentos__carousel" id="depoimentosCarousel" data-reveal>
-            <div class="depoimentos__track" id="depoimentosTrack">
-
-                <!-- Slide 1 -->
-                <div class="depoimentos__slide">
-                    <div class="depoimento-card">
-                        <div class="depoimento-card__stars">
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                        </div>
-                        <p class="depoimento-card__quote">
-                            Fui atendido com excelência! A doutora foi
-                            extremamente atenciosa e paciente comigo. Ela analisou todo o meu histórico, zelou pelo
-                            meu atendimento e foi muito cuidadosa com a minha segurança durante todo o tempo. Para
-                            completar, o ambiente de atendimento é simplesmente impecável! Recomendo!
-                        </p>
-                        <div class="depoimento-card__author">
-                            <div class="depoimento-card__avatar">GN</div>
-                            <div>
-                                <div class="depoimento-card__name">Gustavo Nícolas</div>
-                                <div class="depoimento-card__label">Paciente</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 2 -->
-                <div class="depoimentos__slide">
-                    <div class="depoimento-card">
-                        <div class="depoimento-card__stars">
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                        </div>
-                        <p class="depoimento-card__quote">
-                            Nota 10! O grande diferencial foi o atendimento humanizado e personalizado. Em outras
-                            experiências, sentia que recebia um tratamento genérico, mas a doutora analisou meu caso
-                            com exclusividade e fez eu me sentir único do começo ao fim.
-                        </p>
-                        <div class="depoimento-card__author">
-                            <div class="depoimento-card__avatar">DW</div>
-                            <div>
-                                <div class="depoimento-card__name">David Wilderson</div>
-                                <div class="depoimento-card__label">Paciente</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 3 -->
-                <div class="depoimentos__slide">
-                    <div class="depoimento-card">
-                        <div class="depoimento-card__stars">
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                        </div>
-                        <p class="depoimento-card__quote">
-                            Uma Profissional extremamente capacitada! Dra Luzia Rayane Gomes, é dedicada, atenciosa!
-                            Cuidou do meu sorriso com muito carinho e profissionalismo! Super indico!
-                        </p>
-                        <div class="depoimento-card__author">
-                            <div class="depoimento-card__avatar">NJ</div>
-                            <div>
-                                <div class="depoimento-card__name">Nara Jerônimo</div>
-                                <div class="depoimento-card__label">Paciente</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 4 -->
-                <div class="depoimentos__slide">
-                    <div class="depoimento-card">
-                        <div class="depoimento-card__stars">
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                        </div>
-                        <p class="depoimento-card__quote">
-                            Atendimento impecável, ambiente e utensílios higienizados, atenção aos detalhes
-                            excepcional.
-                        </p>
-                        <div class="depoimento-card__author">
-                            <div class="depoimento-card__avatar">RS</div>
-                            <div>
-                                <div class="depoimento-card__name">Rafael Souza</div>
-                                <div class="depoimento-card__label">Paciente</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 5 -->
-                <div class="depoimentos__slide">
-                    <div class="depoimento-card">
-                        <div class="depoimento-card__stars">
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                        </div>
-                        <p class="depoimento-card__quote">
-                            Minha dentista!! Extremamente capacitada e com melhor atendimento possível. Com a Dra.
-                            Luzia Rayane, eu me sinto muito a vontade em tirar minhas dúvidas. Profissional que tem
-                            um cuidado especial pelos pacientes. Recomendo demais!!
-                        </p>
-                        <div class="depoimento-card__author">
-                            <div class="depoimento-card__avatar">JF</div>
-                            <div>
-                                <div class="depoimento-card__name">Jonas Fran&#231;a</div>
-                                <div class="depoimento-card__label">Paciente</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 6 -->
-                <div class="depoimentos__slide">
-                    <div class="depoimento-card">
-                        <div class="depoimento-card__stars">
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                            <Icon name="solar:star-bold" />
-                        </div>
-                        <p class="depoimento-card__quote">
-                            Excelente profissional! Fui atendida com muito cuidado e paciência. Dra. Rayane é
-                            extremamente competente e detalhista. Atendimento diferenciado, ambiente super
-                            higienizado e muito profissionalismo.
-                        </p>
-                        <div class="depoimento-card__author">
-                            <div class="depoimento-card__avatar">GC</div>
-                            <div>
-                                <div class="depoimento-card__name">Gizelle Cruz</div>
-                                <div class="depoimento-card__label">Paciente</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Carousel Arrows -->
-            <div class="depoimentos__nav">
-                <button class="depoimentos__btn" id="depoimentosPrev" aria-label="Depoimento anterior"><Icon name="solar:alt-arrow-left-linear" /></button>
-                <button class="depoimentos__btn" id="depoimentosNext" aria-label="Próximo depoimento"><Icon name="solar:alt-arrow-right-linear" /></button>
-            </div>
-        </div>
-
-        <!-- Dots -->
-        <div class="depoimentos__dots" id="depoimentosDots">
-            <button class="depoimentos__dot is-active" data-index="0" aria-label="Depoimento 1" aria-current="true"></button>
-            <button class="depoimentos__dot" data-index="1" aria-label="Depoimento 2"></button>
-            <button class="depoimentos__dot" data-index="2" aria-label="Depoimento 3"></button>
-            <button class="depoimentos__dot" data-index="3" aria-label="Depoimento 4"></button>
-            <button class="depoimentos__dot" data-index="4" aria-label="Depoimento 5"></button>
-            <button class="depoimentos__dot" data-index="5" aria-label="Depoimento 6"></button>
-        </div>
+<section class="depo" id="depoimentos" aria-labelledby="depo-titulo">
+  <div class="wrap">
+    <h2 class="sr-only" id="depo-titulo">Depoimentos de pacientes</h2>
+    <div class="depo__topo">
+      <p class="eyebrow" data-revela>Quem já sentou na cadeira</p>
+      <p class="depo__nota" data-revela>
+        <strong>{site.notaGoogle}</strong>
+        <Estrelas rotulo="cinco estrelas" />
+        <a class="link-seta" data-link="avaliacoes-google" href={site.avaliacoesGoogle} target="_blank" rel="noopener noreferrer"
+          ><span>Ver avaliações no Google</span><Icone nome="seta" /></a
+        >
+      </p>
     </div>
 
-    <!-- CTA após depoimentos -->
-    <div class="depoimentos__cta">
-        <a href={waLink('agendar')} data-cta="depoimentos" target="_blank" rel="noopener noreferrer" class="cta-pill">
-            <Icon name="mdi:whatsapp" />
-            Agendar pelo WhatsApp
-        </a>
+    <div class="depo__corpo">
+      <figure class="citacao citacao--grande" data-revela>
+        <blockquote><p>“{grande.trecho}”</p></blockquote>
+        <figcaption><span class="citacao__nome">{grande.nome}</span><span class="citacao__fonte">via Google</span></figcaption>
+      </figure>
+
+      <div class="depo__par">
+        {
+          menores.map((d, i) => (
+            <figure class="citacao citacao--menor" data-revela data-revela-atraso={i > 0 ? String(i) : undefined}>
+              <blockquote>
+                <p>“{d.trecho}”</p>
+              </blockquote>
+              <figcaption>
+                <span class="citacao__nome">{d.nome}</span>
+                <span class="citacao__fonte">via Google</span>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
     </div>
+  </div>
 </section>
 
 <style is:global>
-.depoimentos__cta {
-    text-align: center;
-    padding: 2rem var(--space-lg) 0.5rem;
-}
-
-/* ============================================================
-   DEPOIMENTOS SECTION (Elegant Carousel)
-   ============================================================ */
-.depoimentos {
-    background: var(--color-creme);
-    position: relative;
-    z-index: 10;
-    overflow: hidden;
-}
-
-.depoimentos__container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 var(--space-lg);
-    position: relative;
-}
-
-/* Carousel Track */
-.depoimentos__carousel {
-    position: relative;
-    overflow: hidden;
-    border-radius: 24px;
-}
-
-.depoimentos__track {
-    display: flex;
-    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: transform;
-}
-
-.depoimentos__slide {
-    flex: 0 0 100%;
-    min-width: 100%;
-    padding: 0 4px;
-    box-sizing: border-box;
-    display: flex;
-}
-
-.depoimentos__slide > .depoimento-card {
-    flex: 1;
-}
-
-/* Card */
-.depoimento-card {
-    background: var(--color-white);
-    border-radius: 24px;
-    padding: 1.8rem 1.5rem;
-    border: 1px solid rgba(122, 27, 41, 0.06);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    position: relative;
-    overflow: hidden;
-}
-
-.depoimento-card::before {
-    content: '\201C';
-    position: absolute;
-    top: -10px;
-    right: 16px;
-    font-family: var(--font-serif);
-    font-size: 7rem;
-    line-height: 1;
-    color: rgba(122, 27, 41, 0.04);
-    pointer-events: none;
-}
-
-/* Stars */
-.depoimento-card__stars {
-    display: flex;
-    gap: 3px;
-}
-
-.depoimento-card__stars .icon {
-    font-size: 1.1rem;
-    color: #F5A623;
-    filter: drop-shadow(0 1px 2px rgba(245, 166, 35, 0.3));
-}
-
-/* Quote */
-.depoimento-card__quote {
-    font-size: 0.92rem;
-    line-height: 1.65;
-    color: var(--color-gray-text);
-    font-weight: 400;
-    font-style: italic;
-    flex-grow: 1;
-}
-
-/* Author */
-.depoimento-card__author {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-top: var(--space-sm);
-    border-top: 1px solid rgba(122, 27, 41, 0.06);
-}
-
-.depoimento-card__avatar {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--color-bordo), var(--color-bordo-light));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-white);
-    font-family: var(--font-serif);
-    font-size: 1rem;
-    font-weight: 700;
-    flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(122, 27, 41, 0.2);
-}
-
-.depoimento-card__name {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--color-bordo);
-    line-height: 1.2;
-}
-
-.depoimento-card__label {
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: rgba(122, 27, 41, 0.45);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-}
-
-/* Dots */
-.depoimentos__dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: var(--space-lg);
-}
-
-.depoimentos__dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(122, 27, 41, 0.15);
-    border: none;
-    cursor: pointer;
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    padding: 0;
-}
-
-.depoimentos__dot.is-active {
-    background: var(--color-bordo);
-    width: 24px;
-    border-radius: 999px;
-    box-shadow: 0 2px 8px rgba(122, 27, 41, 0.3);
-}
-
-/* Navigation Arrows */
-.depoimentos__nav {
-    position: absolute;
-    top: 50%;
-    left: -4px;
-    right: -4px;
-    transform: translateY(-50%);
-    display: flex;
-    justify-content: space-between;
-    pointer-events: none;
-    z-index: 10;
-}
-
-.depoimentos__btn {
-    pointer-events: auto;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(122, 27, 41, 0.1);
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-bordo);
-    font-size: 1.2rem;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-}
-
-.depoimentos__btn:active {
-    transform: scale(0.9);
-    background: var(--color-bordo);
-    color: var(--color-white);
-}
-
-@media (min-width: 768px) {
-    .depoimento-card {
-        padding: 2.5rem 2rem;
-    }
-
-    .depoimento-card__quote {
-        font-size: 1.05rem;
-        line-height: 1.7;
-    }
-
-    .depoimentos__btn {
-        width: 42px;
-        height: 42px;
-        font-size: 1.2rem;
-    }
-
-    .depoimentos__nav {
-        left: -12px;
-        right: -12px;
-    }
-}
-
-@media (min-width: 1024px) {
-    .depoimentos__container {
-        max-width: 820px;
-    }
-
-    .depoimento-card {
-        padding: 3rem 2.5rem;
-        border-radius: 28px;
-    }
-
-    .depoimento-card__quote {
-        font-size: 1.1rem;
-    }
-
-    .depoimento-card__avatar {
-        width: 48px;
-        height: 48px;
-        font-size: 1.1rem;
-    }
-
-    /* On desktop: pull nav out of the carousel overflow context */
-    .depoimentos__nav {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        right: 0;
-        transform: translateY(calc(-50% - 24px));
-        /* offset to align with card center, above dots */
-        display: flex;
-        justify-content: space-between;
-        pointer-events: none;
-        z-index: 20;
-        padding: 0 calc(var(--space-lg) - 28px);
-    }
-
-    .depoimentos__btn {
-        width: 52px;
-        height: 52px;
-        font-size: 1.3rem;
-        background: rgba(255, 255, 255, 0.55);
-        backdrop-filter: blur(12px) saturate(1.4);
-        -webkit-backdrop-filter: blur(12px) saturate(1.4);
-        border: 1px solid rgba(122, 27, 41, 0.12);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
-        color: var(--color-bordo);
-        transition: background 0.3s, transform 0.25s, box-shadow 0.3s;
-    }
-
-    .depoimentos__btn:hover {
-        background: rgba(255, 255, 255, 0.82);
-        box-shadow: 0 8px 28px rgba(122, 27, 41, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-        transform: scale(1.08);
-    }
-
-    .depoimentos__btn:active {
-        transform: scale(0.94);
-        background: rgba(122, 27, 41, 0.08);
-        color: var(--color-bordo);
-    }
-}
-</style>
-
-<script>
-  const track = document.getElementById('depoimentosTrack');
-  const carousel = document.getElementById('depoimentosCarousel');
-  const dots = document.querySelectorAll<HTMLButtonElement>('#depoimentosDots .depoimentos__dot');
-  const prevBtn = document.getElementById('depoimentosPrev');
-  const nextBtn = document.getElementById('depoimentosNext');
-
-  if (track && carousel && prevBtn && nextBtn) {
-    const total = track.querySelectorAll('.depoimentos__slide').length;
-    const reduzirMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let current = 0;
-    let timer: number | undefined;
-    let startX = 0;
-
-    const goTo = (index: number) => {
-      current = ((index % total) + total) % total;
-      track.style.transform = `translateX(-${current * 100}%)`;
-      dots.forEach((dot, i) => {
-        const ativo = i === current;
-        dot.classList.toggle('is-active', ativo);
-        if (ativo) dot.setAttribute('aria-current', 'true');
-        else dot.removeAttribute('aria-current');
-      });
-    };
-
-    const stopAuto = () => window.clearInterval(timer);
-    const startAuto = () => {
-      stopAuto();
-      if (!reduzirMovimento) timer = window.setInterval(() => goTo(current + 1), 5000);
-    };
-
-    nextBtn.addEventListener('click', () => { goTo(current + 1); startAuto(); });
-    prevBtn.addEventListener('click', () => { goTo(current - 1); startAuto(); });
-    dots.forEach((dot) => {
-      dot.addEventListener('click', () => { goTo(Number(dot.dataset.index)); startAuto(); });
-    });
-
-    carousel.addEventListener('touchstart', (e) => { startX = e.touches[0]?.clientX ?? 0; stopAuto(); }, { passive: true });
-    carousel.addEventListener('touchend', (e) => {
-      const diff = startX - (e.changedTouches[0]?.clientX ?? startX);
-      if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
-      startAuto();
-    }, { passive: true });
-
-    // Pausa enquanto o mouse está sobre o carrossel ou a aba está em segundo plano
-    carousel.addEventListener('mouseenter', stopAuto);
-    carousel.addEventListener('mouseleave', startAuto);
-    document.addEventListener('visibilitychange', () => (document.hidden ? stopAuto() : startAuto()));
-
-    startAuto();
+  /* =========================================================================
+     14. DEPOIMENTOS — a citação grande faz o papel de título
+     ========================================================================= */
+  .depo { background: var(--creme); padding: 96px 0 80px; }
+  .depo__topo { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 40px; }
+  .depo__nota { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; font-size: 16px; color: var(--tinta-2); }
+  .depo__nota strong { font: 500 30px/1 var(--serif); color: var(--bordo); }
+  .depo__nota .estrelas svg { fill: var(--ouro); }
+  .citacao--grande { margin-top: 44px; }
+  .citacao--grande blockquote p {
+    font: italic 400 clamp(40px, 7vw + 14px, 84px)/1.1 var(--serif);
+    color: var(--tinta); letter-spacing: -.02em;
+    max-width: 11em; text-wrap: balance;
   }
-</script>
+  .citacao--grande figcaption { margin-top: 28px; }
+  .depo__par { margin-top: 56px; display: grid; gap: 0; border-top: 1px solid var(--fio); }
+  .citacao--menor { padding: 28px 0; border-bottom: 1px solid var(--fio); }
+  .citacao--menor blockquote p { font: 400 19px/1.5 var(--serif); color: var(--tinta); }
+  .citacao--menor figcaption { margin-top: 16px; }
+  @media (min-width: 768px) {
+    .depo { padding: 128px 0 112px; }
+    .depo__par { grid-template-columns: 1fr 1fr; gap: 0 56px; border-top: 0; margin-top: 80px; }
+    .citacao--menor { border-top: 1px solid var(--fio); border-bottom: 0; padding: 30px 0 0; }
+  }
+  @media (min-width: 1024px) {
+    .depo { padding: 152px 0 144px; }
+    /* citação-título à esquerda, as duas vozes empilhadas à direita */
+    .depo__corpo { margin-top: 80px; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 1fr) minmax(0, 4fr); align-items: start; }
+    .citacao--grande { margin-top: 0; grid-column: 1; }
+    .citacao--grande blockquote p { font-size: clamp(60px, 5.4vw, 84px); }
+    .depo__par { grid-column: 3; grid-template-columns: 1fr; margin: 0; gap: 0; }
+    .citacao--menor { padding: 28px 0 32px; }
+    .citacao--menor + .citacao--menor { margin-top: 8px; }
+    .citacao--menor blockquote p { font-size: 20px; }
+  }
+</style>

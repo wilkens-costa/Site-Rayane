@@ -1,0 +1,24 @@
+---
+/**
+ * "Dra. Luzia Rayane" na cursiva do cartão (símbolo #nome do SpriteSvg), pintado com currentColor.
+ * Com `rotulo`, vira imagem com nome acessível; sem ele, é decorativo.
+ */
+interface Props {
+  rotulo?: string;
+  class?: string;
+}
+
+const { rotulo, class: className } = Astro.props;
+---
+
+{
+  rotulo ? (
+    <svg class:list={['assinatura', className]} role="img" aria-label={rotulo}>
+      <use href="#nome" />
+    </svg>
+  ) : (
+    <svg class:list={['assinatura', className]} aria-hidden="true" focusable="false">
+      <use href="#nome" />
+    </svg>
+  )
+}

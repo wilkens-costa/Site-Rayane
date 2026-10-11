@@ -1,0 +1,10 @@
+---
+/** Monograma "LR" cursivo do cartão (símbolo #lr do SpriteSvg), pintado com currentColor. */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg class:list={['mono', className]} aria-hidden="true" focusable="false"><use href="#lr" /></svg>

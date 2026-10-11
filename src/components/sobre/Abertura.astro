@@ -1,0 +1,167 @@
+---
+/**
+ * Abertura do Sobre (vinho do cartão): a consulta conversada em cor (não repete a hero da home),
+ * o nome em romano, a linha do cartão e a frase da escuta. Do tablet em diante a foto passa da
+ * borda e entra na filosofia; o LR aparece só como relevo, cortado pela margem direita.
+ */
+import BotaoAgendar from '../BotaoAgendar.astro';
+import Estrelas from '../Estrelas.astro';
+import ImagemArte from '../ImagemArte.astro';
+import Monograma from '../Monograma.astro';
+import { site } from '../../data/site';
+import abreDesk from '../../assets/img/sobre-abre.webp';
+import abreCel from '../../assets/img/sobre-abre-mob.webp';
+---
+
+<section class="abre" aria-labelledby="abre-titulo">
+  <div class="abre__relevo" aria-hidden="true"><Monograma /></div>
+  <div class="wrap abre__grid">
+    <nav class="trilha" aria-label="Você está aqui">
+      <ol>
+        <li><a href="/">Início</a></li>
+        <li><span aria-current="page">Sobre</span></li>
+      </ol>
+    </nav>
+    <figure class="abre__foto">
+      <ImagemArte
+        fontes={[
+          {
+            src: abreDesk,
+            media: '(min-width: 768px)',
+            widths: [600, 900, 1080],
+            sizes: '(min-width: 1240px) 530px, (min-width: 1024px) 40vw, 43vw',
+          },
+          { src: abreCel, widths: [600, 900, 1110], sizes: 'calc(100vw - 40px)' },
+        ]}
+        quality={82}
+        loading="eager"
+        fetchpriority="high"
+        alt="Dra. Luzia Rayane sorri enquanto conversa com uma paciente, que aparece de costas; ela segura uma caneta e um tablet"
+      />
+    </figure>
+    <div class="abre__texto">
+      <h1 id="abre-titulo">{site.nome}</h1>
+      <p class="abre__cro">
+        <span>Cirurgiã-dentista</span><span class="abre__ponto" aria-hidden="true">|</span><span class="nw">{site.cro}</span>
+      </p>
+      <p class="abre__lede">“Acredito que todo tratamento começa por ouvir quem está na cadeira.”</p>
+      <p class="abre__corpo">Atendo adultos e crianças na {site.clinica}, no {site.endereco.bairro}, em {site.endereco.cidade}.</p>
+      <div class="abre__acoes">
+        <BotaoAgendar variante="claro" cta="sobre-hero" mensagem="sobre" id="cta-hero" principal />
+        <p class="prova">
+          <Estrelas />
+          <span class="nw"><strong>{site.notaGoogle}</strong> no Google</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  /* =========================================================================
+     8. ABERTURA — a consulta conversada, em cor (outra foto e outra pose: a
+     hero da home não se repete), o nome em romano, a linha do cartão e a
+     frase da escuta. Vinho do cartão. Do tablet em diante a foto passa da
+     borda e entra na filosofia; o LR do cartão aparece só como relevo, cortado
+     pela margem direita, atrás da foto (nunca atrás do texto).
+     ========================================================================= */
+  .abre {
+    position: relative; z-index: 2;
+    background: var(--vinho-cartao); color: #fff;
+    padding: calc(var(--header-h) + 4px) 0 56px;
+    --foco: var(--champ-claro);
+  }
+  .abre__relevo { display: none; }
+  .abre__grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr); }
+
+  /* Trilha (breadcrumb). No celular fica só para leitor de tela (o JSON-LD também a
+     descreve) e reaparece se receber o foco pelo teclado */
+  .trilha ol { display: flex; flex-wrap: wrap; align-items: center; gap: 0 12px; font: 400 14px/1.3 var(--sans); color: rgba(255, 255, 255, .8); }
+  .trilha li { display: inline-flex; align-items: center; gap: 12px; }
+  .trilha li + li::before { content: ''; width: 16px; height: 1px; background: var(--champ); flex: none; }
+  .trilha a { display: inline-flex; align-items: center; min-height: 44px; color: var(--champ-claro); text-decoration: underline; text-decoration-color: var(--fio-champ); text-underline-offset: 4px; }
+  .trilha a:hover { text-decoration-color: var(--champ-claro); }
+  .trilha [aria-current] { color: #fff; }
+  @media (max-width: 767.98px) {
+    .trilha:not(:focus-within) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  }
+
+  /* Foto em moldura de placa (filete interno, como a plaquinha e o mapa) */
+  .abre__foto {
+    position: relative; margin-top: 8px;
+    border-radius: var(--r-placa); overflow: hidden;
+    aspect-ratio: 3 / 2; background: #8C7C76;
+    box-shadow: 0 0 0 1px var(--fio-champ);
+  }
+  .abre__foto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+  .abre__foto::after {
+    content: ''; position: absolute; inset: 8px; pointer-events: none;
+    border: 1px solid rgba(232, 216, 160, .42); border-radius: 8px;
+  }
+  .abre__texto { padding-top: 22px; }
+  .abre h1 { font-size: clamp(42px, 12.2vw, 64px); line-height: .98; letter-spacing: -.026em; color: #fff; text-wrap: balance; }
+  /* a linha do cartão, citada como está nele: CIRURGIÃ-DENTISTA | CRO */
+  .abre__cro {
+    margin-top: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px;
+    font: 500 12.5px/1.3 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--champ-claro);
+  }
+  .abre__ponto { color: var(--champ); letter-spacing: 0; }
+  @media (max-width: 379.98px) { .abre__cro { letter-spacing: .11em; gap: 4px 9px; } }
+  /* celular baixo (ex.: navegador do Instagram, 390×664): foto em 16:9 e respiros menores,
+     para nome, linha do cartão, frase e local ficarem acima da barra */
+  @media (max-width: 767.98px) and (max-height: 720px) {
+    .abre__foto { aspect-ratio: 16 / 9; margin-top: 4px; }
+    .abre__texto { padding-top: 18px; }
+    .abre__cro { margin-top: 10px; }
+    .abre__lede { margin-top: 14px; font-size: 20px; }
+  }
+  .abre__lede { margin-top: 18px; font: 400 21px/1.36 var(--serif); color: #fff; max-width: 21em; text-wrap: balance; }
+  .abre__corpo { margin-top: 10px; color: rgba(255, 255, 255, .84); max-width: 31em; }
+  .abre__acoes { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+  .abre__acoes .btn { flex: 1 1 100%; }
+  /* Microprova colada ao botão (a mesma da home; aqui sem a clínica, que já está no texto) */
+  .prova {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 4px 9px;
+    font-size: 15px; line-height: 1.3; color: rgba(255, 255, 255, .86);
+  }
+  .prova .estrelas svg { width: 13px; height: 13px; }
+  .prova strong { font: 500 18px/1 var(--serif); color: #fff; margin-right: 1px; }
+  @media (min-width: 480px) {
+    .abre__acoes .btn { flex: 0 0 auto; }
+  }
+  @media (min-width: 768px) {
+    .abre { padding-bottom: 0; }
+    .abre__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 32px; align-items: end; }
+    .trilha { grid-column: 1 / -1; }
+    .abre__texto { grid-column: 1; grid-row: 2; padding: 16px 0 88px; }
+    /* a foto passa 72 px da borda de baixo e entra na filosofia */
+    .abre__foto {
+      grid-column: 2; grid-row: 2; aspect-ratio: 4 / 5; margin: 0 0 -72px;
+      box-shadow: 0 0 0 1px var(--fio-champ), 0 24px 40px -28px rgba(68, 16, 30, .35);
+    }
+    .abre__foto img { object-position: 50% 50%; }
+    .abre h1 { font-size: clamp(56px, 7.4vw, 96px); }
+    .abre__cro { letter-spacing: .14em; }
+    .abre__lede { font-size: 22px; }
+    /* o relevo do LR: cortado pela borda direita, só a curva do R aparece na margem */
+    .abre__relevo { display: block; position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+    .abre__relevo .mono { position: absolute; width: 46%; height: auto; right: -18%; bottom: -22%; color: var(--champ); opacity: .08; }
+  }
+  @media (min-width: 1024px) {
+    .abre { padding-top: calc(var(--header-h) + 8px); }
+    .abre__grid { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); column-gap: clamp(40px, 4.6vw, 80px); }
+    .abre__texto { padding: 32px 0 112px; }
+    .abre__foto { margin-bottom: -104px; }
+    .abre h1 { font-size: clamp(64px, 6.6vw, 96px); }
+    .abre__cro { margin-top: 20px; letter-spacing: .16em; }
+    .abre__lede { margin-top: 28px; font-size: clamp(26px, 2.2vw, 30px); }
+    .abre__corpo { margin-top: 14px; font-size: 18px; }
+    .abre__acoes { margin-top: 34px; }
+  }
+  /* Movimento: só transform (sem opacidade), para não atrasar o LCP */
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes abre-sobe { from { transform: translateY(16px); } to { transform: none; } }
+    .abre__foto { animation: abre-sobe 1.1s var(--ease) both; }
+    .abre h1 { animation: abre-sobe .9s var(--ease) both; }
+  }
+</style>

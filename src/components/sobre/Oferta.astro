@@ -1,0 +1,92 @@
+---
+/**
+ * "Em que posso te ajudar?" (vinho-900): os 7 tratamentos em lista compacta, sem numeral e sem
+ * descrição (para não repetir a lista da home). Cada linha abre o WhatsApp com a mensagem do
+ * tratamento. A partir de 1280 px, 2 colunas que se leem de cima para baixo.
+ */
+import Icone from '../Icone.astro';
+import { tratamentos, ctaTratamento } from '../../data/tratamentos';
+import { waLink } from '../../lib/whatsapp';
+---
+
+<section class="oferta" id="o-que-ofereco" aria-labelledby="oferta-titulo">
+  <div class="wrap oferta__grid">
+    <div class="oferta__cab">
+      <h2 class="oferta__titulo" id="oferta-titulo" data-revela>Em que posso te ajudar?</h2>
+      <p class="oferta__intro" data-revela>
+        Atendo em clínica geral. Toque no tratamento e a mensagem já vai pronta para o meu WhatsApp. Pode perguntar à vontade antes de
+        marcar.
+      </p>
+    </div>
+    <ul class="oferta__lista" role="list" data-revela data-lista-wa>
+      {
+        tratamentos.map((t) => (
+          <li>
+            <a href={waLink(t.mensagem)} target="_blank" rel="noopener noreferrer" data-cta={ctaTratamento(t, 'sobre-trat')}>
+              <span class="oferta__nome">{t.nomeLista ?? t.nome}</span>
+              <span class="sr-only">
+                {t.urgente ? ': falar agora no WhatsApp (abre em nova janela)' : ': perguntar no WhatsApp (abre em nova janela)'}
+              </span>
+              <span class="oferta__wa" aria-hidden="true">
+                {t.urgente && 'Falar agora'}
+                <Icone nome="wa" />
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="oferta__mais" data-revela>
+      <a class="link-seta link-seta--luz" href="/#tratamentos"><span>Ver cada tratamento em detalhe</span><Icone nome="seta" /></a>
+    </p>
+  </div>
+</section>
+
+<style is:global>
+  /* =========================================================================
+     12. EM QUE POSSO TE AJUDAR — os 7 tratamentos em lista compacta (sem
+     numeral e sem descrição, para não repetir a lista da home). Cada linha
+     abre o WhatsApp com a mensagem do tratamento. Vinho-900. Sem eyebrow:
+     a pergunta é o cabeçalho.
+     ========================================================================= */
+  .oferta { background: var(--vinho-900); color: #fff; padding: 80px 0 88px; --foco: var(--champ-claro); }
+  .oferta__grid { display: grid; grid-template-areas: "cab" "lista" "mais"; }
+  .oferta__cab { grid-area: cab; }
+  .oferta__lista { grid-area: lista; margin-top: 36px; }
+  .oferta__titulo { font-size: clamp(36px, 9.4vw, 56px); line-height: 1.04; letter-spacing: -.02em; color: #fff; text-wrap: balance; max-width: 9em; }
+  .oferta__intro { margin-top: 16px; color: rgba(255, 255, 255, .84); max-width: 27em; }
+  .oferta__mais { grid-area: mais; margin-top: 20px; }
+  .oferta__lista { border-top: 1px solid var(--fio-champ); }
+  .oferta__lista li { border-bottom: 1px solid var(--fio-champ); }
+  .oferta__lista a {
+    position: relative; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    min-height: 64px; padding: 14px 0;
+    color: #fff; text-decoration: none;
+    font: 400 21px/1.25 var(--serif);
+  }
+  .oferta__nome { background: linear-gradient(var(--champ), var(--champ)) 0 100% / 0 1px no-repeat; padding-bottom: 3px; transition: background-size .6s var(--ease), color .3s; }
+  .oferta__wa { flex: none; display: inline-flex; align-items: center; gap: 8px; font: 500 14px/1 var(--sans); color: var(--champ-claro); }
+  .oferta__wa svg { width: 22px; height: 22px; fill: var(--champ-claro); transition: transform .5s var(--ease); }
+  .oferta__lista a:hover .oferta__nome { background-size: 100% 1px; color: var(--champ-claro); }
+  @media (prefers-reduced-motion: no-preference) {
+    .oferta__lista a:hover .oferta__wa svg { transform: rotate(-10deg) scale(1.1); }
+  }
+  @media (min-width: 768px) {
+    .oferta { padding: 112px 0 120px; }
+    .oferta__lista a { font-size: 23px; min-height: 72px; }
+  }
+  @media (min-width: 1024px) {
+    .oferta { padding: 136px 0 144px; }
+    .oferta__grid { grid-template-columns: minmax(0, 3.7fr) minmax(0, .5fr) minmax(0, 7.8fr); grid-template-rows: auto 1fr; grid-template-areas: "cab . lista" "mais . lista"; align-items: start; }
+    .oferta__lista { margin-top: 0; }
+    .oferta__mais { margin-top: 28px; }
+    .oferta__titulo { font-size: clamp(44px, 3.9vw, 56px); }
+    .oferta__lista a { min-height: 76px; font-size: 23px; }
+  }
+  /* 2 colunas que se leem de cima para baixo (1–4 | 5–7) */
+  @media (min-width: 1280px) {
+    .oferta__lista { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(4, auto); grid-auto-flow: column; column-gap: 48px; border-top: 0; }
+    .oferta__lista li:nth-child(1), .oferta__lista li:nth-child(5) { border-top: 1px solid var(--fio-champ); }
+    .oferta__lista a { min-height: 84px; }
+  }
+</style>

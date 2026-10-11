@@ -1,28 +1,34 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/home/Hero.astro';
+import Prazer from '../components/home/Prazer.astro';
+import Escuta from '../components/home/Escuta.astro';
 import Tratamentos from '../components/home/Tratamentos.astro';
+import PrimeiraConsulta from '../components/home/PrimeiraConsulta.astro';
 import Depoimentos from '../components/home/Depoimentos.astro';
-import Faq from '../components/home/Faq.astro';
-import CtaBanner from '../components/home/CtaBanner.astro';
-import Contato from '../components/home/Contato.astro';
-import DenteFlutuante from '../components/home/DenteFlutuante.astro';
-import '../styles/home.css';
+import OndeAtendo from '../components/home/OndeAtendo.astro';
+import CtaFinal from '../components/home/CtaFinal.astro';
+import { schemaHome } from '../lib/schema';
+import { site } from '../data/site';
 ---
 
 <BaseLayout
-  page="home"
-  title="Dra. Luzia Rayane · Cirurgiã-Dentista em Fortaleza | CRO-CE 16735"
-  description="Cirurgiã-dentista em Fortaleza (Fátima), com atendimento humanizado. Clareamento, facetas de resina, restaurações e atendimento infantil. CRO-CE 16735. Agende pelo WhatsApp."
+  pagina="home"
+  title={`Dra. Luzia Rayane · Cirurgiã-Dentista em Fortaleza | ${site.cro}`}
+  description={`Cirurgiã-dentista em Fortaleza (Fátima), com atendimento humanizado. Clareamento, facetas de resina, restaurações e atendimento infantil. ${site.cro}. Agende pelo WhatsApp.`}
   ogTitle="Dra. Luzia Rayane · Cirurgiã-Dentista em Fortaleza"
   ogDescription="Atendimento humanizado no Fátima, em Fortaleza. Clareamento, facetas de resina, restaurações e atendimento infantil. Agende pelo WhatsApp."
 >
-  <Hero />
-  <Tratamentos />
-  <Depoimentos />
-  <Faq />
-  <CtaBanner />
-  <Contato />
+  <Fragment slot="head">
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(schemaHome())} />
+  </Fragment>
 
-  <DenteFlutuante slot="after-footer" />
+  <Hero />
+  <Prazer />
+  <Escuta />
+  <Tratamentos />
+  <PrimeiraConsulta />
+  <Depoimentos />
+  <OndeAtendo />
+  <CtaFinal />
 </BaseLayout>

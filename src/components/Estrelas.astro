@@ -1,0 +1,16 @@
+---
+/**
+ * Cinco estrelas da nota no Google. Com `rotulo` (quando não há texto equivalente ao lado),
+ * vira imagem com nome acessível; sem ele, fica oculta para leitores de tela.
+ */
+interface Props {
+  rotulo?: string;
+}
+
+const { rotulo } = Astro.props;
+const estrelas = [1, 2, 3, 4, 5];
+---
+
+<span class="estrelas" role={rotulo ? 'img' : undefined} aria-label={rotulo} aria-hidden={rotulo ? undefined : 'true'}
+  >{estrelas.map(() => <svg aria-hidden="true" focusable="false"><use href="#i-estrela" /></svg>)}</span
+>

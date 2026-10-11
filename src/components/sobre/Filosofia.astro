@@ -1,69 +1,97 @@
 ---
-import Icon from '../Icon.astro';
+/**
+ * Minha filosofia (rosé): manifesto tipográfico em 4 frases curtas, texto ao lado e a assinatura
+ * cursiva no fim. No tablet e no desktop, a voz de uma paciente fica logo abaixo da foto que vazou
+ * da abertura (a prova chega cedo, ao lado da promessa).
+ */
+import NomeCursivo from '../NomeCursivo.astro';
+import { site } from '../../data/site';
+import { depoimentos } from '../../data/depoimentos';
+
+const voz = depoimentos.nara;
+const principios = [
+  {
+    titulo: 'Você fala primeiro.',
+    texto: 'Me conte o que sente, o que espera e o que te deixa com receio. Só depois a gente fala de dentes.',
+  },
+  {
+    titulo: 'Eu explico antes de começar.',
+    texto:
+      'Respeito o seu tempo e os seus limites: digo o que vou fazer, presto atenção ao seu conforto o tempo todo e uso anestesia local sempre que necessária.',
+  },
+  { titulo: 'Nada de pressa.', texto: 'Planejo cada caso com calma, buscando um resultado natural, que combine com você.' },
+  { titulo: 'A família toda é bem-vinda.', texto: 'Com as crianças, vou no tempo delas, para que se sintam seguras na cadeira.' },
+];
 ---
 
-<section class="filosofia section-padding">
-    <div class="container">
-        <div class="section-title">
-            <h2>Minha <span>Filosofia</span></h2>
-            <p>Uma odontologia centrada em você — onde o cuidado começa muito antes do procedimento.</p>
-        </div>
-        <div class="filosofia__grid">
-            <div class="filosofia__card">
-                <div class="filosofia__card-icon">
-                    <Icon name="solar:heart-angle-bold-duotone" />
-                </div>
-                <h3>Atendimento Humanizado</h3>
-                <p>Acredito que a escuta ativa é o primeiro passo de qualquer tratamento. Minha missão é resgatar a sua autoestima, devolvendo a você a confiança para sorrir sem medos.</p>
-            </div>
-            <div class="filosofia__card">
-                <div class="filosofia__card-icon">
-                    <Icon name="solar:shield-check-bold-duotone" />
-                </div>
-                <h3>Segurança e Transparência</h3>
-                <p>Respeitamos o seu tempo e seus limites. Cada passo é explicado com clareza para a sua paz de espírito. Transformamos a visita ao dentista numa experiência acolhedora.</p>
-            </div>
-            <div class="filosofia__card">
-                <div class="filosofia__card-icon">
-                    <Icon name="solar:star-shine-bold-duotone" />
-                </div>
-                <h3>Excelência Técnica</h3>
-                <p>Atualização constante com cursos em odontologia estética. Utilizo os materiais e técnicas mais modernas para garantir resultados duradouros e naturais.</p>
-            </div>
-            <div class="filosofia__card">
-                <div class="filosofia__card-icon">
-                    <Icon name="solar:users-group-rounded-bold-duotone" />
-                </div>
-                <h3>Para Toda a Família</h3>
-                <p>Do bebê ao idoso, ofereço cuidado atento e acolhedor para toda a família. Um ambiente seguro onde crianças e adultos se sentem confortáveis e bem tratados.</p>
-            </div>
-        </div>
+<section class="filo" id="filosofia" aria-labelledby="filo-titulo">
+  <div class="wrap">
+    <div class="filo__cab">
+      <div>
+        <p class="eyebrow" data-revela>Minha filosofia</p>
+        <h2 class="filo__titulo" id="filo-titulo" data-revela>O cuidado começa <em>antes</em> do procedimento.</h2>
+      </div>
+      <figure class="voz" data-revela data-revela-atraso="1">
+        <blockquote><p>“{voz.trecho}”</p></blockquote>
+        <figcaption><span class="citacao__nome">{voz.nome}</span><span class="citacao__fonte">via Google</span></figcaption>
+      </figure>
     </div>
+    <div class="filo__lista">
+      {
+        principios.map((p) => (
+          <div class="principio" data-revela>
+            <h3>{p.titulo}</h3>
+            <p>{p.texto}</p>
+          </div>
+        ))
+      }
+    </div>
+    <p class="filo__assina" data-revela><span class="sr-only">{site.nome}</span><NomeCursivo /></p>
+  </div>
 </section>
 
 <style is:global>
-/* ── PHILOSOPHY BLOCKS ── */
-.filosofia { background: var(--color-white); }
-.filosofia__grid {
-    display: grid; grid-template-columns: 1fr;
-    gap: 2rem; margin-top: 2.5rem;
-}
-@media (min-width: 768px) { .filosofia__grid { grid-template-columns: 1fr 1fr; } }
-
-.filosofia__card {
-    background: var(--color-creme);
-    border-radius: 20px; padding: 2rem;
-    border: 1px solid rgba(122,27,41,0.06);
-    display: flex; flex-direction: column; gap: 1rem;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-.filosofia__card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(122,27,41,0.08); }
-.filosofia__card-icon {
-    width: 52px; height: 52px;
-    background: rgba(122,27,41,0.08); border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.6rem; color: var(--color-bordo);
-}
-.filosofia__card h3 { font-size: 1.15rem; font-weight: 700; color: var(--color-bordo); }
-.filosofia__card p { font-size: 0.95rem; color: var(--color-gray-text); line-height: 1.6; }
+  /* =========================================================================
+     9. MINHA FILOSOFIA — manifesto tipográfico (rosé): 4 frases curtas em
+     romano grande, texto ao lado, e a assinatura cursiva no fim. No tablet e
+     no desktop, a voz de uma paciente fica logo abaixo da foto que vazou da
+     abertura (a prova chega cedo, ao lado da promessa).
+     ========================================================================= */
+  .filo { background: var(--rose); padding: 72px 0 80px; }
+  .filo__cab { display: grid; }
+  .filo__titulo { margin-top: 20px; font-size: clamp(38px, 10.2vw, 58px); line-height: 1.02; letter-spacing: -.024em; color: var(--tinta); max-width: 11em; text-wrap: balance; }
+  .filo__titulo em { color: var(--bordo-claro); }
+  /* Voz de paciente: a base de .voz (fio, itálico, nome + "via Google") está no global.css */
+  .filo__lista { margin-top: 44px; border-top: 1px solid var(--fio); }
+  .principio { display: grid; gap: 10px; padding: 24px 0 26px; border-bottom: 1px solid var(--fio); }
+  .principio h3 { font: 400 30px/1.08 var(--serif); letter-spacing: -.018em; color: var(--tinta); text-wrap: balance; }
+  .principio p { color: var(--tinta-2); max-width: 32em; }
+  .filo__assina { margin-top: 30px; display: flex; align-items: center; gap: 16px; color: var(--bordo); }
+  .filo__assina::before { content: ''; width: 34px; height: 1px; background: currentColor; opacity: .5; flex: none; }
+  .filo__assina .assinatura { width: 200px; }
+  @media (min-width: 768px) {
+    .filo { padding: 112px 0 96px; }
+    /* mesma grade da abertura: a voz fica alinhada embaixo da foto */
+    .filo__cab { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 32px; align-items: start; }
+    .filo .voz { grid-column: 2; grid-row: 1; margin-top: 0; padding-top: 22px; max-width: none; }
+    .filo .voz blockquote p { max-width: 24em; }
+    .principio { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); column-gap: 40px; align-items: baseline; padding: 30px 0 32px; }
+    .principio h3 { font-size: 36px; }
+  }
+  @media (min-width: 768px) and (max-width: 1023.98px) {
+    .filo__titulo { font-size: clamp(44px, 5.4vw, 52px); }
+  }
+  @media (min-width: 1024px) {
+    .filo { padding: 152px 0 136px; }
+    .filo__cab { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); column-gap: clamp(40px, 4.6vw, 80px); }
+    .filo__titulo { font-size: clamp(56px, 5vw, 76px); max-width: 10em; }
+    .filo .voz { padding-top: 26px; }
+    .filo .voz blockquote p { font-size: 22px; }
+    .filo__lista { margin-top: 64px; }
+    .principio { grid-template-columns: minmax(0, 6fr) minmax(0, 1fr) minmax(0, 5fr); column-gap: 0; padding: 34px 0 38px; }
+    .principio h3 { font-size: clamp(40px, 3.7vw, 54px); }
+    .principio p { grid-column: 3; }
+    .filo__assina { margin-top: 40px; justify-content: flex-end; }
+    .filo__assina .assinatura { width: 250px; }
+  }
 </style>

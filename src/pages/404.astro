@@ -1,77 +1,93 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Icon from '../components/Icon.astro';
-import { waLink } from '../lib/whatsapp';
+import BotaoAgendar from '../components/BotaoAgendar.astro';
+import Icone from '../components/Icone.astro';
+import Monograma from '../components/Monograma.astro';
 ---
 
-<BaseLayout page="outra" title="Página não encontrada · Dra. Luzia Rayane" description="A página que você procura não existe. Volte para o início ou fale com a Dra. Luzia Rayane pelo WhatsApp.">
+<BaseLayout
+  pagina="outra"
+  title="Página não encontrada · Dra. Luzia Rayane"
+  description="A página que você procura não existe. Volte para o início ou fale com a Dra. Luzia Rayane pelo WhatsApp."
+  barraCta="404-barra"
+>
   <meta slot="head" name="robots" content="noindex" />
-  <section class="erro">
-    <p class="erro__codigo">404</p>
-    <h1 class="erro__titulo">Ops, essa página <span>não existe</span></h1>
-    <p class="erro__texto">O link pode estar errado ou a página mudou de endereço.</p>
-    <div class="erro__acoes">
-      <a href="/" class="btn btn--primary">Voltar para o início</a>
-      <a href={waLink('vimPeloSite')} class="erro__wa" target="_blank" rel="noopener noreferrer" data-cta="404">
-        <Icon name="mdi:whatsapp" /> Falar no WhatsApp
-      </a>
+
+  <section class="erro" aria-labelledby="erro-titulo">
+    <div class="erro__relevo" aria-hidden="true"><Monograma /></div>
+    <div class="wrap erro__in">
+      <p class="erro__num" aria-hidden="true">404</p>
+      <h1 id="erro-titulo">Esta página não <em>existe</em>.</h1>
+      <p class="erro__texto">O link pode estar errado ou a página mudou de endereço. Volte ao início ou me chame no WhatsApp.</p>
+      <div class="erro__acoes">
+        <BotaoAgendar variante="claro" cta="404" principal />
+        <a class="link-seta link-seta--luz" href="/"><span>Voltar ao início</span><Icone nome="seta" /></a>
+      </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
+  /* Mesma família da abertura do Sobre: vinho do cartão, LR em relevo cortado pela margem */
   .erro {
-    min-height: 70vh;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: min(100svh, 860px);
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 4rem var(--space-lg);
-    background: var(--color-creme);
+    padding: calc(var(--header-h) + 48px) 0 96px;
+    background: var(--vinho-cartao);
+    color: #fff;
+    --foco: var(--champ-claro);
   }
-
-  .erro__codigo {
-    font-family: var(--font-serif);
-    font-size: clamp(4rem, 14vw, 8rem);
-    line-height: 1;
-    color: rgba(122, 27, 41, 0.15);
-    font-weight: 700;
+  .erro__relevo {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
   }
-
-  .erro__titulo {
-    font-family: var(--font-serif);
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    line-height: 1.15;
-    margin: 0.5rem 0 0.75rem;
+  .erro__relevo :global(.mono) {
+    position: absolute;
+    width: max(280px, 46%);
+    height: auto;
+    right: -14%;
+    bottom: -18%;
+    color: var(--champ);
+    opacity: 0.08;
   }
-
-  .erro__titulo span {
-    font-style: italic;
-    font-weight: 400;
-    color: var(--color-bordo-light);
+  .erro__num {
+    font: italic 400 clamp(72px, 18vw, 140px) / 1 var(--serif);
+    letter-spacing: -0.03em;
+    color: var(--champ);
   }
-
+  .erro h1 {
+    margin-top: 16px;
+    max-width: 11em;
+    font-size: clamp(40px, 10.8vw, 76px);
+    line-height: 1.02;
+    letter-spacing: -0.022em;
+    color: #fff;
+    text-wrap: balance;
+  }
+  .erro h1 em {
+    color: var(--champ-claro);
+  }
   .erro__texto {
-    color: var(--color-gray-text);
-    margin-bottom: 2rem;
+    margin-top: 20px;
+    max-width: 30em;
+    color: rgba(255, 255, 255, 0.86);
   }
-
   .erro__acoes {
+    margin-top: 32px;
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
     align-items: center;
+    gap: 12px 28px;
   }
-
-  .erro__wa {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--color-bordo);
-    font-weight: 600;
-    text-decoration: none;
-    padding: 1rem;
+  @media (min-width: 1024px) {
+    .erro__texto {
+      font-size: 18px;
+    }
   }
 </style>

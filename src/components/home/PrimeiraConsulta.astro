@@ -1,0 +1,114 @@
+---
+/**
+ * Primeira consulta (faixa vinho): "Medo de dentista?" + 4 passos + botão + FAQ.
+ * No celular o botão vem logo depois dos passos e o FAQ depois dele; no desktop o FAQ fica
+ * à esquerda e o botão, fixo, à direita (a ordem do DOM é a ordem de foco do celular).
+ */
+import BotaoAgendar from '../BotaoAgendar.astro';
+import Faq from './Faq.astro';
+
+const passos = [
+  { titulo: 'Você chama no WhatsApp', texto: 'Conte o que está sentindo ou o que gostaria de mudar. Pode perguntar à vontade.' },
+  { titulo: 'Combinamos o melhor horário', texto: 'Encontramos juntos um dia e um horário que caibam na sua rotina.' },
+  { titulo: 'Avaliação sem pressa', texto: 'Conversa, exame e explicação de cada opção, com tempo para todas as suas perguntas.' },
+  { titulo: 'Plano de tratamento claro', texto: 'Você sai sabendo o que fazer, em que ordem e por quê, e segue no seu ritmo.' },
+];
+---
+
+<section class="consulta" id="primeira-consulta" aria-labelledby="consulta-titulo">
+  <div class="wrap">
+    <div class="consulta__topo">
+      <h2 class="consulta__titulo" id="consulta-titulo" data-revela>
+        <span class="consulta__pergunta">Medo de dentista?</span> Tudo começa com uma <em>conversa</em>.
+      </h2>
+      <p class="consulta__intro" data-revela>
+        Se você vem adiando por receio, eu entendo. Na primeira consulta, nada acontece sem você saber o porquê.
+      </p>
+    </div>
+
+    <ol class="passos__lista" role="list" aria-label="A primeira consulta em 4 passos">
+      {
+        passos.map((p, i) => (
+          <li class="passo" data-revela data-revela-atraso={i > 0 ? String(i) : undefined}>
+            <span class="passo__num" aria-hidden="true">
+              {i + 1}
+            </span>
+            <h3>{p.titulo}</h3>
+            <p>{p.texto}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="consulta__fim">
+      <div class="consulta__cta" data-revela>
+        <p>O primeiro passo é só uma mensagem. O resto, a gente combina com calma.</p>
+        <BotaoAgendar variante="claro" cta="primeira-consulta" mensagem="primeiraConsulta" id="cta-consulta" principal
+          >Agendar minha avaliação</BotaoAgendar
+        >
+      </div>
+      <Faq />
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  /* =========================================================================
+     13. PRIMEIRA CONSULTA — "Medo de dentista?" (da B): 4 passos + FAQ
+     completo em acordeão + botão próprio. Faixa vinho.
+     ========================================================================= */
+  .consulta { background: var(--vinho); color: #fff; padding: 80px 0 72px; --foco: var(--champ-claro); }
+  .consulta__topo { display: grid; gap: 20px; }
+  .consulta__titulo { font-size: clamp(36px, 9.4vw, 60px); line-height: 1.05; color: #fff; text-wrap: balance; max-width: 13em; }
+  .consulta__titulo em { color: var(--champ-claro); }
+  .consulta__pergunta { display: block; }
+  .consulta__intro { color: rgba(255, 255, 255, .86); max-width: 30em; font-size: 17px; }
+  /* Passos: linha do tempo no celular, 4 colunas no desktop */
+  .passos__lista { margin-top: 48px; display: grid; gap: 0; }
+  .passo {
+    position: relative; align-content: start;
+    display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: 16px;
+    padding: 0 0 32px;
+  }
+  .passo::before {
+    content: ''; position: absolute; left: 22px; top: 60px; bottom: 8px; width: 1px;
+    background: var(--fio-champ);
+  }
+  .passo:last-child::before { display: none; }
+  .passo__num { font: 400 52px/1 var(--serif); color: var(--champ); text-align: center; grid-row: span 2; }
+  .passo h3 { font-size: 22px; line-height: 1.25; color: #fff; padding-top: 6px; }
+  .passo p { margin-top: 8px; font-size: 16px; color: rgba(255, 255, 255, .8); }
+  /* FAQ + CTA */
+  /* No celular e no tablet o botão vem logo depois dos 4 passos (pico de motivação)
+     e o FAQ depois dele; no desktop o FAQ fica à esquerda e o botão, fixo, à direita */
+  .consulta__fim { margin-top: 24px; padding-top: 36px; border-top: 1px solid var(--fio-champ); display: grid; gap: 48px; }
+  .consulta__cta { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; align-content: start; justify-items: stretch; }
+  .consulta__cta p { font: italic 400 21px/1.4 var(--serif); color: var(--champ-claro); max-width: 18em; text-wrap: balance; }
+  .consulta__cta .btn { width: 100%; }
+  @media (min-width: 768px) {
+    .consulta { padding: 104px 0 88px; }
+    .passos__lista { grid-template-columns: repeat(2, 1fr); gap: 48px 40px; margin-top: 64px; }
+    .passo { grid-template-columns: 1fr; padding: 26px 0 0; border-top: 1px solid var(--fio-champ); }
+    .passo::before { display: none; }
+    .passo::after { content: ''; position: absolute; top: -4px; left: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--champ); }
+    .passo__num { font-size: 96px; margin: 14px 0 18px; grid-row: auto; text-align: left; }
+    .passo h3 { padding-top: 0; }
+    .passo p { font-size: 16.5px; }
+    .consulta__fim { margin-top: 64px; }
+    .consulta__cta { justify-items: start; }
+    .consulta__cta .btn { width: auto; }
+  }
+  @media (min-width: 1100px) {
+    .consulta { padding: 128px 0 112px; }
+    .consulta__topo { grid-template-columns: minmax(0, 7fr) minmax(0, 1fr) minmax(0, 4fr); align-items: end; gap: 0; }
+    .consulta__intro { grid-column: 3; }
+    .passos__lista { grid-template-columns: repeat(4, 1fr); grid-template-rows: auto auto auto; gap: 0 40px; margin-top: 80px; }
+    .passo { grid-row: span 3; display: grid; grid-template-rows: subgrid; row-gap: 0; }
+    .passo h3 { align-self: start; padding-bottom: 2px; font-size: 23px; }
+    .passo__num { font-size: 124px; letter-spacing: -.03em; }
+    .passo p { font-size: 16px; }
+    .consulta__fim { grid-template-columns: minmax(0, 7fr) minmax(0, 1fr) minmax(0, 4fr); gap: 0; margin-top: 88px; padding-top: 48px; }
+    .faq { grid-column: 1; grid-row: 1; }
+    .consulta__cta { grid-column: 3; grid-row: 1; position: sticky; top: 120px; padding-top: 36px; }
+  }
+</style>

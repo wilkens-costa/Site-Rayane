@@ -1,0 +1,77 @@
+---
+/**
+ * <picture> com direção de arte (um recorte por faixa de largura), gerado pelo astro:assets.
+ * O <Picture> do Astro não aceita `media` por fonte; aqui cada fonte vira <source> AVIF e WebP
+ * com as larguras pedidas. A última fonte (sem `media`) é a padrão e alimenta o <img>.
+ */
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+
+interface Fonte {
+  src: ImageMetadata;
+  widths: number[];
+  sizes: string;
+  media?: string;
+}
+
+interface Props {
+  fontes: Fonte[];
+  alt: string;
+  class?: string;
+  imgClass?: string;
+  loading?: 'eager' | 'lazy';
+  fetchpriority?: 'high' | 'auto';
+  quality?: number;
+}
+
+const { fontes, alt, class: className, imgClass, loading = 'lazy', fetchpriority, quality } = Astro.props;
+const padrao = fontes.at(-1);
+if (!padrao) throw new Error('ImagemArte: informe ao menos uma fonte');
+
+const gerar = (f: Fonte, format: 'avif' | 'webp') => getImage({ src: f.src, widths: f.widths, format, quality });
+const fontesGeradas = await Promise.all(
+  fontes.map(async (f) => {
+    const [avif, webp] = await Promise.all([gerar(f, 'avif'), gerar(f, 'webp')]);
+    return { f, avif, webp };
+  }),
+);
+const img = fontesGeradas.at(-1)!.webp;
+const maior = Math.max(...padrao.widths);
+const largura = Math.min(maior, padrao.src.width);
+const altura = Math.round((largura * padrao.src.height) / padrao.src.width);
+---
+
+<picture class={className}>
+  {
+    fontesGeradas.map(({ f, avif, webp }) => [
+      <source
+        media={f.media}
+        type="image/avif"
+        srcset={avif.srcSet.attribute}
+        sizes={f.sizes}
+        width={f.src.width}
+        height={f.src.height}
+      />,
+      <source
+        media={f.media}
+        type="image/webp"
+        srcset={webp.srcSet.attribute}
+        sizes={f.sizes}
+        width={f.src.width}
+        height={f.src.height}
+      />,
+    ])
+  }
+  <img
+    class={imgClass}
+    src={img.src}
+    srcset={img.srcSet.attribute}
+    sizes={padrao.sizes}
+    width={largura}
+    height={altura}
+    alt={alt}
+    loading={loading}
+    decoding={loading === 'eager' ? undefined : 'async'}
+    fetchpriority={fetchpriority}
+  />
+</picture>

@@ -1,0 +1,11 @@
+---
+/** Ícone do sprite (SpriteSvg): sempre decorativo, herda cor e tamanho do CSS. */
+interface Props {
+  nome: 'wa' | 'seta' | 'estrela' | 'rota' | 'carro' | 'mapa';
+  class?: string;
+}
+
+const { nome, class: className } = Astro.props;
+---
+
+<svg class={className} aria-hidden="true" focusable="false"><use href={`#i-${nome}`} /></svg>

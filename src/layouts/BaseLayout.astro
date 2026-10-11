@@ -3,22 +3,36 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/playfair-display';
 import '@fontsource-variable/playfair-display/wght-italic.css';
 import '../styles/global.css';
+import SpriteSvg from '../components/SpriteSvg.astro';
 import Header from '../components/Header.astro';
-import BottomNav from '../components/BottomNav.astro';
 import Footer from '../components/Footer.astro';
+import BarraCta from '../components/BarraCta.astro';
 import { site } from '../data/site';
+import type { Mensagem } from '../lib/whatsapp';
 
 interface Props {
   title: string;
   description: string;
   /** Qual página está ativa no menu */
-  page: 'home' | 'sobre' | 'outra';
+  pagina: 'home' | 'sobre' | 'outra';
   ogType?: 'website' | 'profile';
   ogTitle?: string;
   ogDescription?: string;
+  /** data-cta e mensagem da barra "Agendar" do celular */
+  barraCta?: string;
+  barraMensagem?: Mensagem;
 }
 
-const { title, description, page, ogType = 'website', ogTitle = title, ogDescription = description } = Astro.props;
+const {
+  title,
+  description,
+  pagina,
+  ogType = 'website',
+  ogTitle = title,
+  ogDescription = description,
+  barraCta = 'barra',
+  barraMensagem = 'vimPeloSite',
+} = Astro.props;
 const canonical = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '/'), site.url).href;
 const ogImage = new URL(site.ogImage, site.url).href;
 ---
@@ -27,7 +41,7 @@ const ogImage = new URL(site.ogImage, site.url).href;
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <script is:inline>document.documentElement.classList.add('js');</script>
 
     <!-- Google tag (gtag.js) -->
@@ -45,7 +59,7 @@ const ogImage = new URL(site.ogImage, site.url).href;
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#7A1B29" />
+    <meta name="theme-color" content="#44101E" />
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={site.nome} />
@@ -55,7 +69,7 @@ const ogImage = new URL(site.ogImage, site.url).href;
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Dra. Luzia Rayane, cirurgiã-dentista em Fortaleza, de jaleco branco" />
+    <meta property="og:image:alt" content={site.ogImageAlt} />
     <meta property="og:locale" content="pt_BR" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={ogTitle} />
@@ -66,16 +80,16 @@ const ogImage = new URL(site.ogImage, site.url).href;
   </head>
 
   <body>
-    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-    <Header page={page} />
-    <BottomNav page={page} />
+    <SpriteSvg />
+    <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+    <Header pagina={pagina} />
 
     <main id="conteudo">
       <slot />
     </main>
 
-    <Footer />
-    <slot name="after-footer" />
+    <Footer pagina={pagina} />
+    <BarraCta cta={barraCta} mensagem={barraMensagem} />
 
     <script>
       import '../scripts/reveal';

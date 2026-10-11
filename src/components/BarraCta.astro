@@ -1,0 +1,83 @@
+---
+/**
+ * Único CTA persistente no celular e no tablet (só existe com JS).
+ * Some quando um botão principal da página ([data-cta-principal]) está inteiro na tela
+ * e enquanto uma lista de tratamentos ([data-lista-wa]) ocupa a base da tela
+ * (ali cada linha já é um link de WhatsApp).
+ */
+import BotaoAgendar from './BotaoAgendar.astro';
+import type { Mensagem } from '../lib/whatsapp';
+
+interface Props {
+  cta: string;
+  mensagem?: Mensagem;
+}
+
+const { cta, mensagem = 'vimPeloSite' } = Astro.props;
+---
+
+<aside class="barra is-oculta" id="barra" aria-label="Agendar avaliação">
+  <BotaoAgendar variante="bordo" cta={cta} mensagem={mensagem} />
+</aside>
+
+<script>
+  const barra = document.getElementById('barra');
+  if (barra) {
+    if ('IntersectionObserver' in window) {
+      const visiveis = new Set<Element>();
+      let listaNaBase = false;
+      const atualiza = () => barra.classList.toggle('is-oculta', visiveis.size > 0 || listaNaBase);
+
+      const ioBotoes = new IntersectionObserver(
+        (entradas) => {
+          entradas.forEach((e) => (e.intersectionRatio >= 0.95 ? visiveis.add(e.target) : visiveis.delete(e.target)));
+          atualiza();
+        },
+        { threshold: [0, 0.5, 0.95, 1] },
+      );
+      document.querySelectorAll('[data-cta-principal]').forEach((el) => ioBotoes.observe(el));
+
+      // Raiz encolhida para a faixa dos 18% de baixo da tela, onde fica a barra
+      const ioLista = new IntersectionObserver(
+        (entradas) => {
+          listaNaBase = entradas.some((e) => e.isIntersecting);
+          atualiza();
+        },
+        { rootMargin: '-82% 0px 0px 0px' },
+      );
+      document.querySelectorAll('[data-lista-wa]').forEach((el) => ioLista.observe(el));
+    } else {
+      barra.classList.remove('is-oculta');
+    }
+  }
+</script>
+
+<style is:global>
+  /* =========================================================================
+     6. CTA MOBILE — único CTA persistente (só existe com JS).
+     Some quando um CTA principal da página (hero, primeira consulta, onde
+     atendo, final) está INTEIRO na tela, e enquanto a lista de tratamentos
+     ocupa a base da tela (ali cada linha já é um link de WhatsApp).
+     ========================================================================= */
+  .barra { display: none; }
+  @media (max-width: 979.98px) {
+    .js .barra {
+      display: block;
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      background: var(--creme);
+      box-shadow: 0 -1px 0 var(--fio), 0 -12px 28px -18px rgba(42, 31, 33, .35);
+      transition: transform .45s var(--ease), visibility .45s;
+    }
+    .js .barra .btn { width: 100%; min-height: 54px; }
+    .js .barra.is-oculta { transform: translateY(115%); visibility: hidden; }
+  }
+  /* Tablet e celular deitado: a mesma barra, com o botão centralizado. O botão
+     flutuante cobria a coluna de texto da direita, e o anel de foco bordô sumia
+     sobre as seções vinho (1,5:1); sobre o creme da barra ele tem 9,8:1 */
+  @media (min-width: 600px) and (max-width: 979.98px) {
+    .js .barra { padding-inline: max(24px, env(safe-area-inset-left)) max(24px, env(safe-area-inset-right)); }
+    .js .barra .btn { display: flex; width: min(100%, 420px); margin-inline: auto; }
+  }
+  @media (prefers-reduced-motion: reduce) { .js .barra { transition: none; } }
+</style>
