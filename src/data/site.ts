@@ -32,7 +32,7 @@ export const site = {
   mapaEmbed:
     'https://maps.google.com/maps?q=Marv%20Clinic,%20R.%20Martinho%20Rodrigues,%20129%20-%20F%C3%A1tima,%20Fortaleza&t=&z=16&ie=UTF8&iwloc=&output=embed',
   /** Instagram oficial: preencher quando houver (o link do rodapé só aparece com ele) */
-  instagram: '',
+  instagram: 'luziarayane.g',
 
   ogImage: '/og/dra-luzia-rayane-og.jpg',
   ogImageAlt: 'Dra. Luzia Rayane sorrindo, ao lado do monograma LR e da linha Cirurgiã-dentista, CRO-CE 16735',

@@ -2,6 +2,8 @@
 import { site } from '../data/site';
 import { faq, respostaTexto } from '../data/faq';
 
+const perfis = site.instagram ? [`https://www.instagram.com/${site.instagram}/`] : [];
+
 const endereco = {
   '@type': 'PostalAddress',
   streetAddress: site.endereco.rua,
@@ -21,6 +23,7 @@ export function schemaHome() {
         url: site.url,
         telephone: site.telefoneSchema,
         address: endereco,
+        ...(perfis.length ? { sameAs: perfis } : {}),
       },
       {
         '@type': 'FAQPage',
@@ -51,6 +54,7 @@ export function schemaSobre() {
         honorificPrefix: 'Dra.',
         jobTitle: site.profissao,
         identifier: site.cro,
+        ...(perfis.length ? { sameAs: perfis } : {}),
         workLocation: {
           '@type': 'Dentist',
           name: site.clinica,
